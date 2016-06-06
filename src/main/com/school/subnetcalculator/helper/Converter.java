@@ -18,7 +18,12 @@ public class Converter {
 
 
     public static String convertBinaryToDecimal(String binaryString) {
-        return null;
+        if (binaryString.length() > 0) {
+            Integer decimalInt = Integer.parseInt(binaryString, 2);
+            return decimalInt.toString();
+        } else {
+            return "0";
+        }
     }
 
 

@@ -8,14 +8,14 @@ public class ConverterTest {
 
     @Test
     public void convertDecimalToBinary() throws Exception {
-        String resultTwelve = Converter.convertDecimalToBinary("12");
-        Assert.assertEquals("1100", resultTwelve);
+        String binaryTwelve = Converter.convertDecimalToBinary("12");
+        Assert.assertEquals("1100", binaryTwelve);
 
-        String resultTwoHundred = Converter.convertDecimalToBinary("200");
-        Assert.assertEquals("11001000", resultTwoHundred);
+        String binaryTwoHundred = Converter.convertDecimalToBinary("200");
+        Assert.assertEquals("11001000", binaryTwoHundred);
 
-        String resultZero = Converter.convertDecimalToBinary("");
-        Assert.assertEquals("0", resultZero);
+        String binaryZero = Converter.convertDecimalToBinary("");
+        Assert.assertEquals("0", binaryZero);
     }
 
     @Test
@@ -25,7 +25,14 @@ public class ConverterTest {
 
     @Test
     public void convertBinaryToDecimal() throws Exception {
+        String resultTwelve = Converter.convertBinaryToDecimal("1100");
+        Assert.assertEquals("12", resultTwelve);
 
+        String resultTwoHundred = Converter.convertBinaryToDecimal("11001000");
+        Assert.assertEquals("200", resultTwoHundred);
+
+        String resultZero = Converter.convertBinaryToDecimal("");
+        Assert.assertEquals("0", resultZero);
     }
 
     @Test
