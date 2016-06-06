@@ -1,19 +1,18 @@
 package main.com.school.subnetcalculator.view;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import java.awt.BorderLayout;
-import java.awt.GridBagLayout;
-import javax.swing.JTabbedPane;
 import java.awt.GridBagConstraints;
-import javax.swing.JButton;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JTextField;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
-public class SubnetCalculator extends JFrame {
+public class SubnetCalculatorFrame extends JFrame {
 	private JTabbedPane tpNetworkSubnetsHosts;
 	private JButton btnAddNetwork;
 	private JButton btnOptions;
@@ -44,7 +43,7 @@ public class SubnetCalculator extends JFrame {
 	private JTextField tfHexadecimal;
 	private JTextArea taDescription;
 
-	public SubnetCalculator() {
+	public SubnetCalculatorFrame() {
 		initGUI();
 	}
 
