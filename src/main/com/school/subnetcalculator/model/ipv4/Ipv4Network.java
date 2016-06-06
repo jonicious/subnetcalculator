@@ -1,6 +1,6 @@
-package com.school.subnetcalculator.model.ipv4;
+package main.com.school.subnetcalculator.model.ipv4;
 
-import com.school.subnetcalculator.model.Network;
+import main.com.school.subnetcalculator.model.Network;
 import java.net.Inet4Address;
 
 public class Ipv4Network extends Network

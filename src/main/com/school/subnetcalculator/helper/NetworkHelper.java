@@ -1,4 +1,4 @@
-package com.school.subnetcalculator.helper;
+package main.com.school.subnetcalculator.helper;
 
 import java.net.InetAddress;
 
@@ -8,7 +8,4 @@ public class NetworkHelper
     {
         return null;
     }
-
-
-
 }

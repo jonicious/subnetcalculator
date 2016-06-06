@@ -1,6 +1,6 @@
-package com.school.subnetcalculator.model.ipv6;
+package main.com.school.subnetcalculator.model.ipv6;
 
-import com.school.subnetcalculator.model.Network;
+import main.com.school.subnetcalculator.model.Network;
 import java.net.Inet6Address;
 
 public class Ipv6Network extends Network

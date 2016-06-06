@@ -1,4 +1,4 @@
-package com.school.subnetcalculator.model;
+package main.com.school.subnetcalculator.model;
 
 import java.net.Inet4Address;
 import java.net.Inet6Address;
