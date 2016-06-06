@@ -2,12 +2,17 @@ package main.com.school.subnetcalculator.helper;
 
 public class Converter {
 
-    public static String convertDecimalToBinary(String decimalString) {
+    /**
+     * @param decimalString string representation of unsigned integer
+     * @return binaryString
+     * @throws IllegalArgumentException
+     */
+    public static String convertDecimalToBinary(String decimalString) throws IllegalArgumentException {
         if(decimalString.length() > 0) {
             Integer decimal = Integer.parseUnsignedInt(decimalString, 10);
             return Integer.toBinaryString(decimal);
         } else {
-            return "0";
+            throw new IllegalArgumentException("decimal input is empty");
         }
     }
 
@@ -17,12 +22,17 @@ public class Converter {
     }
 
 
-    public static String convertBinaryToDecimal(String binaryString) {
+    /**
+     * @param binaryString string representation of a binary integer
+     * @return decimalString
+     * @throws IllegalArgumentException
+     */
+    public static String convertBinaryToDecimal(String binaryString) throws IllegalArgumentException {
         if (binaryString.length() > 0) {
             Integer decimalInt = Integer.parseInt(binaryString, 2);
             return decimalInt.toString();
         } else {
-            return "0";
+            throw new IllegalArgumentException("binary input is empty");
         }
     }
 

@@ -4,6 +4,8 @@ import main.com.school.subnetcalculator.helper.Converter;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.IllegalFormatCodePointException;
+
 public class ConverterTest {
 
     @Test
@@ -13,9 +15,11 @@ public class ConverterTest {
 
         String binaryTwoHundred = Converter.convertDecimalToBinary("200");
         Assert.assertEquals("11001000", binaryTwoHundred);
+    }
 
-        String binaryZero = Converter.convertDecimalToBinary("");
-        Assert.assertEquals("0", binaryZero);
+    @Test(expected = IllegalArgumentException.class)
+    public void convertDecimalToBinaryException() throws Exception {
+        Converter.convertDecimalToBinary("");
     }
 
     @Test
@@ -30,9 +34,11 @@ public class ConverterTest {
 
         String resultTwoHundred = Converter.convertBinaryToDecimal("11001000");
         Assert.assertEquals("200", resultTwoHundred);
+    }
 
-        String resultZero = Converter.convertBinaryToDecimal("");
-        Assert.assertEquals("0", resultZero);
+    @Test(expected = IllegalArgumentException.class)
+    public void convertBinaryToDecimalException() throws Exception {
+        Converter.convertBinaryToDecimal("");
     }
 
     @Test
