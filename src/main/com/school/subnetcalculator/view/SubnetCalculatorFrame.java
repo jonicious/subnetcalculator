@@ -53,9 +53,11 @@ public class SubnetCalculatorFrame extends JFrame {
 	private JButton btnDeleteHost;
 
 	public SubnetCalculatorFrame() {
+		new UIController();
 		initGUI();
 		setVisible(true);
 		setSize(new Dimension(700, 500));
+		setTitle("SubnetCalculator");
 	}
 
 	private void initGUI() {
