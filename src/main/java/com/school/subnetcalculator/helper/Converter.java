@@ -1,4 +1,4 @@
-package main.com.school.subnetcalculator.helper;
+package com.school.subnetcalculator.helper;
 
 import java.math.BigInteger;
 

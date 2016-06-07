@@ -1,4 +1,4 @@
-package main.com.school.subnetcalculator.model;
+package com.school.subnetcalculator.model;
 
 import com.googlecode.ipv6.IPv6Address;
 import java.net.Inet4Address;

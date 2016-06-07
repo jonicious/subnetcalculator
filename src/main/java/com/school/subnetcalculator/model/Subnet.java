@@ -1,8 +1,5 @@
-package main.com.school.subnetcalculator.model;
+package com.school.subnetcalculator.model;
 
-import com.googlecode.ipv6.IPv6Network;
-
-import java.net.InetAddress;
 import java.util.List;
 
 public class Subnet {

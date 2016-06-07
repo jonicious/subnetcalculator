@@ -1,4 +1,4 @@
-package main.com.school.subnetcalculator.helper;
+package com.school.subnetcalculator.helper;
 
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
