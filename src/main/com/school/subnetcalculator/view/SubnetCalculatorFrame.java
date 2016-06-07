@@ -53,6 +53,8 @@ public class SubnetCalculatorFrame extends JFrame {
 
 	public SubnetCalculatorFrame() {
 		initGUI();
+		setVisible(true);
+		setSize(new Dimension(700, 500));
 	}
 
 	private void initGUI() {
