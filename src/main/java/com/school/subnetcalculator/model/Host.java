@@ -1,11 +1,14 @@
 package com.school.subnetcalculator.model;
 
+import com.googlecode.ipv6.IPv6Address;
+
 import java.net.Inet4Address;
 
 public class Host
 {
     private String description;
     private Inet4Address ipv4Address;
+    private IPv6Address ipv6Address;
 
 
     public String getDescription()
@@ -32,4 +35,11 @@ public class Host
     }
 
 
+    public IPv6Address getIpv6Address() {
+        return ipv6Address;
+    }
+
+    public void setIpv6Address(IPv6Address ipv6Address) {
+        this.ipv6Address = ipv6Address;
+    }
 }

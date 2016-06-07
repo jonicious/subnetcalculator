@@ -1,10 +1,14 @@
 package com.school.subnetcalculator.view;
-import java.awt.Dimension;
-import main.com.school.subnetcalculator.helper.UIController;
-import main.com.school.subnetcalculator.model.Host;
-import main.com.school.subnetcalculator.model.Network;
-import main.com.school.subnetcalculator.model.Subnet;
-import main.com.school.subnetcalculator.view.NetworkCreatorDialog;
+import com.school.subnetcalculator.helper.UIController;
+import com.school.subnetcalculator.model.Host;
+import com.school.subnetcalculator.model.Network;
+import com.school.subnetcalculator.model.Subnet;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class SubnetCalculatorFrame extends JFrame {
 	private static final long serialVersionUID = -6244329414716205933L;
@@ -48,7 +52,7 @@ public class SubnetCalculatorFrame extends JFrame {
 	private JTextField tfBroadcastaddress;
 	private JLabel lblBroadcastaddress;
 
-	public SubnetCalculatorFrame() {
+	public SubnetCalculatorFrame() throws IOException {
 		new UIController();
 		initGUI();
 		setVisible(true);
@@ -87,12 +91,7 @@ public class SubnetCalculatorFrame extends JFrame {
 	private JButton getBtnAddNetwork() {
 		if (btnAddNetwork == null) {
 			btnAddNetwork = new JButton("Add Network");
-			btnAddNetwork.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					new NetworkCreatorDialog(SubnetCalculatorFrame.this);
-				}
-			});
+			btnAddNetwork.addActionListener(e -> new NetworkCreatorDialog(SubnetCalculatorFrame.this));
 		}
 		return btnAddNetwork;
 	}
