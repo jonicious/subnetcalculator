@@ -8,6 +8,7 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.io.IOException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -58,7 +59,7 @@ public class SubnetCalculatorFrame extends JFrame
     private JButton btnDeleteHost;
 
 
-    public SubnetCalculatorFrame()
+    public SubnetCalculatorFrame() throws IOException
     {
         new UIController();
         initGUI();

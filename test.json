@@ -1,14 +1,50 @@
 {
   "networkList": [
     {
-      "networkAddress": "192.168.178.1",
-      "globalNetworkAddress": "2001:0db8:85a3:0000:0000:8a2e:0370:7334/48",
-      "globalSubnetMask": "ffff::::::0",
+      "ipv4NetworkAddress": "192.168.178.1/24",
+      "ipv6NetworkAddress": "2001:0db8:85a3:0000:0000:8a2e:0370:7334/48",
       "subnetList": [
         {
-          "networkAddress": "192.168.178.1",
-          "ipv4SubnetMask": "192.168.178.1",
-          "ipv6SubnetMask": "2001:0db8:85a3:0000:0000:8a2e:0370:7334",
+          "ipv4SubnetAddress": "192.168.178.1/24",
+          "ipv6SubnetAddress": "2001:0db8:85a3:0000:0000:8a2e:0370:7334/48",
+          "hosts": [
+            {
+              "description": "Peters PC",
+              "ipv4Address": "192.168.178.1",
+              "ipv6Address": "2001:0db8:85a3:0000:0000:8a2e:0370:7334"
+            },
+            {
+              "description": "Peters PC",
+              "ipv4Address": "192.168.178.1",
+              "ipv6Address": "2001:0db8:85a3:0000:0000:8a2e:0370:7334"
+            }
+          ]
+        },
+        {
+          "ipv4SubnetAddress": "192.168.178.1/24",
+          "ipv6SubnetAddress": "2001:0db8:85a3:0000:0000:8a2e:0370:7334/48",
+          "hosts": [
+            {
+              "description": "Peters PC",
+              "ipv4Address": "192.168.178.1",
+              "ipv6Address": "2001:0db8:85a3:0000:0000:8a2e:0370:7334"
+            },
+            {
+              "description": "Peters PC",
+              "ipv4Address": "192.168.178.1",
+              "ipv6Address": "2001:0db8:85a3:0000:0000:8a2e:0370:7334"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "ipv4NetworkAddress": "192.168.178.1/24",
+      "ipv6NetworkAddress": "2001:0db8:85a3:0000:0000:8a2e:0370:7334/48",
+      "subnetList": [
+        {
+          "ipv4SubnetAddress": "192.168.178.1/24",
+          "ipv6SubnetAddress": "2001:0db8:85a3:0000:0000:8a2e:0370:7334/48",
           "hosts": [
             {
               "description": "Peters PC",

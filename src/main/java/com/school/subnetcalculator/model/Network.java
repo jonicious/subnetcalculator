@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Network
 {
-    // TODO: missing IPv4Network thing
+    // TODO: Add IPv4
     private IPv6Network ipv6Network;
     private List<Subnet> subnetList;
 
@@ -58,4 +58,6 @@ public class Network
     {
         this.ipv6Network = ipv6Network;
     }
+
+
 }

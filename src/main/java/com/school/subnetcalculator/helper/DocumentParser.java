@@ -15,7 +15,7 @@ public class DocumentParser
         {
             String jsonData = readFile(fileName);
             JSONObject object = new JSONObject(jsonData);
-            return NetworkMapper.makeNetworkFromObject(object);
+            return NetworkMapper.makeNetworkListFormObject(object);
         }
         catch (Exception e)
         {
