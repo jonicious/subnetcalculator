@@ -11,8 +11,10 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.JScrollPane;
 
 public class SubnetCalculatorFrame extends JFrame {
+	private static final long serialVersionUID = -6244329414716205933L;
 	private JTabbedPane tpNetworkSubnetsHosts;
 	private JButton btnAddNetwork;
 	private JButton btnOptions;
@@ -41,7 +43,13 @@ public class SubnetCalculatorFrame extends JFrame {
 	private JLabel lblHexadecimal;
 	private JTextField tfBinary;
 	private JTextField tfHexadecimal;
+	private JLabel lblHosts;
+	private JList listHosts;
+	private JScrollPane sPDescription;
 	private JTextArea taDescription;
+	private JPanel pHostButtons;
+	private JButton btnAddHost;
+	private JButton btnDeleteHost;
 
 	public SubnetCalculatorFrame() {
 		initGUI();
@@ -66,7 +74,8 @@ public class SubnetCalculatorFrame extends JFrame {
 	private JTabbedPane getTpNetworkSubnetsHosts() {
 		if (tpNetworkSubnetsHosts == null) {
 			tpNetworkSubnetsHosts = new JTabbedPane(JTabbedPane.TOP);
-			tpNetworkSubnetsHosts.addTab("Networks", null, getPNetworks(), null);
+			tpNetworkSubnetsHosts
+					.addTab("Networks", null, getPNetworks(), null);
 			tpNetworkSubnetsHosts.addTab("Subnets", null, getPSubnets(), null);
 			tpNetworkSubnetsHosts.addTab("Hosts", null, getPHosts(), null);
 		}
@@ -114,14 +123,17 @@ public class SubnetCalculatorFrame extends JFrame {
 		}
 		return btnSave;
 	}
+
 	private JPanel getPNetworks() {
 		if (pNetworks == null) {
 			pNetworks = new JPanel();
 			GridBagLayout gbl_pNetworks = new GridBagLayout();
-			gbl_pNetworks.columnWidths = new int[]{0, 0, 0};
-			gbl_pNetworks.rowHeights = new int[]{0, 0, 0};
-			gbl_pNetworks.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-			gbl_pNetworks.rowWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
+			gbl_pNetworks.columnWidths = new int[] { 0, 0, 0 };
+			gbl_pNetworks.rowHeights = new int[] { 0, 0, 0 };
+			gbl_pNetworks.columnWeights = new double[] { 0.0, 1.0,
+					Double.MIN_VALUE };
+			gbl_pNetworks.rowWeights = new double[] { 1.0, 0.0,
+					Double.MIN_VALUE };
 			pNetworks.setLayout(gbl_pNetworks);
 			GridBagConstraints gbc_lblNetworks = new GridBagConstraints();
 			gbc_lblNetworks.anchor = GridBagConstraints.NORTH;
@@ -145,26 +157,31 @@ public class SubnetCalculatorFrame extends JFrame {
 		}
 		return pNetworks;
 	}
+
 	private JLabel getLblNetworks() {
 		if (lblNetworks == null) {
 			lblNetworks = new JLabel("Networks");
 		}
 		return lblNetworks;
 	}
+
 	private JList getListNetworks() {
 		if (listNetworks == null) {
 			listNetworks = new JList();
 		}
 		return listNetworks;
 	}
+
 	private JPanel getPSubnets() {
 		if (pSubnets == null) {
 			pSubnets = new JPanel();
 			GridBagLayout gbl_pSubnets = new GridBagLayout();
-			gbl_pSubnets.columnWidths = new int[]{0, 0, 0};
-			gbl_pSubnets.rowHeights = new int[]{0, 0, 0, 0, 0};
-			gbl_pSubnets.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-			gbl_pSubnets.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
+			gbl_pSubnets.columnWidths = new int[] { 0, 0, 0 };
+			gbl_pSubnets.rowHeights = new int[] { 0, 0, 0, 0, 0 };
+			gbl_pSubnets.columnWeights = new double[] { 0.0, 1.0,
+					Double.MIN_VALUE };
+			gbl_pSubnets.rowWeights = new double[] { 0.0, 0.0, 1.0, 0.0,
+					Double.MIN_VALUE };
 			pSubnets.setLayout(gbl_pSubnets);
 			GridBagConstraints gbc_lblNetwork = new GridBagConstraints();
 			gbc_lblNetwork.anchor = GridBagConstraints.NORTHWEST;
@@ -173,7 +190,7 @@ public class SubnetCalculatorFrame extends JFrame {
 			gbc_lblNetwork.gridy = 0;
 			pSubnets.add(getLblNetwork(), gbc_lblNetwork);
 			GridBagConstraints gbc_tfNetwork = new GridBagConstraints();
-			gbc_tfNetwork.insets = new Insets(0, 0, 5, 0);
+			gbc_tfNetwork.insets = new Insets(5, 0, 5, 0);
 			gbc_tfNetwork.anchor = GridBagConstraints.NORTH;
 			gbc_tfNetwork.fill = GridBagConstraints.HORIZONTAL;
 			gbc_tfNetwork.gridx = 1;
@@ -213,12 +230,14 @@ public class SubnetCalculatorFrame extends JFrame {
 		}
 		return pSubnets;
 	}
+
 	private JLabel getLblNetwork() {
 		if (lblNetwork == null) {
 			lblNetwork = new JLabel("Network");
 		}
 		return lblNetwork;
 	}
+
 	private JTextField getTfNetwork() {
 		if (tfNetwork == null) {
 			tfNetwork = new JTextField();
@@ -226,58 +245,69 @@ public class SubnetCalculatorFrame extends JFrame {
 		}
 		return tfNetwork;
 	}
+
 	private JLabel getLblNetClass() {
 		if (lblNetClass == null) {
 			lblNetClass = new JLabel("Net Class");
 		}
 		return lblNetClass;
 	}
+
 	private JLabel getLblSubnets() {
 		if (lblSubnets == null) {
 			lblSubnets = new JLabel("Subnets");
 		}
 		return lblSubnets;
 	}
+
 	private JPanel getPNetworkButtons() {
 		if (pNetworkButtons == null) {
 			pNetworkButtons = new JPanel();
 			GridBagLayout gbl_pNetworkButtons = new GridBagLayout();
-			gbl_pNetworkButtons.columnWidths = new int[]{0, 0, 0, 0};
-			gbl_pNetworkButtons.rowHeights = new int[]{0, 0, 0};
-			gbl_pNetworkButtons.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
-			gbl_pNetworkButtons.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+			gbl_pNetworkButtons.columnWidths = new int[] { 0, 0, 0, 0 };
+			gbl_pNetworkButtons.rowHeights = new int[] { 0, 0, 0 };
+			gbl_pNetworkButtons.columnWeights = new double[] { 0.0, 0.0, 0.0,
+					Double.MIN_VALUE };
+			gbl_pNetworkButtons.rowWeights = new double[] { 0.0, 0.0,
+					Double.MIN_VALUE };
 			pNetworkButtons.setLayout(gbl_pNetworkButtons);
 			GridBagConstraints gbc_btnAddNetwork = new GridBagConstraints();
+			gbc_btnAddNetwork.fill = GridBagConstraints.HORIZONTAL;
 			gbc_btnAddNetwork.anchor = GridBagConstraints.NORTHWEST;
 			gbc_btnAddNetwork.insets = new Insets(0, 0, 5, 5);
 			gbc_btnAddNetwork.gridx = 0;
 			gbc_btnAddNetwork.gridy = 0;
 			pNetworkButtons.add(getBtnAddNetwork(), gbc_btnAddNetwork);
 			GridBagConstraints gbc_btnDeleteNetwork = new GridBagConstraints();
+			gbc_btnDeleteNetwork.fill = GridBagConstraints.HORIZONTAL;
 			gbc_btnDeleteNetwork.anchor = GridBagConstraints.NORTHWEST;
 			gbc_btnDeleteNetwork.insets = new Insets(0, 0, 5, 5);
 			gbc_btnDeleteNetwork.gridx = 1;
 			gbc_btnDeleteNetwork.gridy = 0;
 			pNetworkButtons.add(getBtnDeleteNetwork(), gbc_btnDeleteNetwork);
 			GridBagConstraints gbc_btnSubnets = new GridBagConstraints();
+			gbc_btnSubnets.fill = GridBagConstraints.HORIZONTAL;
 			gbc_btnSubnets.anchor = GridBagConstraints.NORTHWEST;
 			gbc_btnSubnets.insets = new Insets(0, 0, 5, 0);
 			gbc_btnSubnets.gridx = 2;
 			gbc_btnSubnets.gridy = 0;
 			pNetworkButtons.add(getBtnSubnets(), gbc_btnSubnets);
 			GridBagConstraints gbc_btnOptions = new GridBagConstraints();
+			gbc_btnOptions.fill = GridBagConstraints.HORIZONTAL;
 			gbc_btnOptions.anchor = GridBagConstraints.NORTHWEST;
 			gbc_btnOptions.insets = new Insets(0, 0, 0, 5);
 			gbc_btnOptions.gridx = 0;
 			gbc_btnOptions.gridy = 1;
 			pNetworkButtons.add(getBtnOptions(), gbc_btnOptions);
 			GridBagConstraints gbc_btnLoad = new GridBagConstraints();
+			gbc_btnLoad.fill = GridBagConstraints.HORIZONTAL;
 			gbc_btnLoad.anchor = GridBagConstraints.NORTHWEST;
 			gbc_btnLoad.insets = new Insets(0, 0, 0, 5);
 			gbc_btnLoad.gridx = 1;
 			gbc_btnLoad.gridy = 1;
 			pNetworkButtons.add(getBtnLoad(), gbc_btnLoad);
 			GridBagConstraints gbc_btnSave = new GridBagConstraints();
+			gbc_btnSave.fill = GridBagConstraints.HORIZONTAL;
 			gbc_btnSave.anchor = GridBagConstraints.NORTHWEST;
 			gbc_btnSave.gridx = 2;
 			gbc_btnSave.gridy = 1;
@@ -285,6 +315,7 @@ public class SubnetCalculatorFrame extends JFrame {
 		}
 		return pNetworkButtons;
 	}
+
 	private JTextField getTfNetClass() {
 		if (tfNetClass == null) {
 			tfNetClass = new JTextField();
@@ -292,20 +323,24 @@ public class SubnetCalculatorFrame extends JFrame {
 		}
 		return tfNetClass;
 	}
+
 	private JList getListSubnets() {
 		if (listSubnets == null) {
 			listSubnets = new JList();
 		}
 		return listSubnets;
 	}
+
 	private JPanel getPSubnetButtons() {
 		if (pSubnetButtons == null) {
 			pSubnetButtons = new JPanel();
 			GridBagLayout gbl_pSubnetButtons = new GridBagLayout();
-			gbl_pSubnetButtons.columnWidths = new int[]{0, 0, 0, 0};
-			gbl_pSubnetButtons.rowHeights = new int[]{0, 0};
-			gbl_pSubnetButtons.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
-			gbl_pSubnetButtons.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+			gbl_pSubnetButtons.columnWidths = new int[] { 0, 0, 0, 0 };
+			gbl_pSubnetButtons.rowHeights = new int[] { 0, 0 };
+			gbl_pSubnetButtons.columnWeights = new double[] { 0.0, 0.0, 0.0,
+					Double.MIN_VALUE };
+			gbl_pSubnetButtons.rowWeights = new double[] { 0.0,
+					Double.MIN_VALUE };
 			pSubnetButtons.setLayout(gbl_pSubnetButtons);
 			GridBagConstraints gbc_btnAddSubnet = new GridBagConstraints();
 			gbc_btnAddSubnet.anchor = GridBagConstraints.NORTHWEST;
@@ -327,108 +362,203 @@ public class SubnetCalculatorFrame extends JFrame {
 		}
 		return pSubnetButtons;
 	}
+
 	private JButton getBtnAddSubnet() {
 		if (btnAddSubnet == null) {
 			btnAddSubnet = new JButton("Add Subnet");
 		}
 		return btnAddSubnet;
 	}
+
 	private JButton getBtnDeleteSubnet() {
 		if (btnDeleteSubnet == null) {
 			btnDeleteSubnet = new JButton("Delete Subnet");
 		}
 		return btnDeleteSubnet;
 	}
+
 	private JButton getBtnHosts() {
 		if (btnHosts == null) {
 			btnHosts = new JButton("Hosts");
 		}
 		return btnHosts;
 	}
+
 	private JPanel getPHosts() {
 		if (pHosts == null) {
 			pHosts = new JPanel();
 			GridBagLayout gbl_pHosts = new GridBagLayout();
-			gbl_pHosts.columnWidths = new int[]{0, 0, 0};
-			gbl_pHosts.rowHeights = new int[]{0, 0, 0, 0};
-			gbl_pHosts.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
-			gbl_pHosts.rowWeights = new double[]{0.0, 0.0, 1.0, Double.MIN_VALUE};
+			gbl_pHosts.columnWidths = new int[] { 0, 0, 0 };
+			gbl_pHosts.rowHeights = new int[] { 0, 0, 0, 0, 0, 0 };
+			gbl_pHosts.columnWeights = new double[] { 0.0, 1.0,
+					Double.MIN_VALUE };
+			gbl_pHosts.rowWeights = new double[] { 1.0, 0.0, 0.0, 1.0, 0.0,
+					Double.MIN_VALUE };
 			pHosts.setLayout(gbl_pHosts);
+			GridBagConstraints gbc_lblHosts = new GridBagConstraints();
+			gbc_lblHosts.anchor = GridBagConstraints.NORTHWEST;
+			gbc_lblHosts.insets = new Insets(5, 5, 5, 5);
+			gbc_lblHosts.gridx = 0;
+			gbc_lblHosts.gridy = 0;
+			pHosts.add(getLblHosts(), gbc_lblHosts);
+			GridBagConstraints gbc_listHosts = new GridBagConstraints();
+			gbc_listHosts.insets = new Insets(5, 0, 5, 0);
+			gbc_listHosts.fill = GridBagConstraints.BOTH;
+			gbc_listHosts.gridx = 1;
+			gbc_listHosts.gridy = 0;
+			pHosts.add(getListHosts(), gbc_listHosts);
 			GridBagConstraints gbc_lblBinary = new GridBagConstraints();
 			gbc_lblBinary.anchor = GridBagConstraints.NORTHWEST;
 			gbc_lblBinary.insets = new Insets(5, 5, 5, 5);
 			gbc_lblBinary.gridx = 0;
-			gbc_lblBinary.gridy = 0;
+			gbc_lblBinary.gridy = 1;
 			pHosts.add(getLblBinary(), gbc_lblBinary);
 			GridBagConstraints gbc_tfBinary = new GridBagConstraints();
 			gbc_tfBinary.insets = new Insets(0, 0, 5, 0);
 			gbc_tfBinary.fill = GridBagConstraints.HORIZONTAL;
 			gbc_tfBinary.gridx = 1;
-			gbc_tfBinary.gridy = 0;
+			gbc_tfBinary.gridy = 1;
 			pHosts.add(getTfBinary(), gbc_tfBinary);
 			GridBagConstraints gbc_lblHexadecimal = new GridBagConstraints();
 			gbc_lblHexadecimal.anchor = GridBagConstraints.NORTHEAST;
 			gbc_lblHexadecimal.insets = new Insets(5, 5, 5, 5);
 			gbc_lblHexadecimal.gridx = 0;
-			gbc_lblHexadecimal.gridy = 1;
+			gbc_lblHexadecimal.gridy = 2;
 			pHosts.add(getLblHexadecimal(), gbc_lblHexadecimal);
 			GridBagConstraints gbc_tfHexadecimal = new GridBagConstraints();
 			gbc_tfHexadecimal.insets = new Insets(0, 0, 5, 0);
 			gbc_tfHexadecimal.fill = GridBagConstraints.HORIZONTAL;
 			gbc_tfHexadecimal.gridx = 1;
-			gbc_tfHexadecimal.gridy = 1;
+			gbc_tfHexadecimal.gridy = 2;
 			pHosts.add(getTfHexadecimal(), gbc_tfHexadecimal);
 			GridBagConstraints gbc_lblDescription = new GridBagConstraints();
 			gbc_lblDescription.anchor = GridBagConstraints.NORTHWEST;
-			gbc_lblDescription.insets = new Insets(5, 5, 0, 5);
+			gbc_lblDescription.insets = new Insets(5, 5, 5, 5);
 			gbc_lblDescription.gridx = 0;
-			gbc_lblDescription.gridy = 2;
+			gbc_lblDescription.gridy = 3;
 			pHosts.add(getLblDescription(), gbc_lblDescription);
-			GridBagConstraints gbc_taDescription = new GridBagConstraints();
-			gbc_taDescription.fill = GridBagConstraints.BOTH;
-			gbc_taDescription.gridx = 1;
-			gbc_taDescription.gridy = 2;
-			pHosts.add(getTaDescription(), gbc_taDescription);
+			GridBagConstraints gbc_sPDescription = new GridBagConstraints();
+			gbc_sPDescription.insets = new Insets(0, 0, 5, 0);
+			gbc_sPDescription.fill = GridBagConstraints.BOTH;
+			gbc_sPDescription.gridx = 1;
+			gbc_sPDescription.gridy = 3;
+			pHosts.add(getSPDescription(), gbc_sPDescription);
+			GridBagConstraints gbc_pHostButtons = new GridBagConstraints();
+			gbc_pHostButtons.gridwidth = 2;
+			gbc_pHostButtons.insets = new Insets(0, 0, 0, 5);
+			gbc_pHostButtons.fill = GridBagConstraints.BOTH;
+			gbc_pHostButtons.gridx = 0;
+			gbc_pHostButtons.gridy = 4;
+			pHosts.add(getPHostButtons(), gbc_pHostButtons);
 		}
 		return pHosts;
 	}
+
 	private JLabel getLblDescription() {
 		if (lblDescription == null) {
 			lblDescription = new JLabel("Description");
 		}
 		return lblDescription;
 	}
+
 	private JLabel getLblBinary() {
 		if (lblBinary == null) {
 			lblBinary = new JLabel("Binary");
 		}
 		return lblBinary;
 	}
+
 	private JLabel getLblHexadecimal() {
 		if (lblHexadecimal == null) {
 			lblHexadecimal = new JLabel("Hexadecimal");
 		}
 		return lblHexadecimal;
 	}
+
 	private JTextField getTfBinary() {
 		if (tfBinary == null) {
 			tfBinary = new JTextField();
+			tfBinary.setEditable(false);
 			tfBinary.setColumns(10);
 		}
 		return tfBinary;
 	}
+
 	private JTextField getTfHexadecimal() {
 		if (tfHexadecimal == null) {
 			tfHexadecimal = new JTextField();
+			tfHexadecimal.setEditable(false);
 			tfHexadecimal.setColumns(10);
 		}
 		return tfHexadecimal;
 	}
+
+	private JLabel getLblHosts() {
+		if (lblHosts == null) {
+			lblHosts = new JLabel("Hosts");
+		}
+		return lblHosts;
+	}
+
+	private JList getListHosts() {
+		if (listHosts == null) {
+			listHosts = new JList();
+		}
+		return listHosts;
+	}
+
+	private JScrollPane getSPDescription() {
+		if (sPDescription == null) {
+			sPDescription = new JScrollPane();
+			sPDescription.setViewportView(getTaDescription());
+		}
+		return sPDescription;
+	}
+
 	private JTextArea getTaDescription() {
 		if (taDescription == null) {
 			taDescription = new JTextArea();
+			taDescription.setEditable(false);
 		}
 		return taDescription;
 	}
-}
 
+	private JPanel getPHostButtons() {
+		if (pHostButtons == null) {
+			pHostButtons = new JPanel();
+			GridBagLayout gbl_pHostButtons = new GridBagLayout();
+			gbl_pHostButtons.columnWidths = new int[] { 0, 0, 0 };
+			gbl_pHostButtons.rowHeights = new int[] { 0, 0 };
+			gbl_pHostButtons.columnWeights = new double[] { 0.0, 0.0,
+					Double.MIN_VALUE };
+			gbl_pHostButtons.rowWeights = new double[] { 0.0, Double.MIN_VALUE };
+			pHostButtons.setLayout(gbl_pHostButtons);
+			GridBagConstraints gbc_btnAddHost = new GridBagConstraints();
+			gbc_btnAddHost.anchor = GridBagConstraints.NORTHWEST;
+			gbc_btnAddHost.insets = new Insets(0, 0, 0, 5);
+			gbc_btnAddHost.gridx = 0;
+			gbc_btnAddHost.gridy = 0;
+			pHostButtons.add(getBtnAddHost(), gbc_btnAddHost);
+			GridBagConstraints gbc_btnDeleteHost = new GridBagConstraints();
+			gbc_btnDeleteHost.anchor = GridBagConstraints.NORTHWEST;
+			gbc_btnDeleteHost.gridx = 1;
+			gbc_btnDeleteHost.gridy = 0;
+			pHostButtons.add(getBtnDeleteHost(), gbc_btnDeleteHost);
+		}
+		return pHostButtons;
+	}
+
+	private JButton getBtnAddHost() {
+		if (btnAddHost == null) {
+			btnAddHost = new JButton("Add Host");
+		}
+		return btnAddHost;
+	}
+
+	private JButton getBtnDeleteHost() {
+		if (btnDeleteHost == null) {
+			btnDeleteHost = new JButton("Delete Host");
+		}
+		return btnDeleteHost;
+	}
+}
