@@ -43,5 +43,6 @@ public class Host
     public void setIpv6Address(IPv6Address iPv6Address)
     {
         this.iPv6Address = iPv6Address;
+
     }
 }

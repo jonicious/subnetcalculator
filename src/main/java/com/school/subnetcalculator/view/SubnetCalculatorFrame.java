@@ -57,6 +57,10 @@ public class SubnetCalculatorFrame extends JFrame
     private JPanel pHostButtons;
     private JButton btnAddHost;
     private JButton btnDeleteHost;
+    private JLabel lblSubnetaddress;
+    private JTextField tfSubnetAddress;
+    private JTextField tfBroadcastaddress;
+    private JLabel lblBroadcastaddress;
 
 
     public SubnetCalculatorFrame() throws IOException
@@ -108,6 +112,7 @@ public class SubnetCalculatorFrame extends JFrame
         if (btnAddNetwork == null)
         {
             btnAddNetwork = new JButton("Add Network");
+            btnAddNetwork.addActionListener(e -> new NetworkCreatorDialog(SubnetCalculatorFrame.this));
         }
         return btnAddNetwork;
     }
@@ -475,66 +480,90 @@ public class SubnetCalculatorFrame extends JFrame
             pHosts = new JPanel();
             GridBagLayout gbl_pHosts = new GridBagLayout();
             gbl_pHosts.columnWidths = new int[] {0, 0, 0};
-            gbl_pHosts.rowHeights = new int[] {0, 0, 0, 0, 0, 0};
+            gbl_pHosts.rowHeights = new int[] {0, 0, 0, 0, 0, 0, 0, 0};
             gbl_pHosts.columnWeights = new double[] {0.0, 1.0,
                 Double.MIN_VALUE};
-            gbl_pHosts.rowWeights = new double[] {1.0, 0.0, 0.0, 1.0, 0.0,
+            gbl_pHosts.rowWeights = new double[] {0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0,
                 Double.MIN_VALUE};
             pHosts.setLayout(gbl_pHosts);
+            GridBagConstraints gbc_lblSubnetaddress = new GridBagConstraints();
+            gbc_lblSubnetaddress.anchor = GridBagConstraints.NORTHWEST;
+            gbc_lblSubnetaddress.insets = new Insets(5, 5, 5, 5);
+            gbc_lblSubnetaddress.gridx = 0;
+            gbc_lblSubnetaddress.gridy = 0;
+            pHosts.add(getLblSubnetaddress(), gbc_lblSubnetaddress);
+            GridBagConstraints gbc_tfSubnetAddress = new GridBagConstraints();
+            gbc_tfSubnetAddress.anchor = GridBagConstraints.NORTH;
+            gbc_tfSubnetAddress.insets = new Insets(5, 0, 5, 0);
+            gbc_tfSubnetAddress.fill = GridBagConstraints.HORIZONTAL;
+            gbc_tfSubnetAddress.gridx = 1;
+            gbc_tfSubnetAddress.gridy = 0;
+            pHosts.add(getTfSubnetAddress(), gbc_tfSubnetAddress);
+            GridBagConstraints gbc_lblBroadcastaddress = new GridBagConstraints();
+            gbc_lblBroadcastaddress.insets = new Insets(5, 5, 5, 5);
+            gbc_lblBroadcastaddress.anchor = GridBagConstraints.NORTHWEST;
+            gbc_lblBroadcastaddress.gridx = 0;
+            gbc_lblBroadcastaddress.gridy = 1;
+            pHosts.add(getLblBroadcastaddress(), gbc_lblBroadcastaddress);
+            GridBagConstraints gbc_tfBroadcastaddress = new GridBagConstraints();
+            gbc_tfBroadcastaddress.insets = new Insets(5, 0, 5, 0);
+            gbc_tfBroadcastaddress.fill = GridBagConstraints.HORIZONTAL;
+            gbc_tfBroadcastaddress.gridx = 1;
+            gbc_tfBroadcastaddress.gridy = 1;
+            pHosts.add(getTfBroadcastaddress(), gbc_tfBroadcastaddress);
             GridBagConstraints gbc_lblHosts = new GridBagConstraints();
             gbc_lblHosts.anchor = GridBagConstraints.NORTHWEST;
             gbc_lblHosts.insets = new Insets(5, 5, 5, 5);
             gbc_lblHosts.gridx = 0;
-            gbc_lblHosts.gridy = 0;
+            gbc_lblHosts.gridy = 2;
             pHosts.add(getLblHosts(), gbc_lblHosts);
             GridBagConstraints gbc_listHosts = new GridBagConstraints();
             gbc_listHosts.insets = new Insets(5, 0, 5, 0);
             gbc_listHosts.fill = GridBagConstraints.BOTH;
             gbc_listHosts.gridx = 1;
-            gbc_listHosts.gridy = 0;
+            gbc_listHosts.gridy = 2;
             pHosts.add(getListHosts(), gbc_listHosts);
             GridBagConstraints gbc_lblBinary = new GridBagConstraints();
             gbc_lblBinary.anchor = GridBagConstraints.NORTHWEST;
             gbc_lblBinary.insets = new Insets(5, 5, 5, 5);
             gbc_lblBinary.gridx = 0;
-            gbc_lblBinary.gridy = 1;
+            gbc_lblBinary.gridy = 3;
             pHosts.add(getLblBinary(), gbc_lblBinary);
             GridBagConstraints gbc_tfBinary = new GridBagConstraints();
             gbc_tfBinary.insets = new Insets(0, 0, 5, 0);
             gbc_tfBinary.fill = GridBagConstraints.HORIZONTAL;
             gbc_tfBinary.gridx = 1;
-            gbc_tfBinary.gridy = 1;
+            gbc_tfBinary.gridy = 3;
             pHosts.add(getTfBinary(), gbc_tfBinary);
             GridBagConstraints gbc_lblHexadecimal = new GridBagConstraints();
-            gbc_lblHexadecimal.anchor = GridBagConstraints.NORTHEAST;
+            gbc_lblHexadecimal.anchor = GridBagConstraints.NORTHWEST;
             gbc_lblHexadecimal.insets = new Insets(5, 5, 5, 5);
             gbc_lblHexadecimal.gridx = 0;
-            gbc_lblHexadecimal.gridy = 2;
+            gbc_lblHexadecimal.gridy = 4;
             pHosts.add(getLblHexadecimal(), gbc_lblHexadecimal);
             GridBagConstraints gbc_tfHexadecimal = new GridBagConstraints();
             gbc_tfHexadecimal.insets = new Insets(0, 0, 5, 0);
             gbc_tfHexadecimal.fill = GridBagConstraints.HORIZONTAL;
             gbc_tfHexadecimal.gridx = 1;
-            gbc_tfHexadecimal.gridy = 2;
+            gbc_tfHexadecimal.gridy = 4;
             pHosts.add(getTfHexadecimal(), gbc_tfHexadecimal);
             GridBagConstraints gbc_lblDescription = new GridBagConstraints();
             gbc_lblDescription.anchor = GridBagConstraints.NORTHWEST;
             gbc_lblDescription.insets = new Insets(5, 5, 5, 5);
             gbc_lblDescription.gridx = 0;
-            gbc_lblDescription.gridy = 3;
+            gbc_lblDescription.gridy = 5;
             pHosts.add(getLblDescription(), gbc_lblDescription);
             GridBagConstraints gbc_sPDescription = new GridBagConstraints();
             gbc_sPDescription.insets = new Insets(0, 0, 5, 0);
             gbc_sPDescription.fill = GridBagConstraints.BOTH;
             gbc_sPDescription.gridx = 1;
-            gbc_sPDescription.gridy = 3;
+            gbc_sPDescription.gridy = 5;
             pHosts.add(getSPDescription(), gbc_sPDescription);
             GridBagConstraints gbc_pHostButtons = new GridBagConstraints();
             gbc_pHostButtons.gridwidth = 2;
-            gbc_pHostButtons.insets = new Insets(0, 0, 0, 5);
             gbc_pHostButtons.fill = GridBagConstraints.BOTH;
             gbc_pHostButtons.gridx = 0;
-            gbc_pHostButtons.gridy = 4;
+            gbc_pHostButtons.gridy = 6;
             pHosts.add(getPHostButtons(), gbc_pHostButtons);
         }
         return pHosts;
@@ -682,5 +711,47 @@ public class SubnetCalculatorFrame extends JFrame
             btnDeleteHost = new JButton("Delete Host");
         }
         return btnDeleteHost;
+    }
+
+
+    private JLabel getLblSubnetaddress()
+    {
+        if (lblSubnetaddress == null)
+        {
+            lblSubnetaddress = new JLabel("Subnetaddress");
+        }
+        return lblSubnetaddress;
+    }
+
+
+    private JTextField getTfSubnetAddress()
+    {
+        if (tfSubnetAddress == null)
+        {
+            tfSubnetAddress = new JTextField();
+            tfSubnetAddress.setColumns(10);
+        }
+        return tfSubnetAddress;
+    }
+
+
+    private JTextField getTfBroadcastaddress()
+    {
+        if (tfBroadcastaddress == null)
+        {
+            tfBroadcastaddress = new JTextField();
+            tfBroadcastaddress.setColumns(10);
+        }
+        return tfBroadcastaddress;
+    }
+
+
+    private JLabel getLblBroadcastaddress()
+    {
+        if (lblBroadcastaddress == null)
+        {
+            lblBroadcastaddress = new JLabel("Broadcastaddress");
+        }
+        return lblBroadcastaddress;
     }
 }

@@ -1,12 +1,9 @@
 package com.school.subnetcalculator.helper;
 
-import com.school.subnetcalculator.view.SubnetCalculatorFrame;
-
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 
 public class UIController {
 	
@@ -26,9 +23,7 @@ public class UIController {
 
 	private void setFont() throws IOException {
 		try {
-			InputStream is = SubnetCalculatorFrame.class
-					.getResourceAsStream("System San Francisco Display Regular.ttf");
-			Font createFont = Font.createFont(Font.TRUETYPE_FONT, is);
+			Font createFont = Font.createFont(Font.TRUETYPE_FONT, new File("sf-regular.ttf"));
 			UIManager.put("Button.font", createFont.deriveFont(16.0f));
 			UIManager.put("Label.font", createFont.deriveFont(16.0f));
 			UIManager.put("TextField.font", createFont.deriveFont(16.0f));
