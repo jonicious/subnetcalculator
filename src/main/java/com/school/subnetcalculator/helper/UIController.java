@@ -1,11 +1,16 @@
 package com.school.subnetcalculator.helper;
 
+import com.school.subnetcalculator.view.SubnetCalculatorFrame;
+
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import java.awt.*;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class UIController {
 	
-	public UIController() {
+	public UIController() throws IOException {
 		setLookAndFeel();
 		setFont();
 	}
@@ -19,7 +24,7 @@ public class UIController {
 		}
 	}
 
-	private void setFont() {
+	private void setFont() throws IOException {
 		try {
 			InputStream is = SubnetCalculatorFrame.class
 					.getResourceAsStream("System San Francisco Display Regular.ttf");
