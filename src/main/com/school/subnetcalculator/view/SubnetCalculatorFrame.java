@@ -1,8 +1,9 @@
 package main.com.school.subnetcalculator.view;
-
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -24,7 +25,7 @@ public class SubnetCalculatorFrame extends JFrame {
 	private JButton btnSave;
 	private JPanel pNetworks;
 	private JLabel lblNetworks;
-	private JList listNetworks;
+	private JList<Network> listNetworks;
 	private JPanel pSubnets;
 	private JLabel lblNetwork;
 	private JTextField tfNetwork;
@@ -32,7 +33,7 @@ public class SubnetCalculatorFrame extends JFrame {
 	private JLabel lblSubnets;
 	private JPanel pNetworkButtons;
 	private JTextField tfNetClass;
-	private JList listSubnets;
+	private JList<Subnet> listSubnets;
 	private JPanel pSubnetButtons;
 	private JButton btnAddSubnet;
 	private JButton btnDeleteSubnet;
@@ -44,7 +45,7 @@ public class SubnetCalculatorFrame extends JFrame {
 	private JTextField tfBinary;
 	private JTextField tfHexadecimal;
 	private JLabel lblHosts;
-	private JList listHosts;
+	private JList<Host> listHosts;
 	private JScrollPane sPDescription;
 	private JTextArea taDescription;
 	private JPanel pHostButtons;
@@ -167,9 +168,9 @@ public class SubnetCalculatorFrame extends JFrame {
 		return lblNetworks;
 	}
 
-	private JList getListNetworks() {
+	private JList<Network> getListNetworks() {
 		if (listNetworks == null) {
-			listNetworks = new JList();
+			listNetworks = new JList<Network>();
 		}
 		return listNetworks;
 	}
@@ -326,9 +327,9 @@ public class SubnetCalculatorFrame extends JFrame {
 		return tfNetClass;
 	}
 
-	private JList getListSubnets() {
+	private JList<Subnet> getListSubnets() {
 		if (listSubnets == null) {
-			listSubnets = new JList();
+			listSubnets = new JList<Subnet>();
 		}
 		return listSubnets;
 	}
@@ -502,9 +503,9 @@ public class SubnetCalculatorFrame extends JFrame {
 		return lblHosts;
 	}
 
-	private JList getListHosts() {
+	private JList<Host> getListHosts() {
 		if (listHosts == null) {
-			listHosts = new JList();
+			listHosts = new JList<Host>();
 		}
 		return listHosts;
 	}
