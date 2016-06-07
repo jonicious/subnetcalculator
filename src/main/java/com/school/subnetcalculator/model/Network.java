@@ -1,5 +1,6 @@
 package com.school.subnetcalculator.model;
 
+import com.googlecode.ipv6.IPv6Network;
 import java.util.Collections;
 import java.util.List;
 

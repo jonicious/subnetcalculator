@@ -2,24 +2,20 @@ package com.school.subnetcalculator.helper;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import main.com.school.subnetcalculator.model.Network;
-import org.json.JSONArray;
+import java.util.List;
+import com.school.subnetcalculator.mapper.NetworkMapper;
+import com.school.subnetcalculator.model.Network;
 import org.json.JSONObject;
 
 public class DocumentParser
 {
-    public static Network importFromFile(String fileName)
+    public static List<Network> importFromFile(String fileName)
     {
         try
         {
             String jsonData = readFile(fileName);
-            JSONObject jobj = new JSONObject(jsonData);
-            JSONArray jarr = new JSONArray(jobj.getJSONArray("keywords").toString());
-            System.out.println("Name: " + jobj.getString("name"));
-            for (int i = 0; i < jarr.length(); i++)
-            {
-                System.out.println("Keyword: " + jarr.getString(i));
-            }
+            JSONObject object = new JSONObject(jsonData);
+            return NetworkMapper.makeNetworkFromObject(object);
         }
         catch (Exception e)
         {
@@ -27,11 +23,10 @@ public class DocumentParser
         }
 
         return null;
-
     }
 
 
-    private static String readFile(String fileName)
+    static String readFile(String fileName)
     {
         String result = "";
         try

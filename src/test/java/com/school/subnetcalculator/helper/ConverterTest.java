@@ -1,13 +1,14 @@
-package test.com.school.subnetcalculator.helper;
+package com.school.subnetcalculator.helper;
 
-import main.com.school.subnetcalculator.helper.Converter;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class ConverterTest {
+public class ConverterTest
+{
 
     @Test
-    public void convertDecimalToBinary() throws Exception {
+    public void convertDecimalToBinary() throws Exception
+    {
         String binaryTwelve = Converter.convertDecimalToBinary("12");
         Assert.assertEquals("1100", binaryTwelve);
 
@@ -15,13 +16,17 @@ public class ConverterTest {
         Assert.assertEquals("11001000", binaryTwoHundred);
     }
 
+
     @Test(expected = IllegalArgumentException.class)
-    public void convertDecimalToBinaryException() throws Exception {
+    public void convertDecimalToBinaryException() throws Exception
+    {
         Converter.convertDecimalToBinary("");
     }
 
+
     @Test
-    public void convertHexadecimalToBinary() throws Exception {
+    public void convertHexadecimalToBinary() throws Exception
+    {
         String binaryTwoA = Converter.convertHexadecimalToBinary("2A");
         Assert.assertEquals("101010", binaryTwoA);
 
@@ -30,13 +35,17 @@ public class ConverterTest {
         Assert.assertEquals(expectedBinaryString, binaryLargeNumber);
     }
 
+
     @Test(expected = IllegalArgumentException.class)
-    public void convertHexadecimalToBinaryException() throws Exception {
+    public void convertHexadecimalToBinaryException() throws Exception
+    {
         Converter.convertHexadecimalToBinary("");
     }
 
+
     @Test
-    public void convertBinaryToDecimal() throws Exception {
+    public void convertBinaryToDecimal() throws Exception
+    {
         String resultTwelve = Converter.convertBinaryToDecimal("1100");
         Assert.assertEquals("12", resultTwelve);
 
@@ -44,13 +53,17 @@ public class ConverterTest {
         Assert.assertEquals("200", resultTwoHundred);
     }
 
+
     @Test(expected = IllegalArgumentException.class)
-    public void convertBinaryToDecimalException() throws Exception {
+    public void convertBinaryToDecimalException() throws Exception
+    {
         Converter.convertBinaryToDecimal("");
     }
 
+
     @Test
-    public void convertBinaryToHexadecimal() throws Exception {
+    public void convertBinaryToHexadecimal() throws Exception
+    {
         String resultTwoA = Converter.convertBinaryToHexadecimal("101010");
         Assert.assertEquals("2a", resultTwoA);
 
