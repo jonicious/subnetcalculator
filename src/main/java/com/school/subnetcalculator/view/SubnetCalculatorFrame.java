@@ -65,6 +65,7 @@ public class SubnetCalculatorFrame extends JFrame
         setVisible(true);
         setSize(new Dimension(700, 500));
         setTitle("SubnetCalculator");
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
 
