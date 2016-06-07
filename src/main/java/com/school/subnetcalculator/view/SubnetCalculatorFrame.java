@@ -1,5 +1,10 @@
 package com.school.subnetcalculator.view;
 import java.awt.Dimension;
+import main.com.school.subnetcalculator.helper.UIController;
+import main.com.school.subnetcalculator.model.Host;
+import main.com.school.subnetcalculator.model.Network;
+import main.com.school.subnetcalculator.model.Subnet;
+import main.com.school.subnetcalculator.view.NetworkCreatorDialog;
 
 public class SubnetCalculatorFrame extends JFrame {
 	private static final long serialVersionUID = -6244329414716205933L;
