@@ -1,5 +1,7 @@
 package main.com.school.subnetcalculator.helper;
 
+import java.math.BigInteger;
+
 public class Converter {
 
     /**
@@ -8,7 +10,7 @@ public class Converter {
      * @throws IllegalArgumentException
      */
     public static String convertDecimalToBinary(String decimalString) throws IllegalArgumentException {
-        if(decimalString.length() > 0) {
+        if (decimalString.length() > 0) {
             Integer decimal = Integer.parseUnsignedInt(decimalString, 10);
             return Integer.toBinaryString(decimal);
         } else {
@@ -18,7 +20,12 @@ public class Converter {
 
 
     public static String convertHexadecimalToBinary(String hexadecimalString) {
-        return null;
+        if (hexadecimalString.length() > 0) {
+            BigInteger hexadecimal = new BigInteger(hexadecimalString, 16);
+            return hexadecimal.toString(2);
+        } else {
+            throw new IllegalArgumentException("hexadecimal input is empty");
+        }
     }
 
 
@@ -38,6 +45,11 @@ public class Converter {
 
 
     public static String convertBinaryToHexadecimal(String binaryString) {
-        return null;
+        if(binaryString.length() > 0) {
+            BigInteger binary = new BigInteger(binaryString, 2);
+            return binary.toString(16);
+        } else {
+            throw new IllegalArgumentException("binary input is empty");
+        }
     }
 }

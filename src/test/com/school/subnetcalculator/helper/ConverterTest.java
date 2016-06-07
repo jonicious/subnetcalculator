@@ -4,8 +4,6 @@ import main.com.school.subnetcalculator.helper.Converter;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.IllegalFormatCodePointException;
-
 public class ConverterTest {
 
     @Test
@@ -24,7 +22,17 @@ public class ConverterTest {
 
     @Test
     public void convertHexadecimalToBinary() throws Exception {
+        String binaryTwoA = Converter.convertHexadecimalToBinary("2A");
+        Assert.assertEquals("101010", binaryTwoA);
 
+        String binaryLargeNumber = Converter.convertHexadecimalToBinary("2AAFFEEEEFF329920FE");
+        String expectedBinaryString = "10101010101111111111101110111011101111111100110010100110010010000011111110";
+        Assert.assertEquals(expectedBinaryString, binaryLargeNumber);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void convertHexadecimalToBinaryException() throws Exception {
+        Converter.convertHexadecimalToBinary("");
     }
 
     @Test
@@ -43,6 +51,12 @@ public class ConverterTest {
 
     @Test
     public void convertBinaryToHexadecimal() throws Exception {
+        String resultTwoA = Converter.convertBinaryToHexadecimal("101010");
+        Assert.assertEquals("2a", resultTwoA);
+
+        String requestedBinaryString = "10101010101111111111101110111011101111111100110010100110010010000011111110";
+        String resultLargeNumber = Converter.convertBinaryToHexadecimal(requestedBinaryString);
+        Assert.assertEquals("2aaffeeeeff329920fe", resultLargeNumber);
 
     }
 
