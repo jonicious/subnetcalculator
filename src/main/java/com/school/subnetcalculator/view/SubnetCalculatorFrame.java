@@ -16,7 +16,6 @@ public class SubnetCalculatorFrame extends JFrame {
     private JButton btnOptions;
     private JButton btnDeleteNetwork;
     private JButton btnLoad;
-    private JButton btnSubnets;
     private JButton btnSave;
     private JPanel pNetworks;
     private JLabel lblNetworks;
@@ -24,15 +23,12 @@ public class SubnetCalculatorFrame extends JFrame {
     private JPanel pSubnets;
     private JLabel lblNetwork;
     private JTextField tfNetwork;
-    private JLabel lblNetClass;
     private JLabel lblSubnets;
     private JPanel pNetworkButtons;
-    private JTextField tfNetClass;
     private JList<Subnet> listSubnets;
     private JPanel pSubnetButtons;
     private JButton btnAddSubnet;
     private JButton btnDeleteSubnet;
-    private JButton btnHosts;
     private JPanel pHosts;
     private JLabel lblDescription;
     private JLabel lblBinary;
@@ -118,13 +114,6 @@ public class SubnetCalculatorFrame extends JFrame {
         return btnLoad;
     }
 
-    private JButton getBtnSubnets() {
-        if (btnSubnets == null) {
-            btnSubnets = new JButton("Subnets");
-        }
-        return btnSubnets;
-    }
-
     private JButton getBtnSave() {
         if (btnSave == null) {
             btnSave = new JButton("Save");
@@ -182,7 +171,6 @@ public class SubnetCalculatorFrame extends JFrame {
 				public void valueChanged(ListSelectionEvent e) {
 					getTpNetworkSubnetsHosts().setEnabledAt(1, true);
 					getTfNetwork().setText(getListNetworks().getSelectedValue().getIpv6Network());
-					getTfNetClass().setText(getListNetworks().getSelectedValue().getIpv6Network());
 				}
 			});
         }
@@ -213,18 +201,6 @@ public class SubnetCalculatorFrame extends JFrame {
             gbc_tfNetwork.gridx = 1;
             gbc_tfNetwork.gridy = 0;
             pSubnets.add(getTfNetwork(), gbc_tfNetwork);
-            GridBagConstraints gbc_lblNetClass = new GridBagConstraints();
-            gbc_lblNetClass.anchor = GridBagConstraints.NORTHWEST;
-            gbc_lblNetClass.insets = new Insets(5, 5, 5, 5);
-            gbc_lblNetClass.gridx = 0;
-            gbc_lblNetClass.gridy = 1;
-            pSubnets.add(getLblNetClass(), gbc_lblNetClass);
-            GridBagConstraints gbc_tfNetClass = new GridBagConstraints();
-            gbc_tfNetClass.insets = new Insets(0, 0, 5, 0);
-            gbc_tfNetClass.fill = GridBagConstraints.HORIZONTAL;
-            gbc_tfNetClass.gridx = 1;
-            gbc_tfNetClass.gridy = 1;
-            pSubnets.add(getTfNetClass(), gbc_tfNetClass);
             GridBagConstraints gbc_lblSubnets = new GridBagConstraints();
             gbc_lblSubnets.anchor = GridBagConstraints.NORTHWEST;
             gbc_lblSubnets.insets = new Insets(5, 5, 5, 5);
@@ -264,13 +240,6 @@ public class SubnetCalculatorFrame extends JFrame {
         return tfNetwork;
     }
 
-    private JLabel getLblNetClass() {
-        if (lblNetClass == null) {
-            lblNetClass = new JLabel("Net Class");
-        }
-        return lblNetClass;
-    }
-
     private JLabel getLblSubnets() {
         if (lblSubnets == null) {
             lblSubnets = new JLabel("Subnets");
@@ -303,13 +272,6 @@ public class SubnetCalculatorFrame extends JFrame {
             gbc_btnDeleteNetwork.gridx = 1;
             gbc_btnDeleteNetwork.gridy = 0;
             pNetworkButtons.add(getBtnDeleteNetwork(), gbc_btnDeleteNetwork);
-            GridBagConstraints gbc_btnSubnets = new GridBagConstraints();
-            gbc_btnSubnets.fill = GridBagConstraints.HORIZONTAL;
-            gbc_btnSubnets.anchor = GridBagConstraints.NORTHWEST;
-            gbc_btnSubnets.insets = new Insets(0, 0, 5, 0);
-            gbc_btnSubnets.gridx = 2;
-            gbc_btnSubnets.gridy = 0;
-            pNetworkButtons.add(getBtnSubnets(), gbc_btnSubnets);
             GridBagConstraints gbc_btnOptions = new GridBagConstraints();
             gbc_btnOptions.fill = GridBagConstraints.HORIZONTAL;
             gbc_btnOptions.anchor = GridBagConstraints.NORTHWEST;
@@ -332,15 +294,6 @@ public class SubnetCalculatorFrame extends JFrame {
             pNetworkButtons.add(getBtnSave(), gbc_btnSave);
         }
         return pNetworkButtons;
-    }
-
-    private JTextField getTfNetClass() {
-        if (tfNetClass == null) {
-            tfNetClass = new JTextField();
-            tfNetClass.setColumns(10);
-            tfNetClass.setEditable(false);
-        }
-        return tfNetClass;
     }
 
     public JList<Subnet> getListSubnets() {
@@ -374,11 +327,6 @@ public class SubnetCalculatorFrame extends JFrame {
             gbc_btnDeleteSubnet.gridx = 1;
             gbc_btnDeleteSubnet.gridy = 0;
             pSubnetButtons.add(getBtnDeleteSubnet(), gbc_btnDeleteSubnet);
-            GridBagConstraints gbc_btnHosts = new GridBagConstraints();
-            gbc_btnHosts.anchor = GridBagConstraints.NORTHWEST;
-            gbc_btnHosts.gridx = 2;
-            gbc_btnHosts.gridy = 0;
-            pSubnetButtons.add(getBtnHosts(), gbc_btnHosts);
         }
         return pSubnetButtons;
     }
@@ -396,13 +344,6 @@ public class SubnetCalculatorFrame extends JFrame {
             btnDeleteSubnet = new JButton("Delete Subnet");
         }
         return btnDeleteSubnet;
-    }
-
-    private JButton getBtnHosts() {
-        if (btnHosts == null) {
-            btnHosts = new JButton("Hosts");
-        }
-        return btnHosts;
     }
 
     private JPanel getPHosts() {
