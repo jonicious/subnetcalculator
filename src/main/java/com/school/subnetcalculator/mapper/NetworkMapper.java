@@ -1,5 +1,6 @@
 package com.school.subnetcalculator.mapper;
 
+import com.google.gson.Gson;
 import com.googlecode.ipv6.IPv6Network;
 import com.school.subnetcalculator.model.Network;
 import java.util.ArrayList;
@@ -27,6 +28,26 @@ public class NetworkMapper
         }
 
         return network;
+    }
+
+
+    public static JSONObject makeJsonObjectFromNetworkList(List<Network> networkList)
+    {
+        JSONObject jsonObject = new JSONObject();
+
+        try
+        {
+            Gson gson = new Gson();
+            Network network = networkList.get(0);
+            jsonObject.put("networksList", gson.toJson(network));
+        }
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+
+        return jsonObject;
+
     }
 
 

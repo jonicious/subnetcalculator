@@ -1,10 +1,17 @@
 package com.school.subnetcalculator.helper;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.util.List;
 import com.school.subnetcalculator.mapper.NetworkMapper;
 import com.school.subnetcalculator.model.Network;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.io.Writer;
+import java.util.List;
 import org.json.JSONObject;
 
 public class DocumentParser
@@ -23,6 +30,30 @@ public class DocumentParser
         }
 
         return null;
+    }
+
+
+    public static void exportToFile(List<Network> networkList, String exportFileName)
+    {
+        JSONObject jsonObject = NetworkMapper.makeJsonObjectFromNetworkList(networkList);
+
+        try (Writer writer = new BufferedWriter(new OutputStreamWriter(
+            new FileOutputStream(exportFileName), "utf-8")))
+        {
+            writer.write(jsonObject.toString());
+        }
+        catch (UnsupportedEncodingException e)
+        {
+            e.printStackTrace();
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
     }
 
 
