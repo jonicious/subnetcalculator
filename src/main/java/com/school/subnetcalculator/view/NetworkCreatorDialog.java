@@ -13,21 +13,28 @@ import javax.swing.JTextField;
 import java.awt.Component;
 import java.awt.Insets;
 import java.awt.Dimension;
+import com.googlecode.ipv6.IPv6Address;
 
 class NetworkCreatorDialog extends JDialog {
     private static final long serialVersionUID = -509854914694000006L;
     private JLabel lblNetworkaddress;
     private JTextField tfNetworkaddress;
     private JLabel lblPraefix;
-    private JTextField textField;
+    private JTextField tfPraefix;
     private JTextField tfNetworkmask;
     private JLabel lblNetworkmask;
+    private JPanel pAddCancel;
+    private JButton btnAddNetwork;
+    private JButton btnCancel;
+    private SubnetCalculatorFrame parentFrame;
+    private IPv6Address createdAddress;
 
-    public NetworkCreatorDialog(Component c) {
+    public NetworkCreatorDialog(SubnetCalculatorFrame parentFrame) {
         setModal(true);
-        setSize(700, 110);
-        setMinimumSize(new Dimension(700, 110));
-        setLocationRelativeTo(c);
+        setSize(700, 120);
+        setMinimumSize(new Dimension(700, 120));
+        this.parentFrame = parentFrame;
+        setLocationRelativeTo(parentFrame);
         initGUI();
         setVisible(true);
     }
@@ -35,10 +42,10 @@ class NetworkCreatorDialog extends JDialog {
     private void initGUI() {
         GridBagLayout gridBagLayout = new GridBagLayout();
         gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0};
-        gridBagLayout.rowHeights = new int[]{0, 0, 0};
+        gridBagLayout.rowHeights = new int[]{0, 0, 0, 0};
         gridBagLayout.columnWeights = new double[]{0.0, 1.0, 0.0, 0.0,
                 Double.MIN_VALUE};
-        gridBagLayout.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+        gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
         getContentPane().setLayout(gridBagLayout);
         GridBagConstraints gbc_lblNetworkaddress = new GridBagConstraints();
         gbc_lblNetworkaddress.insets = new Insets(10, 10, 5, 5);
@@ -62,21 +69,29 @@ class NetworkCreatorDialog extends JDialog {
         gbc_textField.fill = GridBagConstraints.HORIZONTAL;
         gbc_textField.gridx = 3;
         gbc_textField.gridy = 0;
-        getContentPane().add(getTextField(), gbc_textField);
+        getContentPane().add(getTfPraefix(), gbc_textField);
         GridBagConstraints gbc_lblNetworkmask = new GridBagConstraints();
-        gbc_lblNetworkmask.insets = new Insets(0, 10, 0, 5);
+        gbc_lblNetworkmask.insets = new Insets(0, 10, 5, 5);
         gbc_lblNetworkmask.anchor = GridBagConstraints.NORTHWEST;
         gbc_lblNetworkmask.gridx = 0;
         gbc_lblNetworkmask.gridy = 1;
         getContentPane().add(getLblNetworkmask(), gbc_lblNetworkmask);
         GridBagConstraints gbc_tfNetworkmask = new GridBagConstraints();
-        gbc_tfNetworkmask.insets = new Insets(0, 0, 0, 10);
+        gbc_tfNetworkmask.insets = new Insets(0, 0, 5, 10);
         gbc_tfNetworkmask.gridwidth = 3;
         gbc_tfNetworkmask.anchor = GridBagConstraints.NORTH;
         gbc_tfNetworkmask.fill = GridBagConstraints.HORIZONTAL;
         gbc_tfNetworkmask.gridx = 1;
         gbc_tfNetworkmask.gridy = 1;
         getContentPane().add(getTfNetworkmask(), gbc_tfNetworkmask);
+        GridBagConstraints gbc_pAddCancel = new GridBagConstraints();
+        gbc_pAddCancel.anchor = GridBagConstraints.SOUTH;
+        gbc_pAddCancel.gridwidth = 4;
+        gbc_pAddCancel.insets = new Insets(0, 10, 10, 10);
+        gbc_pAddCancel.fill = GridBagConstraints.HORIZONTAL;
+        gbc_pAddCancel.gridx = 0;
+        gbc_pAddCancel.gridy = 2;
+        getContentPane().add(getPAddCancel(), gbc_pAddCancel);
     }
 
     private JLabel getLblNetworkaddress() {
@@ -101,13 +116,13 @@ class NetworkCreatorDialog extends JDialog {
         return lblPraefix;
     }
 
-    private JTextField getTextField() {
-        if (textField == null) {
-            textField = new JTextField();
-            textField.setMinimumSize(new Dimension(25, 20));
-            textField.setColumns(10);
+    private JTextField getTfPraefix() {
+        if (tfPraefix == null) {
+            tfPraefix = new JTextField();
+            tfPraefix.setMinimumSize(new Dimension(25, 20));
+            tfPraefix.setColumns(10);
         }
-        return textField;
+        return tfPraefix;
     }
 
     private JTextField getTfNetworkmask() {
@@ -124,4 +139,51 @@ class NetworkCreatorDialog extends JDialog {
         }
         return lblNetworkmask;
     }
+	private JPanel getPAddCancel() {
+		if (pAddCancel == null) {
+			pAddCancel = new JPanel();
+			GridBagLayout gbl_pAddCancel = new GridBagLayout();
+			gbl_pAddCancel.columnWidths = new int[]{0, 0, 0, 0};
+			gbl_pAddCancel.rowHeights = new int[]{0, 0};
+			gbl_pAddCancel.columnWeights = new double[]{1.0, 0.0, 0.0, Double.MIN_VALUE};
+			gbl_pAddCancel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+			pAddCancel.setLayout(gbl_pAddCancel);
+			GridBagConstraints gbc_btnAddNetwork = new GridBagConstraints();
+			gbc_btnAddNetwork.anchor = GridBagConstraints.NORTHEAST;
+			gbc_btnAddNetwork.insets = new Insets(0, 0, 0, 5);
+			gbc_btnAddNetwork.gridx = 1;
+			gbc_btnAddNetwork.gridy = 0;
+			pAddCancel.add(getBtnAddNetwork(), gbc_btnAddNetwork);
+			GridBagConstraints gbc_btnCancel = new GridBagConstraints();
+			gbc_btnCancel.anchor = GridBagConstraints.NORTHEAST;
+			gbc_btnCancel.gridx = 2;
+			gbc_btnCancel.gridy = 0;
+			pAddCancel.add(getBtnCancel(), gbc_btnCancel);
+		}
+		return pAddCancel;
+	}
+	private JButton getBtnAddNetwork() {
+		if (btnAddNetwork == null) {
+			btnAddNetwork = new JButton("Add Network");
+			btnAddNetwork.addActionListener(e -> addNetworkToNetworkList());
+		}
+		return btnAddNetwork;
+	}
+	private JButton getBtnCancel() {
+		if (btnCancel == null) {
+			btnCancel = new JButton("Cancel");
+		}
+		return btnCancel;
+	}
+	
+	private void generatePraefix(){
+	}
+	
+	private void generateNetworkmask(){
+		
+	}
+	
+	private void addNetworkToNetworkList(){
+		createdAddress = IPv6Address.fromString(getTfNetworkaddress().getText());
+	}
 }
