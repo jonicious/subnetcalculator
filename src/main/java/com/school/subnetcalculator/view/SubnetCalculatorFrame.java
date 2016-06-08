@@ -83,6 +83,8 @@ public class SubnetCalculatorFrame extends JFrame {
                     .addTab("Networks", null, getPNetworks(), null);
             tpNetworkSubnetsHosts.addTab("Subnets", null, getPSubnets(), null);
             tpNetworkSubnetsHosts.addTab("Hosts", null, getPHosts(), null);
+            tpNetworkSubnetsHosts.setEnabledAt(1, false);
+			tpNetworkSubnetsHosts.setEnabledAt(2, false);
         }
         return tpNetworkSubnetsHosts;
     }
@@ -175,6 +177,14 @@ public class SubnetCalculatorFrame extends JFrame {
         if (listNetworks == null) {
             listNetworks = new JList<>();
             listNetworks.setModel(new DefaultListModel<>());
+            listNetworks.addListSelectionListener(new ListSelectionListener() {
+				@Override
+				public void valueChanged(ListSelectionEvent e) {
+					getTpNetworkSubnetsHosts().setEnabledAt(1, true);
+					getTfNetwork().setText(getListNetworks().getSelectedValue().getIpv6Network());
+					getTfNetClass().setText(getListNetworks().getSelectedValue().getIpv6Network());
+				}
+			});
         }
         return listNetworks;
     }
@@ -249,6 +259,7 @@ public class SubnetCalculatorFrame extends JFrame {
         if (tfNetwork == null) {
             tfNetwork = new JTextField();
             tfNetwork.setColumns(10);
+            tfNetwork.setEditable(false);
         }
         return tfNetwork;
     }
@@ -327,6 +338,7 @@ public class SubnetCalculatorFrame extends JFrame {
         if (tfNetClass == null) {
             tfNetClass = new JTextField();
             tfNetClass.setColumns(10);
+            tfNetClass.setEditable(false);
         }
         return tfNetClass;
     }
