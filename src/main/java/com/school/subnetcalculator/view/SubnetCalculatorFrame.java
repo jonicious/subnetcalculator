@@ -331,9 +331,10 @@ public class SubnetCalculatorFrame extends JFrame {
         return tfNetClass;
     }
 
-    private JList<Subnet> getListSubnets() {
+    public JList<Subnet> getListSubnets() {
         if (listSubnets == null) {
             listSubnets = new JList<>();
+            listSubnets.setModel(new DefaultListModel<>());
         }
         return listSubnets;
     }
