@@ -19,6 +19,10 @@ public class Converter {
     }
 
 
+    /**
+     * @param hexadecimalString hexadecimal string
+     * @return
+     */
     public static String convertHexadecimalToBinary(String hexadecimalString) {
         if (hexadecimalString.length() > 0) {
             BigInteger hexadecimal = new BigInteger(hexadecimalString, 16);
