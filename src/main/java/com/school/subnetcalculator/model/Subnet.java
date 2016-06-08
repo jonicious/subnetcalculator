@@ -6,7 +6,7 @@ import java.util.List;
 public class Subnet
 {
     // TODO: missing IPv4Network thing
-    private IPv6Network ipv6Subnet;
+    private IPv6Network ipv6Network;
     private List<Host> hosts;
 
 
@@ -40,14 +40,14 @@ public class Subnet
     }
 
 
-    public IPv6Network getIpv6Subnet()
+    public IPv6Network getIpv6Network()
     {
-        return ipv6Subnet;
+        return ipv6Network;
     }
 
 
-    public void setIpv6Subnet(IPv6Network ipv6Subnet)
+    public void setIpv6Network(IPv6Network ipv6Network)
     {
-        this.ipv6Subnet = ipv6Subnet;
+        this.ipv6Network = ipv6Network;
     }
 }

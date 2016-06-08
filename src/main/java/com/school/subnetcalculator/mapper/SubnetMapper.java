@@ -16,7 +16,7 @@ public class SubnetMapper
         try
         {
             String ipv6SubnetAddressString = object.getString("ipv6SubnetAddress");
-            subnet.setIpv6Subnet(IPv6Network.fromString(ipv6SubnetAddressString));
+            subnet.setIpv6Network(IPv6Network.fromString(ipv6SubnetAddressString));
             subnet.setHosts(HostMapper.makeHostListFromObject(object.getJSONArray("hosts")));
         }
         catch (JSONException e)
