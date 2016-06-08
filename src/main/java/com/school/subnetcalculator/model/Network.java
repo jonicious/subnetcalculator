@@ -15,11 +15,15 @@ public class Network {
 
     public Network(IPv6Address networkAddress, IPv6NetworkMask subnetMask) {
         this.ipv6Network = IPv6Network.fromAddressAndMask(networkAddress, subnetMask);
-
     }
 
     public Network() {
         // TODO: repeat the above for IPv4
+    }
+
+    @Override
+    public String toString() {
+        return this.ipv6Network.toString();
     }
 
 

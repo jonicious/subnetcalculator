@@ -1,19 +1,11 @@
 package com.school.subnetcalculator.view;
 
-import javax.swing.JDialog;
-
-import java.awt.GridBagLayout;
-
-import javax.swing.JLabel;
-
-import java.awt.GridBagConstraints;
-
-import javax.swing.JTextField;
-
-import java.awt.Component;
-import java.awt.Insets;
-import java.awt.Dimension;
 import com.googlecode.ipv6.IPv6Address;
+import com.googlecode.ipv6.IPv6NetworkMask;
+import com.school.subnetcalculator.model.Network;
+
+import javax.swing.*;
+import java.awt.*;
 
 class NetworkCreatorDialog extends JDialog {
     private static final long serialVersionUID = -509854914694000006L;
@@ -28,6 +20,7 @@ class NetworkCreatorDialog extends JDialog {
     private JButton btnCancel;
     private SubnetCalculatorFrame parentFrame;
     private IPv6Address createdAddress;
+    private IPv6NetworkMask createdMask;
 
     public NetworkCreatorDialog(SubnetCalculatorFrame parentFrame) {
         setModal(true);
@@ -139,51 +132,71 @@ class NetworkCreatorDialog extends JDialog {
         }
         return lblNetworkmask;
     }
-	private JPanel getPAddCancel() {
-		if (pAddCancel == null) {
-			pAddCancel = new JPanel();
-			GridBagLayout gbl_pAddCancel = new GridBagLayout();
-			gbl_pAddCancel.columnWidths = new int[]{0, 0, 0, 0};
-			gbl_pAddCancel.rowHeights = new int[]{0, 0};
-			gbl_pAddCancel.columnWeights = new double[]{1.0, 0.0, 0.0, Double.MIN_VALUE};
-			gbl_pAddCancel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
-			pAddCancel.setLayout(gbl_pAddCancel);
-			GridBagConstraints gbc_btnAddNetwork = new GridBagConstraints();
-			gbc_btnAddNetwork.anchor = GridBagConstraints.NORTHEAST;
-			gbc_btnAddNetwork.insets = new Insets(0, 0, 0, 5);
-			gbc_btnAddNetwork.gridx = 1;
-			gbc_btnAddNetwork.gridy = 0;
-			pAddCancel.add(getBtnAddNetwork(), gbc_btnAddNetwork);
-			GridBagConstraints gbc_btnCancel = new GridBagConstraints();
-			gbc_btnCancel.anchor = GridBagConstraints.NORTHEAST;
-			gbc_btnCancel.gridx = 2;
-			gbc_btnCancel.gridy = 0;
-			pAddCancel.add(getBtnCancel(), gbc_btnCancel);
-		}
-		return pAddCancel;
-	}
-	private JButton getBtnAddNetwork() {
-		if (btnAddNetwork == null) {
-			btnAddNetwork = new JButton("Add Network");
-			btnAddNetwork.addActionListener(e -> addNetworkToNetworkList());
-		}
-		return btnAddNetwork;
-	}
-	private JButton getBtnCancel() {
-		if (btnCancel == null) {
-			btnCancel = new JButton("Cancel");
-		}
-		return btnCancel;
-	}
-	
-	private void generatePraefix(){
-	}
-	
-	private void generateNetworkmask(){
-		
-	}
-	
-	private void addNetworkToNetworkList(){
-		createdAddress = IPv6Address.fromString(getTfNetworkaddress().getText());
-	}
+
+    private JPanel getPAddCancel() {
+        if (pAddCancel == null) {
+            pAddCancel = new JPanel();
+            GridBagLayout gbl_pAddCancel = new GridBagLayout();
+            gbl_pAddCancel.columnWidths = new int[]{0, 0, 0, 0};
+            gbl_pAddCancel.rowHeights = new int[]{0, 0};
+            gbl_pAddCancel.columnWeights = new double[]{1.0, 0.0, 0.0, Double.MIN_VALUE};
+            gbl_pAddCancel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+            pAddCancel.setLayout(gbl_pAddCancel);
+            GridBagConstraints gbc_btnAddNetwork = new GridBagConstraints();
+            gbc_btnAddNetwork.anchor = GridBagConstraints.NORTHEAST;
+            gbc_btnAddNetwork.insets = new Insets(0, 0, 0, 5);
+            gbc_btnAddNetwork.gridx = 1;
+            gbc_btnAddNetwork.gridy = 0;
+            pAddCancel.add(getBtnAddNetwork(), gbc_btnAddNetwork);
+            GridBagConstraints gbc_btnCancel = new GridBagConstraints();
+            gbc_btnCancel.anchor = GridBagConstraints.NORTHEAST;
+            gbc_btnCancel.gridx = 2;
+            gbc_btnCancel.gridy = 0;
+            pAddCancel.add(getBtnCancel(), gbc_btnCancel);
+        }
+        return pAddCancel;
+    }
+
+    private JButton getBtnAddNetwork() {
+        if (btnAddNetwork == null) {
+            btnAddNetwork = new JButton("Add Network");
+            btnAddNetwork.addActionListener(e -> addNetworkToNetworkList());
+        }
+        return btnAddNetwork;
+    }
+
+    private JButton getBtnCancel() {
+        if (btnCancel == null) {
+            btnCancel = new JButton("Cancel");
+        }
+        return btnCancel;
+    }
+
+    private void generatePraefix() {
+    }
+
+    private void generateNetworkmask() {
+
+    }
+
+    private void addNetworkToNetworkList() {
+        String netAddress = getTfNetworkaddress().getText();
+        String netPraefix = getTfPraefix().getText();
+        String netMask = getTfNetworkmask().getText();
+
+        if (netAddress.contains(":")) {
+            this.createdAddress = IPv6Address.fromString(netAddress);
+
+            if (netPraefix != null) {
+                this.createdMask = IPv6NetworkMask.fromPrefixLength(Integer.parseUnsignedInt(netPraefix, 10));
+            } else if (netMask != null) {
+                this.createdMask = IPv6NetworkMask.fromAddress(IPv6Address.fromString(netMask));
+            }
+
+            Network generatedNet = new Network(this.createdAddress, this.createdMask);
+
+            DefaultListModel df = (DefaultListModel) this.parentFrame.getListNetworks().getModel();
+            df.addElement(generatedNet);
+        }
+    }
 }
