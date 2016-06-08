@@ -114,6 +114,22 @@ class NetworkCreatorDialog extends JDialog {
             tfPraefix = new JTextField();
             tfPraefix.setMinimumSize(new Dimension(25, 20));
             tfPraefix.setColumns(10);
+            tfPraefix.addFocusListener(new FocusListener() {
+				@Override
+				public void focusLost(FocusEvent e) {
+					if(getTfPraefix().getText().length() == 0){
+						getTfNetworkmask().setEditable(true);
+					} else {
+						getTfNetworkmask().setEditable(false);
+					}
+				}
+				@Override
+				public void focusGained(FocusEvent e) {
+					if(getTfPraefix().getText().length() > 0){
+						getTfNetworkmask().setEditable(false);
+					}
+				}
+			});
         }
         return tfPraefix;
     }
@@ -122,6 +138,22 @@ class NetworkCreatorDialog extends JDialog {
         if (tfNetworkmask == null) {
             tfNetworkmask = new JTextField();
             tfNetworkmask.setColumns(10);
+            tfNetworkmask.addFocusListener(new FocusListener() {
+				@Override
+				public void focusLost(FocusEvent e) {
+					if(getTfNetworkmask().getText().length() == 0){
+						getTfPraefix().setEditable(true);
+					} else {
+						getTfPraefix().setEditable(false);
+					}
+				}
+				@Override
+				public void focusGained(FocusEvent e) {
+					if(getTfNetworkmask().getText().length() > 0){
+						getTfPraefix().setEditable(false);
+					}
+				}
+			});
         }
         return tfNetworkmask;
     }
@@ -170,13 +202,6 @@ class NetworkCreatorDialog extends JDialog {
             btnCancel = new JButton("Cancel");
         }
         return btnCancel;
-    }
-
-    private void generatePraefix() {
-    }
-
-    private void generateNetworkmask() {
-
     }
 
     private void addNetworkToNetworkList() {
