@@ -1,12 +1,16 @@
 package com.school.subnetcalculator.view;
 
+import com.school.subnetcalculator.helper.DocumentParser;
 import com.school.subnetcalculator.helper.UIController;
 import com.school.subnetcalculator.model.Host;
 import com.school.subnetcalculator.model.Network;
 import com.school.subnetcalculator.model.Subnet;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 
 public class SubnetCalculatorFrame extends JFrame {
@@ -110,6 +114,18 @@ public class SubnetCalculatorFrame extends JFrame {
     private JButton getBtnLoad() {
         if (btnLoad == null) {
             btnLoad = new JButton("Load");
+            btnLoad.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    JFileChooser fileChooser = new JFileChooser();
+                    int returnVal = fileChooser.showOpenDialog(SubnetCalculatorFrame.this);
+                    if(returnVal== JFileChooser.APPROVE_OPTION) {
+                        for(Network net : DocumentParser.importFromFile(fileChooser.getSelectedFile().getName())) {
+                            ((DefaultListModel) getListNetworks().getModel()).addElement(net);
+                        }
+                    }
+                }
+            });
         }
         return btnLoad;
     }
@@ -171,10 +187,10 @@ public class SubnetCalculatorFrame extends JFrame {
                 getTpNetworkSubnetsHosts().setEnabledAt(1, true);
                 getTfNetwork().setText(String.valueOf(getListNetworks().getSelectedValue().getIpv6Network()));
                 DefaultListModel df = (DefaultListModel) getListSubnets().getModel();
-                if (!df.isEmpty()) {
+
                     df.clear();
                     getListNetworks().getSelectedValue().getSubnetList().forEach(df::addElement);
-                }
+
             });
         }
         return listNetworks;
