@@ -200,6 +200,7 @@ class NetworkCreatorDialog extends JDialog {
     private JButton getBtnCancel() {
         if (btnCancel == null) {
             btnCancel = new JButton("Cancel");
+            btnCancel.addActionListener(e -> this.dispose());
         }
         return btnCancel;
     }
@@ -217,11 +218,15 @@ class NetworkCreatorDialog extends JDialog {
             } else if (netMask != null) {
                 this.createdMask = IPv6NetworkMask.fromAddress(IPv6Address.fromString(netMask));
             }
+            
+            if(this.createdMask != null && this.createdAddress != null) {
+            	
+            	Network generatedNet = new Network(this.createdAddress, this.createdMask);
 
-            Network generatedNet = new Network(this.createdAddress, this.createdMask);
-
-            DefaultListModel df = (DefaultListModel) this.parentFrame.getListNetworks().getModel();
-            df.addElement(generatedNet);
+            	DefaultListModel df = (DefaultListModel) this.parentFrame.getListNetworks().getModel();
+            	df.addElement(generatedNet);
+            	this.dispose();
+            }
         }
     }
 }
