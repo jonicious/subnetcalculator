@@ -80,7 +80,7 @@ public class SubnetCalculatorFrame extends JFrame {
             tpNetworkSubnetsHosts.addTab("Subnets", null, getPSubnets(), null);
             tpNetworkSubnetsHosts.addTab("Hosts", null, getPHosts(), null);
             tpNetworkSubnetsHosts.setEnabledAt(1, false);
-			tpNetworkSubnetsHosts.setEnabledAt(2, false);
+            tpNetworkSubnetsHosts.setEnabledAt(2, false);
         }
         return tpNetworkSubnetsHosts;
     }
@@ -166,13 +166,16 @@ public class SubnetCalculatorFrame extends JFrame {
         if (listNetworks == null) {
             listNetworks = new JList<>();
             listNetworks.setModel(new DefaultListModel<>());
-            listNetworks.addListSelectionListener(new ListSelectionListener() {
-				@Override
-				public void valueChanged(ListSelectionEvent e) {
-					getTpNetworkSubnetsHosts().setEnabledAt(1, true);
-					getTfNetwork().setText(getListNetworks().getSelectedValue().getIpv6Network());
-				}
-			});
+            listNetworks.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+            listNetworks.addListSelectionListener(e -> {
+                getTpNetworkSubnetsHosts().setEnabledAt(1, true);
+                getTfNetwork().setText(String.valueOf(getListNetworks().getSelectedValue().getIpv6Network()));
+                DefaultListModel df = (DefaultListModel) getListSubnets().getModel();
+                if (!df.isEmpty()) {
+                    df.clear();
+                    getListNetworks().getSelectedValue().getSubnetList().forEach(df::addElement);
+                }
+            });
         }
         return listNetworks;
     }

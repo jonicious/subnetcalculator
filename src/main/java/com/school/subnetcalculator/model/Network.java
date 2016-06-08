@@ -4,13 +4,12 @@ import com.googlecode.ipv6.IPv6Address;
 import com.googlecode.ipv6.IPv6Network;
 import com.googlecode.ipv6.IPv6NetworkMask;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class Network {
     // TODO: missing IPv4Network thing
     private IPv6Network ipv6Network;
-    private List<Subnet> subnetList;
+    private List<Subnet> subnetList = new ArrayList<>();
 
 
     public Network(IPv6Address networkAddress, IPv6NetworkMask subnetMask) {
