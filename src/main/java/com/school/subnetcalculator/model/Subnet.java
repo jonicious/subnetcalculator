@@ -13,7 +13,7 @@ public class Subnet {
 
 
     public Subnet(IPv6Address networkAddress, IPv6NetworkMask networkMask) {
-        this.ipv6Subnet = IPv6Network.fromAddressAndMask(networkAddress, networkMask);
+        this.ipv6Network = IPv6Network.fromAddressAndMask(networkAddress, networkMask);
     }
 
     public Subnet() {
@@ -53,6 +53,6 @@ public class Subnet {
 
     @Override
     public String toString() {
-        return this.ipv6Subnet.toString();
+        return this.ipv6Network.toString();
     }
 }
