@@ -374,6 +374,7 @@ public class SubnetCalculatorFrame extends JFrame {
     private JButton getBtnAddSubnet() {
         if (btnAddSubnet == null) {
             btnAddSubnet = new JButton("Add Subnet");
+            btnAddSubnet.addActionListener(e -> new SubnetCreatorDialog(SubnetCalculatorFrame.this));
         }
         return btnAddSubnet;
     }

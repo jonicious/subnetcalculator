@@ -48,4 +48,9 @@ public class Subnet {
     public void setIpv6Subnet(IPv6Network ipv6Subnet) {
         this.ipv6Subnet = ipv6Subnet;
     }
+
+    @Override
+    public String toString() {
+        return this.ipv6Subnet.toString();
+    }
 }

@@ -1,5 +1,10 @@
 package com.school.subnetcalculator.view;
 
+import com.googlecode.ipv6.IPv6Address;
+import com.googlecode.ipv6.IPv6NetworkMask;
+import com.school.subnetcalculator.model.Network;
+import com.school.subnetcalculator.model.Subnet;
+
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -7,16 +12,12 @@ import java.awt.Insets;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 
-public class SubnetCreatorDialog extends JDialog{
-	
-	private static final long serialVersionUID = -6007338971207933410L;
-	private JLabel lblSubnetaddress;
+public class SubnetCreatorDialog extends JDialog {
+
+    private static final long serialVersionUID = -6007338971207933410L;
+    private JLabel lblSubnetaddress;
     private JTextField tfSubnetaddress;
     private JLabel lblPraefix;
     private JTextField tfPraefix;
@@ -26,6 +27,8 @@ public class SubnetCreatorDialog extends JDialog{
     private JButton btnAddSubnet;
     private JButton btnCancel;
     private SubnetCalculatorFrame parentFrame;
+    private IPv6Address createdAddress;
+    private IPv6NetworkMask createdMask;
 
     public SubnetCreatorDialog(SubnetCalculatorFrame parentFrame) {
         setModal(true);
@@ -120,21 +123,22 @@ public class SubnetCreatorDialog extends JDialog{
             tfPraefix.setMinimumSize(new Dimension(25, 20));
             tfPraefix.setColumns(10);
             tfPraefix.addFocusListener(new FocusListener() {
-				@Override
-				public void focusLost(FocusEvent e) {
-					if(getTfPraefix().getText().length() == 0){
-						getTfSubnetmask().setEditable(true);
-					} else {
-						getTfSubnetmask().setEditable(false);
-					}
-				}
-				@Override
-				public void focusGained(FocusEvent e) {
-					if(getTfPraefix().getText().length() > 0){
-						getTfSubnetmask().setEditable(false);
-					}
-				}
-			});
+                @Override
+                public void focusLost(FocusEvent e) {
+                    if (getTfPraefix().getText().length() == 0) {
+                        getTfSubnetmask().setEditable(true);
+                    } else {
+                        getTfSubnetmask().setEditable(false);
+                    }
+                }
+
+                @Override
+                public void focusGained(FocusEvent e) {
+                    if (getTfPraefix().getText().length() > 0) {
+                        getTfSubnetmask().setEditable(false);
+                    }
+                }
+            });
         }
         return tfPraefix;
     }
@@ -144,21 +148,22 @@ public class SubnetCreatorDialog extends JDialog{
             tfSubnetmask = new JTextField();
             tfSubnetmask.setColumns(10);
             tfSubnetmask.addFocusListener(new FocusListener() {
-				@Override
-				public void focusLost(FocusEvent e) {
-					if(getTfSubnetmask().getText().length() == 0){
-						getTfPraefix().setEditable(true);
-					} else {
-						getTfPraefix().setEditable(false);
-					}
-				}
-				@Override
-				public void focusGained(FocusEvent e) {
-					if(getTfSubnetmask().getText().length() > 0){
-						getTfPraefix().setEditable(false);
-					}
-				}
-			});
+                @Override
+                public void focusLost(FocusEvent e) {
+                    if (getTfSubnetmask().getText().length() == 0) {
+                        getTfPraefix().setEditable(true);
+                    } else {
+                        getTfPraefix().setEditable(false);
+                    }
+                }
+
+                @Override
+                public void focusGained(FocusEvent e) {
+                    if (getTfSubnetmask().getText().length() > 0) {
+                        getTfPraefix().setEditable(false);
+                    }
+                }
+            });
         }
         return tfSubnetmask;
     }
@@ -169,46 +174,71 @@ public class SubnetCreatorDialog extends JDialog{
         }
         return lblSubnetmask;
     }
-	private JPanel getPAddCancel() {
-		if (pAddCancel == null) {
-			pAddCancel = new JPanel();
-			GridBagLayout gbl_pAddCancel = new GridBagLayout();
-			gbl_pAddCancel.columnWidths = new int[]{0, 0, 0, 0};
-			gbl_pAddCancel.rowHeights = new int[]{0, 0};
-			gbl_pAddCancel.columnWeights = new double[]{1.0, 0.0, 0.0, Double.MIN_VALUE};
-			gbl_pAddCancel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
-			pAddCancel.setLayout(gbl_pAddCancel);
-			GridBagConstraints gbc_btnAddNetwork = new GridBagConstraints();
-			gbc_btnAddNetwork.anchor = GridBagConstraints.NORTHEAST;
-			gbc_btnAddNetwork.insets = new Insets(0, 0, 0, 5);
-			gbc_btnAddNetwork.gridx = 1;
-			gbc_btnAddNetwork.gridy = 0;
-			pAddCancel.add(getBtnAddSubnet(), gbc_btnAddNetwork);
-			GridBagConstraints gbc_btnCancel = new GridBagConstraints();
-			gbc_btnCancel.anchor = GridBagConstraints.NORTHEAST;
-			gbc_btnCancel.gridx = 2;
-			gbc_btnCancel.gridy = 0;
-			pAddCancel.add(getBtnCancel(), gbc_btnCancel);
-		}
-		return pAddCancel;
-	}
-	private JButton getBtnAddSubnet() {
-		if (btnAddSubnet == null) {
-			btnAddSubnet = new JButton("Add Network");
-			btnAddSubnet.addActionListener(e -> addNetworkToNetworkList());
-		}
-		return btnAddSubnet;
-	}
-	private JButton getBtnCancel() {
-		if (btnCancel == null) {
-			btnCancel = new JButton("Cancel");
-			btnCancel.addActionListener(e -> this.dispose());
-		}
-		return btnCancel;
-	}
-	
-	private void addNetworkToNetworkList(){
-		this.dispose();
-	}
+
+    private JPanel getPAddCancel() {
+        if (pAddCancel == null) {
+            pAddCancel = new JPanel();
+            GridBagLayout gbl_pAddCancel = new GridBagLayout();
+            gbl_pAddCancel.columnWidths = new int[]{0, 0, 0, 0};
+            gbl_pAddCancel.rowHeights = new int[]{0, 0};
+            gbl_pAddCancel.columnWeights = new double[]{1.0, 0.0, 0.0, Double.MIN_VALUE};
+            gbl_pAddCancel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+            pAddCancel.setLayout(gbl_pAddCancel);
+            GridBagConstraints gbc_btnAddNetwork = new GridBagConstraints();
+            gbc_btnAddNetwork.anchor = GridBagConstraints.NORTHEAST;
+            gbc_btnAddNetwork.insets = new Insets(0, 0, 0, 5);
+            gbc_btnAddNetwork.gridx = 1;
+            gbc_btnAddNetwork.gridy = 0;
+            pAddCancel.add(getBtnAddSubnet(), gbc_btnAddNetwork);
+            GridBagConstraints gbc_btnCancel = new GridBagConstraints();
+            gbc_btnCancel.anchor = GridBagConstraints.NORTHEAST;
+            gbc_btnCancel.gridx = 2;
+            gbc_btnCancel.gridy = 0;
+            pAddCancel.add(getBtnCancel(), gbc_btnCancel);
+        }
+        return pAddCancel;
+    }
+
+    private JButton getBtnAddSubnet() {
+        if (btnAddSubnet == null) {
+            btnAddSubnet = new JButton("Add Subnet");
+            btnAddSubnet.addActionListener(e -> addSubnetToSubnetList());
+        }
+        return btnAddSubnet;
+    }
+
+    private JButton getBtnCancel() {
+        if (btnCancel == null) {
+            btnCancel = new JButton("Cancel");
+            btnCancel.addActionListener(e -> this.dispose());
+        }
+        return btnCancel;
+    }
+
+    private void addSubnetToSubnetList() {
+        String netAddress = getTfSubnetaddress().getText();
+        String netPraefix = getTfPraefix().getText();
+        String netMask = getTfSubnetmask().getText();
+
+        if (netAddress.contains(":")) {
+            this.createdAddress = IPv6Address.fromString(netAddress);
+
+            if (netPraefix != null) {
+                this.createdMask = IPv6NetworkMask.fromPrefixLength(Integer.parseUnsignedInt(netPraefix, 10));
+            } else if (netMask != null) {
+                this.createdMask = IPv6NetworkMask.fromAddress(IPv6Address.fromString(netMask));
+            }
+
+            if (this.createdMask != null && this.createdAddress != null) {
+
+                Subnet generatedNet = new Subnet(this.createdAddress, this.createdMask);
+
+                DefaultListModel df = (DefaultListModel) this.parentFrame.getListSubnets().getModel();
+                df.addElement(generatedNet);
+
+                this.dispose();
+            }
+        }
+    }
 
 }

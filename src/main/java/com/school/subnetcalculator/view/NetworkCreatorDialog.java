@@ -6,6 +6,8 @@ import com.school.subnetcalculator.model.Network;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
 class NetworkCreatorDialog extends JDialog {
     private static final long serialVersionUID = -509854914694000006L;
@@ -225,7 +227,8 @@ class NetworkCreatorDialog extends JDialog {
 
             	DefaultListModel df = (DefaultListModel) this.parentFrame.getListNetworks().getModel();
             	df.addElement(generatedNet);
-            	this.dispose();
+
+                this.dispose();
             }
         }
     }
