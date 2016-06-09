@@ -4,22 +4,14 @@ import com.googlecode.ipv6.IPv6Address;
 import com.googlecode.ipv6.IPv6NetworkMask;
 import com.school.subnetcalculator.helper.NetworkHelper;
 import com.school.subnetcalculator.model.Department;
-import com.school.subnetcalculator.model.Network;
 import com.school.subnetcalculator.model.Subnet;
-import com.school.subnetcalculator.model.ipv4.IPv4Address;
-import com.school.subnetcalculator.model.ipv4.IPv4NetworkMask;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.awt.print.PrinterAbortException;
-import java.lang.reflect.Array;
-import java.net.InetAddress;
-import java.net.SocketException;
-import java.net.UnknownHostException;
-import java.util.ArrayList;
-
-import javax.swing.*;
+import java.util.*;
+import java.util.List;
 
 public class SubnetCreatorDialog extends JDialog {
 
@@ -262,36 +254,33 @@ public class SubnetCreatorDialog extends JDialog {
             this.dispose();
         }
     }
-    
+
     private JLabel getLblDepartment() {
-		if (lblDepartment == null) {
-			lblDepartment = new JLabel("Department");
-		}
-		return lblDepartment;
-	}
-	private JComboBox<Department> getCBDepartments() {
-		if (cBDepartments == null) {
-			cBDepartments = new JComboBox();
-			cBDepartments.addItem(null);
-			for(Department department : departmentList) {
-				cBDepartments.addItem(department);
-			}
-			List<Subnet> subnetList = new ArrayList<Subnet>();
-        List<Department> otherList = new ArrayList<Department>();
-        for (int i = 0; i < ((DefaultListModel)parentFrame.getListSubnets().getModel()).getSize(); i++) {
-        	subnetList.add(((DefaultListModel)parentFrame.getListSubnets().getModel()).get(i));
-		}
-        for (int i = 0; i < getCBDepartments().getItemCount(); i++) {
-        	otherList.add(getCBDepartments().getItemAt(i));
+        if (lblDepartment == null) {
+            lblDepartment = new JLabel("Department");
         }
-        for (int i = 0; i < otherList.size(); i++) {
-        	if(subnetList.contains(otherList.get(i))){
-        		otherList.remove(i);
-        		i--;
-        	}
-		}
-		}
-		return cBDepartments;
-	}
+        return lblDepartment;
+    }
+
+    private JComboBox<Department> getCBDepartments() {
+        if (cBDepartments == null) {
+            cBDepartments = new JComboBox();
+            cBDepartments.addItem(null);
+
+            List<Subnet> subnetList = new ArrayList<>();
+
+            for (int i = 0; i < ((DefaultListModel) parentFrame.getListSubnets().getModel()).getSize(); i++) {
+                subnetList.add((Subnet) ((DefaultListModel) parentFrame.getListSubnets().getModel()).get(i));
+            }
+
+            for (Department department : departmentList) {
+                if(!department.isUsedBySubnet(subnetList)) {
+                    cBDepartments.addItem(department);
+                }
+            }
+        }
+
+        return cBDepartments;
+    }
 
 }

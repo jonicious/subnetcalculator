@@ -7,10 +7,10 @@ import com.school.subnetcalculator.model.ipv4.IPv4Address;
 import com.school.subnetcalculator.model.ipv4.IPv4Network;
 import com.school.subnetcalculator.model.ipv4.IPv4NetworkMask;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Network {
-    // TODO: missing IPv4Network thing
     private IPv6Network ipv6Network;
     private IPv4Network ipv4Network;
     private List<Subnet> subnetList = new ArrayList<>();
@@ -56,18 +56,6 @@ public class Network {
     public void removeSubnetFromList(Subnet subnet) {
         this.subnetList.remove(subnet);
     }
-
-
-    public List<Subnet> getCalculatedSubnetList(int subnetCount) {
-        // TODO: Of some host count.
-        return Collections.emptyList();
-    }
-
-
-    public IPv6Network getIpv6Network() {
-        return ipv6Network;
-    }
-
 
     public void setIpv6Network(IPv6Network ipv6Network) {
         this.ipv6Network = ipv6Network;

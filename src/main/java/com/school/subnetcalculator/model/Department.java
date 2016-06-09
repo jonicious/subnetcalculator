@@ -1,5 +1,7 @@
 package com.school.subnetcalculator.model;
 
+import java.util.List;
+
 public class Department {
     private String name;
 
@@ -11,8 +13,8 @@ public class Department {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public boolean isUsedBySubnet(List<Subnet> subnetList) {
+        return subnetList.stream().anyMatch(subnet -> subnet.getDepartment().getName().equals(this.getName()));
     }
 
     @Override

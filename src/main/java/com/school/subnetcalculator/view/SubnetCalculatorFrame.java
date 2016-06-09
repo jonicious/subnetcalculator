@@ -3,15 +3,11 @@ package com.school.subnetcalculator.view;
 import com.school.subnetcalculator.helper.Converter;
 import com.school.subnetcalculator.helper.DocumentParser;
 import com.school.subnetcalculator.helper.UIController;
-import com.school.subnetcalculator.model.Department;
 import com.school.subnetcalculator.model.Host;
 import com.school.subnetcalculator.model.Network;
 import com.school.subnetcalculator.model.Subnet;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -112,15 +108,12 @@ public class SubnetCalculatorFrame extends JFrame {
     private JButton getBtnDeleteNetwork() {
         if (btnDeleteNetwork == null) {
             btnDeleteNetwork = new JButton("Delete Network");
-            btnDeleteNetwork.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					if (getListNetworks().isFocusOwner()) {
-						((DefaultListModel) getListNetworks().getModel())
-								.remove(getListNetworks().getSelectedIndex());
-					}
-				}
-			});
+            btnDeleteNetwork.addActionListener(e -> {
+                if (getListNetworks().getSelectedValue() != null) {
+                    getListNetworks().remove(getListNetworks().getSelectedIndex());
+                    ((DefaultListModel) getListNetworks().getModel()).remove(getListNetworks().getSelectedIndex());
+                }
+            });
         }
         return btnDeleteNetwork;
     }
@@ -128,15 +121,12 @@ public class SubnetCalculatorFrame extends JFrame {
     private JButton getBtnLoad() {
         if (btnLoad == null) {
             btnLoad = new JButton("Load");
-            btnLoad.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    JFileChooser fileChooser = new JFileChooser();
-                    int returnVal = fileChooser.showOpenDialog(SubnetCalculatorFrame.this);
-                    if(returnVal== JFileChooser.APPROVE_OPTION) {
-                        for(Network net : DocumentParser.importFromFile(fileChooser.getSelectedFile().getName())) {
-                            ((DefaultListModel) getListNetworks().getModel()).addElement(net);
-                        }
+            btnLoad.addActionListener(e -> {
+                JFileChooser fileChooser = new JFileChooser();
+                int returnVal = fileChooser.showOpenDialog(SubnetCalculatorFrame.this);
+                if (returnVal == JFileChooser.APPROVE_OPTION) {
+                    for (Network net : DocumentParser.importFromFile(fileChooser.getSelectedFile().getName())) {
+                        ((DefaultListModel) getListNetworks().getModel()).addElement(net);
                     }
                 }
             });
@@ -149,8 +139,7 @@ public class SubnetCalculatorFrame extends JFrame {
             btnSave = new JButton("Save");
             java.util.List<Network> networkList = new ArrayList<>();
             btnSave.addActionListener(e -> {
-                for (int i = 0; i < getListNetworks().getModel().getSize(); i++)
-                {
+                for (int i = 0; i < getListNetworks().getModel().getSize(); i++) {
                     networkList.add(getListNetworks().getModel().getElementAt(i));
                 }
                 DocumentParser.exportToFile(networkList, "export.json");
@@ -210,8 +199,8 @@ public class SubnetCalculatorFrame extends JFrame {
                 getTfNetwork().setText(String.valueOf(getListNetworks().getSelectedValue().toString()));
                 DefaultListModel df = (DefaultListModel) getListSubnets().getModel();
 
-                    df.clear();
-                    getListNetworks().getSelectedValue().getSubnetList().forEach(df::addElement);
+                df.clear();
+                getListNetworks().getSelectedValue().getSubnetList().forEach(df::addElement);
 
             });
         }
@@ -342,11 +331,17 @@ public class SubnetCalculatorFrame extends JFrame {
             listSubnets = new JList<>();
             listSubnets.setModel(new DefaultListModel<>());
             listSubnets.addListSelectionListener(e -> {
-                getTpNetworkSubnetsHosts().setEnabledAt(2, true);
-                getTfNetwork().setText(String.valueOf(getListSubnets().getSelectedValue().getIpv6Network()));
-                DefaultListModel df = (DefaultListModel) getListHosts().getModel();
-                df.clear();
-                getListSubnets().getSelectedValue().getHosts().forEach(df::addElement);
+                if (getListSubnets().getSelectedValue() != null) {
+                    getTpNetworkSubnetsHosts().setEnabledAt(2, true);
+                    getTfNetwork().setText(String.valueOf(getListNetworks().getSelectedValue().toString()));
+
+                    DefaultListModel df = (DefaultListModel) getListHosts().getModel();
+                    df.clear();
+
+                    if (getListSubnets().getSelectedValue().getHosts() != null) {
+                        getListSubnets().getSelectedValue().getHosts().forEach(df::addElement);
+                    }
+                }
             });
         }
         return listSubnets;
@@ -390,15 +385,12 @@ public class SubnetCalculatorFrame extends JFrame {
     private JButton getBtnDeleteSubnet() {
         if (btnDeleteSubnet == null) {
             btnDeleteSubnet = new JButton("Delete Subnet");
-            btnDeleteSubnet.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					if (getListSubnets().isFocusOwner()) {
-						((DefaultListModel) getListSubnets().getModel())
-								.remove(getListSubnets().getSelectedIndex());
-					}
-				}
-			});
+            btnDeleteSubnet.addActionListener(e -> {
+                if (getListSubnets().getSelectedValue() != null) {
+                    getListNetworks().getSelectedValue().removeSubnetFromList(getListSubnets().getSelectedValue());
+                    ((DefaultListModel) getListSubnets().getModel()).remove(getListSubnets().getSelectedIndex());
+                }
+            });
         }
         return btnDeleteSubnet;
     }
@@ -606,15 +598,12 @@ public class SubnetCalculatorFrame extends JFrame {
     private JButton getBtnDeleteHost() {
         if (btnDeleteHost == null) {
             btnDeleteHost = new JButton("Delete Host");
-            btnDeleteHost.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					if(getListHosts().isFocusOwner()){
-						((DefaultListModel) getListHosts().getModel())
-						.remove(getListHosts().getSelectedIndex());
-					}
-				}
-			});
+            btnDeleteHost.addActionListener(e -> {
+                if (getListHosts().getSelectedValue() != null) {
+                    getListSubnets().getSelectedValue().removeHostFromList(getListHosts().getSelectedValue());
+                    ((DefaultListModel) getListHosts().getModel()).remove(getListHosts().getSelectedIndex());
+                }
+            });
         }
         return btnDeleteHost;
     }

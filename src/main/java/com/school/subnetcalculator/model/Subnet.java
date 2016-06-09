@@ -49,21 +49,6 @@ public class Subnet {
     }
 
 
-    public void addIpAddress(Host host) {
-        this.hosts.add(host);
-    }
-
-
-    public void addMultipleHosts(List<Host> hosts) {
-        this.hosts.addAll(hosts);
-    }
-
-
-    public IPv6Network getIpv6Network() {
-        return ipv6Network;
-    }
-
-
     public void setIpv6Network(IPv6Network ipv6Network) {
         this.ipv6Network = ipv6Network;
     }
@@ -72,8 +57,8 @@ public class Subnet {
         return department;
     }
 
-    public void setDepartment(Department department) {
-        this.department = department;
+    public void removeHostFromList(Host host) {
+        this.hosts.remove(host);
     }
 
     @Override
