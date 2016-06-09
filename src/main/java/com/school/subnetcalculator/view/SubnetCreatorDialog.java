@@ -273,9 +273,13 @@ public class SubnetCreatorDialog extends JDialog {
 		}
 		return lblDepartment;
 	}
-	private JComboBox getCBDepartments() {
+	private JComboBox<Department> getCBDepartments() {
 		if (cBDepartments == null) {
 			cBDepartments = new JComboBox();
+			cBDepartments.addItem(null);
+			for(Department department : departmentList) {
+				cBDepartments.addItem(department);
+			}
 		}
 		return cBDepartments;
 	}
