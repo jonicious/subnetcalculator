@@ -30,11 +30,13 @@ public class SubnetCreatorDialog extends JDialog {
     private IPv6Address createdAddress;
     private IPv6NetworkMask createdMask;
     private ArrayList<Department> departmentList;
+    private JLabel lblDepartment;
+    private JComboBox cBDepartments;
 
     public SubnetCreatorDialog(SubnetCalculatorFrame parentFrame) {
         setModal(true);
-        setSize(700, 120);
-        setMinimumSize(new Dimension(700, 120));
+        setSize(700, 158);
+        setMinimumSize(new Dimension(700, 158));
         this.parentFrame = parentFrame;
         setLocationRelativeTo(parentFrame);
         initGUI();
@@ -54,10 +56,10 @@ public class SubnetCreatorDialog extends JDialog {
     private void initGUI() {
         GridBagLayout gridBagLayout = new GridBagLayout();
         gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0};
-        gridBagLayout.rowHeights = new int[]{0, 0, 0, 0};
+        gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0};
         gridBagLayout.columnWeights = new double[]{0.0, 1.0, 0.0, 0.0,
                 Double.MIN_VALUE};
-        gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+        gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
         getContentPane().setLayout(gridBagLayout);
         GridBagConstraints gbc_lblNetworkaddress = new GridBagConstraints();
         gbc_lblNetworkaddress.insets = new Insets(10, 10, 5, 5);
@@ -96,13 +98,26 @@ public class SubnetCreatorDialog extends JDialog {
         gbc_tfNetworkmask.gridx = 1;
         gbc_tfNetworkmask.gridy = 1;
         getContentPane().add(getTfSubnetmask(), gbc_tfNetworkmask);
+        GridBagConstraints gbc_lblDepartment = new GridBagConstraints();
+        gbc_lblDepartment.anchor = GridBagConstraints.NORTHWEST;
+        gbc_lblDepartment.insets = new Insets(0, 10, 5, 5);
+        gbc_lblDepartment.gridx = 0;
+        gbc_lblDepartment.gridy = 2;
+        getContentPane().add(getLblDepartment(), gbc_lblDepartment);
+        GridBagConstraints gbc_cBDepartments = new GridBagConstraints();
+        gbc_cBDepartments.gridwidth = 3;
+        gbc_cBDepartments.insets = new Insets(0, 0, 5, 10);
+        gbc_cBDepartments.fill = GridBagConstraints.HORIZONTAL;
+        gbc_cBDepartments.gridx = 1;
+        gbc_cBDepartments.gridy = 2;
+        getContentPane().add(getCBDepartments(), gbc_cBDepartments);
         GridBagConstraints gbc_pAddCancel = new GridBagConstraints();
         gbc_pAddCancel.anchor = GridBagConstraints.SOUTH;
         gbc_pAddCancel.gridwidth = 4;
         gbc_pAddCancel.insets = new Insets(0, 10, 10, 10);
         gbc_pAddCancel.fill = GridBagConstraints.HORIZONTAL;
         gbc_pAddCancel.gridx = 0;
-        gbc_pAddCancel.gridy = 2;
+        gbc_pAddCancel.gridy = 3;
         getContentPane().add(getPAddCancel(), gbc_pAddCancel);
     }
 
@@ -251,5 +266,18 @@ public class SubnetCreatorDialog extends JDialog {
             }
         }
     }
+    
+    private JLabel getLblDepartment() {
+		if (lblDepartment == null) {
+			lblDepartment = new JLabel("Department");
+		}
+		return lblDepartment;
+	}
+	private JComboBox getCBDepartments() {
+		if (cBDepartments == null) {
+			cBDepartments = new JComboBox();
+		}
+		return cBDepartments;
+	}
 
 }
