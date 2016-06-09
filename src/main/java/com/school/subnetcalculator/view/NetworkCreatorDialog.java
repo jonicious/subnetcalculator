@@ -3,11 +3,17 @@ package com.school.subnetcalculator.view;
 import com.googlecode.ipv6.IPv6Address;
 import com.googlecode.ipv6.IPv6NetworkMask;
 import com.school.subnetcalculator.model.Network;
+import com.school.subnetcalculator.model.ipv4.IPv4Address;
+import com.school.subnetcalculator.model.ipv4.IPv4Network;
+import com.school.subnetcalculator.model.ipv4.IPv4NetworkMask;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.net.InetAddress;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 
 class NetworkCreatorDialog extends JDialog {
     private static final long serialVersionUID = -509854914694000006L;
@@ -21,8 +27,7 @@ class NetworkCreatorDialog extends JDialog {
     private JButton btnAddNetwork;
     private JButton btnCancel;
     private SubnetCalculatorFrame parentFrame;
-    private IPv6Address createdAddress;
-    private IPv6NetworkMask createdMask;
+    private Network network;
 
     public NetworkCreatorDialog(SubnetCalculatorFrame parentFrame) {
         setModal(true);
@@ -117,21 +122,22 @@ class NetworkCreatorDialog extends JDialog {
             tfPraefix.setMinimumSize(new Dimension(25, 20));
             tfPraefix.setColumns(10);
             tfPraefix.addFocusListener(new FocusListener() {
-				@Override
-				public void focusLost(FocusEvent e) {
-					if(getTfPraefix().getText().length() == 0){
-						getTfNetworkmask().setEditable(true);
-					} else {
-						getTfNetworkmask().setEditable(false);
-					}
-				}
-				@Override
-				public void focusGained(FocusEvent e) {
-					if(getTfPraefix().getText().length() > 0){
-						getTfNetworkmask().setEditable(false);
-					}
-				}
-			});
+                @Override
+                public void focusLost(FocusEvent e) {
+                    if (getTfPraefix().getText().length() == 0) {
+                        getTfNetworkmask().setEditable(true);
+                    } else {
+                        getTfNetworkmask().setEditable(false);
+                    }
+                }
+
+                @Override
+                public void focusGained(FocusEvent e) {
+                    if (getTfPraefix().getText().length() > 0) {
+                        getTfNetworkmask().setEditable(false);
+                    }
+                }
+            });
         }
         return tfPraefix;
     }
@@ -141,21 +147,22 @@ class NetworkCreatorDialog extends JDialog {
             tfNetworkmask = new JTextField();
             tfNetworkmask.setColumns(10);
             tfNetworkmask.addFocusListener(new FocusListener() {
-				@Override
-				public void focusLost(FocusEvent e) {
-					if(getTfNetworkmask().getText().length() == 0){
-						getTfPraefix().setEditable(true);
-					} else {
-						getTfPraefix().setEditable(false);
-					}
-				}
-				@Override
-				public void focusGained(FocusEvent e) {
-					if(getTfNetworkmask().getText().length() > 0){
-						getTfPraefix().setEditable(false);
-					}
-				}
-			});
+                @Override
+                public void focusLost(FocusEvent e) {
+                    if (getTfNetworkmask().getText().length() == 0) {
+                        getTfPraefix().setEditable(true);
+                    } else {
+                        getTfPraefix().setEditable(false);
+                    }
+                }
+
+                @Override
+                public void focusGained(FocusEvent e) {
+                    if (getTfNetworkmask().getText().length() > 0) {
+                        getTfPraefix().setEditable(false);
+                    }
+                }
+            });
         }
         return tfNetworkmask;
     }
@@ -213,23 +220,44 @@ class NetworkCreatorDialog extends JDialog {
         String netMask = getTfNetworkmask().getText();
 
         if (netAddress.contains(":")) {
-            this.createdAddress = IPv6Address.fromString(netAddress);
+            IPv6Address createdAddress = IPv6Address.fromString(netAddress);
+            IPv6NetworkMask createdMask = null;
 
             if (netPraefix != null) {
-                this.createdMask = IPv6NetworkMask.fromPrefixLength(Integer.parseUnsignedInt(netPraefix, 10));
+                createdMask = IPv6NetworkMask.fromPrefixLength(Integer.parseUnsignedInt(netPraefix, 10));
             } else if (netMask != null) {
-                this.createdMask = IPv6NetworkMask.fromAddress(IPv6Address.fromString(netMask));
+                createdMask = IPv6NetworkMask.fromAddress(IPv6Address.fromString(netMask));
             }
-            
-            if(this.createdMask != null && this.createdAddress != null) {
-            	
-            	Network generatedNet = new Network(this.createdAddress, this.createdMask);
 
-            	DefaultListModel df = (DefaultListModel) this.parentFrame.getListNetworks().getModel();
-            	df.addElement(generatedNet);
+            if (createdMask != null) {
+                Network generatedNet = new Network(createdAddress, createdMask);
+                this.addNetworkAndCloseDialog(generatedNet);
+            }
 
-                this.dispose();
+        } else {
+            IPv4Address createdAddress = IPv4Address.fromString(netAddress);
+            IPv4NetworkMask createdMask = null;
+
+            if(netPraefix != null) {
+                createdMask = IPv4NetworkMask.fromPrefixLength(Integer.parseUnsignedInt(netPraefix, 10));
+            } else if (netMask != null) {
+                try {
+                    createdMask = IPv4NetworkMask.fromAddress(InetAddress.getByName(netMask));
+                } catch (UnknownHostException | SocketException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if (createdMask != null) {
+                Network generatedNet = new Network(createdAddress, createdMask);
+                this.addNetworkAndCloseDialog(generatedNet);
             }
         }
+    }
+
+    private void addNetworkAndCloseDialog(Network generatedNet) {
+        DefaultListModel df = (DefaultListModel) this.parentFrame.getListNetworks().getModel();
+        df.addElement(generatedNet);
+        this.dispose();
     }
 }

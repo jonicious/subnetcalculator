@@ -16,7 +16,7 @@ public class HostMapper
         try
         {
             host.setDescription(object.getString("description"));
-            // TODO: Add IPv4 object.getString("ipv4Address");
+            // TODO: Add ipv4 object.getString("ipv4Address");
             String ipv6AddressString = object.getString("ipv6Address");
             host.setIpv6Address(IPv6Address.fromString(ipv6AddressString));
         }

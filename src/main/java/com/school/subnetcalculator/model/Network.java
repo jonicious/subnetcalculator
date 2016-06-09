@@ -3,6 +3,9 @@ package com.school.subnetcalculator.model;
 import com.googlecode.ipv6.IPv6Address;
 import com.googlecode.ipv6.IPv6Network;
 import com.googlecode.ipv6.IPv6NetworkMask;
+import com.school.subnetcalculator.model.ipv4.IPv4Address;
+import com.school.subnetcalculator.model.ipv4.IPv4Network;
+import com.school.subnetcalculator.model.ipv4.IPv4NetworkMask;
 
 import java.util.*;
 
@@ -21,9 +24,17 @@ public class Network {
         this.ipv4Network = IPv4Network.fromAddressAndMask(networkAddress, subnetMask);
     }
 
+    public Network() {
+
+    }
+
     @Override
     public String toString() {
-        return this.ipv6Network.toString();
+        if (ipv6Network != null) {
+            return this.ipv6Network.toString();
+        } else {
+            return this.ipv4Network.toString();
+        }
     }
 
 

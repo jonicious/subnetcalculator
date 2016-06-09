@@ -23,7 +23,7 @@ public class Subnet {
     }
 
     public Subnet() {
-        // TODO: If given an IPv4 address, don't select first and last IP as host.
+        // TODO: If given an ipv4 address, don't select first and last IP as host.
     }
 
     public List<Host> getHosts() {

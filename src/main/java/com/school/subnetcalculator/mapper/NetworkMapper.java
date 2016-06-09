@@ -19,7 +19,7 @@ public class NetworkMapper
 
         try
         {
-            // TODO: Add IPv4 object.getString("ipv4NetworkAddress");
+            // TODO: Add ipv4 object.getString("ipv4NetworkAddress");
             JSONObject ipv6NetworkObject = object.getJSONObject("ipv6Network");
 
             JSONObject ipv6AddressObject = ipv6NetworkObject.getJSONObject("address");
