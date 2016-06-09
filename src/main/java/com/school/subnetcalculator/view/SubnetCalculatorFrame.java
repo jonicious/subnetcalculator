@@ -133,7 +133,7 @@ public class SubnetCalculatorFrame extends JFrame {
     private JButton getBtnSave() {
         if (btnSave == null) {
             btnSave = new JButton("Save");
-            List<Network> networkList = new ArrayList<>();
+            java.util.List<Network> networkList = new ArrayList<>();
             btnSave.addActionListener(e -> {
                 for (int i = 0; i < getListNetworks().getModel().getSize(); i++)
                 {
