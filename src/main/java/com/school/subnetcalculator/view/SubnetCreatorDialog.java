@@ -258,6 +258,7 @@ public class SubnetCreatorDialog extends JDialog {
         if (generatedSubnet != null) {
             DefaultListModel df = (DefaultListModel) this.parentFrame.getListSubnets().getModel();
             df.addElement(generatedSubnet);
+            this.parentFrame.getListNetworks().getSelectedValue().addSubnet(generatedSubnet);
             this.dispose();
         }
     }
