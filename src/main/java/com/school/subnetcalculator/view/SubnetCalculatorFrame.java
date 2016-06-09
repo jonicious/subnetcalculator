@@ -333,7 +333,7 @@ public class SubnetCalculatorFrame extends JFrame {
             listSubnets.addListSelectionListener(e -> {
                 if (getListSubnets().getSelectedValue() != null) {
                     getTpNetworkSubnetsHosts().setEnabledAt(2, true);
-                    getTfNetwork().setText(String.valueOf(getListNetworks().getSelectedValue().toString()));
+                    getTfSubnetAddress().setText(String.valueOf(getListSubnets().getSelectedValue().toString()));
 
                     DefaultListModel df = (DefaultListModel) getListHosts().getModel();
                     df.clear();
@@ -591,6 +591,7 @@ public class SubnetCalculatorFrame extends JFrame {
     private JButton getBtnAddHost() {
         if (btnAddHost == null) {
             btnAddHost = new JButton("Add Host");
+            btnAddHost.addActionListener(new ActionListener(e -> new HostCreatorDialog(SubnetCalculatorFrame.this));
         }
         return btnAddHost;
     }
