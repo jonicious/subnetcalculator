@@ -327,6 +327,13 @@ public class SubnetCalculatorFrame extends JFrame {
         if (listSubnets == null) {
             listSubnets = new JList<>();
             listSubnets.setModel(new DefaultListModel<>());
+            listSubnets..addListSelectionListener(e -> {
+                getTpNetworkSubnetsHosts().setEnabledAt(2, true);
+                getTfNetwork().setText(String.valueOf(getListSubnets().getSelectedValue().getIpv6Network()));
+                DefaultListModel df = (DefaultListModel) getListHosts().getModel();
+                df.clear();
+                getListSubnets().getSelectedValue().getHosts().forEach(df::addElement);
+            });
         }
         return listSubnets;
     }
@@ -516,6 +523,7 @@ public class SubnetCalculatorFrame extends JFrame {
     private JList<Host> getListHosts() {
         if (listHosts == null) {
             listHosts = new JList<Host>();
+            listHosts.setModel(new DefaultListModel<>());
         }
         return listHosts;
     }
