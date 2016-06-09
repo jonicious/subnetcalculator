@@ -19,8 +19,7 @@ public class DocumentParserTest
     public void testImportFromFile()
     {
         List<Network> networks = DocumentParser.importFromFile("test.json");
-        Assert.assertTrue(networks.size() == 2);
-        Assert.assertTrue(networks.get(0).getSubnetList().size() == 2);
-        Assert.assertTrue(networks.get(0).getSubnetList().get(0).getHosts().size() == 2);
+        Assert.assertTrue(networks.size() == 4);
+        Assert.assertTrue(networks.get(0).getSubnetList().size() == 0);
     }
 }
