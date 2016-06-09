@@ -1,4 +1,4 @@
-package com.school.subnetcalculator.model;/* awesome code here ▾ created by jonah for subnetcalculator */
+package com.school.subnetcalculator.model;
 
 public class Department {
     private String name;

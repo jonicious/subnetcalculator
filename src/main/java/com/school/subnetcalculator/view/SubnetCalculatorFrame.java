@@ -207,7 +207,7 @@ public class SubnetCalculatorFrame extends JFrame {
             listNetworks.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             listNetworks.addListSelectionListener(e -> {
                 getTpNetworkSubnetsHosts().setEnabledAt(1, true);
-                getTfNetwork().setText(String.valueOf(getListNetworks().getSelectedValue().getIpv6Network()));
+                getTfNetwork().setText(String.valueOf(getListNetworks().getSelectedValue().toString()));
                 DefaultListModel df = (DefaultListModel) getListSubnets().getModel();
 
                     df.clear();
