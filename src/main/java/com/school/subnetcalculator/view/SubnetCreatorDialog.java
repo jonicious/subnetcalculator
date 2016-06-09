@@ -276,6 +276,20 @@ public class SubnetCreatorDialog extends JDialog {
 			for(Department department : departmentList) {
 				cBDepartments.addItem(department);
 			}
+			List<Subnet> subnetList = new ArrayList<Subnet>();
+        List<Department> otherList = new ArrayList<Department>();
+        for (int i = 0; i < ((DefaultListModel)parentFrame.getListSubnets().getModel()).getSize(); i++) {
+        	subnetList.add(((DefaultListModel)parentFrame.getListSubnets().getModel()).get(i));
+		}
+        for (int i = 0; i < getCBDepartments().getItemCount(); i++) {
+        	otherList.add(getCBDepartments().getItemAt(i));
+        }
+        for (int i = 0; i < otherList.size(); i++) {
+        	if(subnetList.contains(otherList.get(i))){
+        		otherList.remove(i);
+        		i--;
+        	}
+		}
 		}
 		return cBDepartments;
 	}
