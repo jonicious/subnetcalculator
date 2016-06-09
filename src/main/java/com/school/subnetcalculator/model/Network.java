@@ -9,6 +9,7 @@ import java.util.*;
 public class Network {
     // TODO: missing IPv4Network thing
     private IPv6Network ipv6Network;
+    private IPv4Network ipv4Network;
     private List<Subnet> subnetList = new ArrayList<>();
 
 
@@ -16,8 +17,8 @@ public class Network {
         this.ipv6Network = IPv6Network.fromAddressAndMask(networkAddress, subnetMask);
     }
 
-    public Network() {
-        // TODO: repeat the above for IPv4
+    public Network(IPv4Address networkAddress, IPv4NetworkMask subnetMask) {
+        this.ipv4Network = IPv4Network.fromAddressAndMask(networkAddress, subnetMask);
     }
 
     @Override
