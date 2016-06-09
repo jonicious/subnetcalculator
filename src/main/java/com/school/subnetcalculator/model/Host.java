@@ -45,4 +45,9 @@ public class Host
         this.iPv6Address = iPv6Address;
 
     }
+
+    @Override
+    public String toString() {
+        return this.iPv6Address.toString();
+    }
 }

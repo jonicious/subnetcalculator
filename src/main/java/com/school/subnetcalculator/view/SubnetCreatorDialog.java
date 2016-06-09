@@ -2,15 +2,15 @@ package com.school.subnetcalculator.view;
 
 import com.googlecode.ipv6.IPv6Address;
 import com.googlecode.ipv6.IPv6NetworkMask;
+import com.school.subnetcalculator.model.Department;
 import com.school.subnetcalculator.model.Network;
 import com.school.subnetcalculator.model.Subnet;
 
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
@@ -29,6 +29,7 @@ public class SubnetCreatorDialog extends JDialog {
     private SubnetCalculatorFrame parentFrame;
     private IPv6Address createdAddress;
     private IPv6NetworkMask createdMask;
+    private ArrayList<Department> departmentList;
 
     public SubnetCreatorDialog(SubnetCalculatorFrame parentFrame) {
         setModal(true);
@@ -38,6 +39,16 @@ public class SubnetCreatorDialog extends JDialog {
         setLocationRelativeTo(parentFrame);
         initGUI();
         setVisible(true);
+
+        this.prefillDepartmentList();
+    }
+
+    private void prefillDepartmentList() {
+        departmentList = new ArrayList<>();
+        departmentList.add(new Department("Sales"));
+        departmentList.add(new Department("Operations"));
+        departmentList.add(new Department("Finance"));
+        departmentList.add(new Department("IT"));
     }
 
     private void initGUI() {

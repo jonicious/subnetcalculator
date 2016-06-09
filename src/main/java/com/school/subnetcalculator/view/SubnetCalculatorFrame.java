@@ -1,17 +1,22 @@
 package com.school.subnetcalculator.view;
 
+import com.school.subnetcalculator.helper.Converter;
 import com.school.subnetcalculator.helper.DocumentParser;
 import com.school.subnetcalculator.helper.UIController;
+import com.school.subnetcalculator.model.Department;
 import com.school.subnetcalculator.model.Host;
 import com.school.subnetcalculator.model.Network;
 import com.school.subnetcalculator.model.Subnet;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class SubnetCalculatorFrame extends JFrame {
     private static final long serialVersionUID = -6244329414716205933L;
@@ -327,7 +332,7 @@ public class SubnetCalculatorFrame extends JFrame {
         if (listSubnets == null) {
             listSubnets = new JList<>();
             listSubnets.setModel(new DefaultListModel<>());
-            listSubnets..addListSelectionListener(e -> {
+            listSubnets.addListSelectionListener(e -> {
                 getTpNetworkSubnetsHosts().setEnabledAt(2, true);
                 getTfNetwork().setText(String.valueOf(getListSubnets().getSelectedValue().getIpv6Network()));
                 DefaultListModel df = (DefaultListModel) getListHosts().getModel();
@@ -524,6 +529,10 @@ public class SubnetCalculatorFrame extends JFrame {
         if (listHosts == null) {
             listHosts = new JList<Host>();
             listHosts.setModel(new DefaultListModel<>());
+            listHosts.addListSelectionListener(e -> {
+                getTfBinary().setText(Converter.convertHexadecimalToBinary(getListHosts().getSelectedValue().getIpv6Address()
+                        .toString().replace(":", " ")));
+            });
         }
         return listHosts;
     }

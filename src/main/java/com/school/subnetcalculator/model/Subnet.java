@@ -9,11 +9,17 @@ import java.util.List;
 public class Subnet {
     // TODO: missing IPv4Network thing
     private IPv6Network ipv6Network;
+    private Department department;
     private List<Host> hosts;
 
 
     public Subnet(IPv6Address networkAddress, IPv6NetworkMask networkMask) {
         this.ipv6Network = IPv6Network.fromAddressAndMask(networkAddress, networkMask);
+    }
+
+    public Subnet(IPv6Address networkAddress, IPv6NetworkMask networkMask, Department department) {
+        this.ipv6Network = IPv6Network.fromAddressAndMask(networkAddress, networkMask);
+        this.department = department;
     }
 
     public Subnet() {
@@ -40,15 +46,21 @@ public class Subnet {
     }
 
 
-    public IPv6Network getIpv6Network()
-    {
+    public IPv6Network getIpv6Network() {
         return ipv6Network;
     }
 
 
-    public void setIpv6Network(IPv6Network ipv6Network)
-    {
+    public void setIpv6Network(IPv6Network ipv6Network) {
         this.ipv6Network = ipv6Network;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 
     @Override
