@@ -2,14 +2,21 @@ package com.school.subnetcalculator.view;
 
 import com.googlecode.ipv6.IPv6Address;
 import com.googlecode.ipv6.IPv6NetworkMask;
+import com.school.subnetcalculator.helper.NetworkHelper;
 import com.school.subnetcalculator.model.Department;
 import com.school.subnetcalculator.model.Network;
 import com.school.subnetcalculator.model.Subnet;
+import com.school.subnetcalculator.model.ipv4.IPv4Address;
+import com.school.subnetcalculator.model.ipv4.IPv4NetworkMask;
 
 import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.print.PrinterAbortException;
 import java.lang.reflect.Array;
+import java.net.InetAddress;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -34,6 +41,8 @@ public class SubnetCreatorDialog extends JDialog {
     private JComboBox cBDepartments;
 
     public SubnetCreatorDialog(SubnetCalculatorFrame parentFrame) {
+        this.prefillDepartmentList();
+
         setModal(true);
         setSize(700, 158);
         setMinimumSize(new Dimension(700, 158));
@@ -41,8 +50,6 @@ public class SubnetCreatorDialog extends JDialog {
         setLocationRelativeTo(parentFrame);
         initGUI();
         setVisible(true);
-
-        this.prefillDepartmentList();
     }
 
     private void prefillDepartmentList() {
@@ -245,25 +252,13 @@ public class SubnetCreatorDialog extends JDialog {
         String netAddress = getTfSubnetaddress().getText();
         String netPraefix = getTfPraefix().getText();
         String netMask = getTfSubnetmask().getText();
+        Department department = (Department) getCBDepartments().getSelectedItem();
 
-        if (netAddress.contains(":")) {
-            this.createdAddress = IPv6Address.fromString(netAddress);
-
-            if (netPraefix != null) {
-                this.createdMask = IPv6NetworkMask.fromPrefixLength(Integer.parseUnsignedInt(netPraefix, 10));
-            } else if (netMask != null) {
-                this.createdMask = IPv6NetworkMask.fromAddress(IPv6Address.fromString(netMask));
-            }
-
-            if (this.createdMask != null && this.createdAddress != null) {
-
-                Subnet generatedNet = new Subnet(this.createdAddress, this.createdMask);
-
-                DefaultListModel df = (DefaultListModel) this.parentFrame.getListSubnets().getModel();
-                df.addElement(generatedNet);
-                this.parentFrame.getListNetworks().getSelectedValue().addSubnet(generatedNet);
-                this.dispose();
-            }
+        Subnet generatedSubnet = NetworkHelper.generateSubnet(netAddress, netPraefix, netMask, department);
+        if (generatedSubnet != null) {
+            DefaultListModel df = (DefaultListModel) this.parentFrame.getListSubnets().getModel();
+            df.addElement(generatedSubnet);
+            this.dispose();
         }
     }
     

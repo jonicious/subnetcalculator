@@ -3,12 +3,16 @@ package com.school.subnetcalculator.model;
 import com.googlecode.ipv6.IPv6Address;
 import com.googlecode.ipv6.IPv6Network;
 import com.googlecode.ipv6.IPv6NetworkMask;
+import com.school.subnetcalculator.model.ipv4.IPv4Address;
+import com.school.subnetcalculator.model.ipv4.IPv4Network;
+import com.school.subnetcalculator.model.ipv4.IPv4NetworkMask;
 
 import java.util.List;
 
 public class Subnet {
     // TODO: missing IPv4Network thing
     private IPv6Network ipv6Network;
+    private IPv4Network ipv4Network;
     private Department department;
     private List<Host> hosts;
 
@@ -19,6 +23,15 @@ public class Subnet {
 
     public Subnet(IPv6Address networkAddress, IPv6NetworkMask networkMask, Department department) {
         this.ipv6Network = IPv6Network.fromAddressAndMask(networkAddress, networkMask);
+        this.department = department;
+    }
+
+    public Subnet(IPv4Address networkAddress, IPv4NetworkMask networkMask) {
+        this.ipv4Network = IPv4Network.fromAddressAndMask(networkAddress, networkMask);
+    }
+
+    public Subnet(IPv4Address networkAddress, IPv4NetworkMask networkMask, Department department) {
+        this.ipv4Network = IPv4Network.fromAddressAndMask(networkAddress, networkMask);
         this.department = department;
     }
 
@@ -65,6 +78,10 @@ public class Subnet {
 
     @Override
     public String toString() {
-        return this.ipv6Network.toString();
+        if (ipv6Network != null) {
+            return this.ipv6Network.toString();
+        } else {
+            return this.ipv4Network.toString();
+        }
     }
 }

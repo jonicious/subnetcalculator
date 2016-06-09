@@ -2,6 +2,7 @@ package com.school.subnetcalculator.view;
 
 import com.googlecode.ipv6.IPv6Address;
 import com.googlecode.ipv6.IPv6NetworkMask;
+import com.school.subnetcalculator.helper.NetworkHelper;
 import com.school.subnetcalculator.model.Network;
 import com.school.subnetcalculator.model.ipv4.IPv4Address;
 import com.school.subnetcalculator.model.ipv4.IPv4Network;
@@ -219,45 +220,12 @@ class NetworkCreatorDialog extends JDialog {
         String netPraefix = getTfPraefix().getText();
         String netMask = getTfNetworkmask().getText();
 
-        if (netAddress.contains(":")) {
-            IPv6Address createdAddress = IPv6Address.fromString(netAddress);
-            IPv6NetworkMask createdMask = null;
+        Network generatedNetwork = NetworkHelper.generateNetwork(netAddress, netPraefix, netMask);
 
-            if (netPraefix != null) {
-                createdMask = IPv6NetworkMask.fromPrefixLength(Integer.parseUnsignedInt(netPraefix, 10));
-            } else if (netMask != null) {
-                createdMask = IPv6NetworkMask.fromAddress(IPv6Address.fromString(netMask));
-            }
-
-            if (createdMask != null) {
-                Network generatedNet = new Network(createdAddress, createdMask);
-                this.addNetworkAndCloseDialog(generatedNet);
-            }
-
-        } else {
-            IPv4Address createdAddress = IPv4Address.fromString(netAddress);
-            IPv4NetworkMask createdMask = null;
-
-            if(netPraefix != null) {
-                createdMask = IPv4NetworkMask.fromPrefixLength(Integer.parseUnsignedInt(netPraefix, 10));
-            } else if (netMask != null) {
-                try {
-                    createdMask = IPv4NetworkMask.fromAddress(InetAddress.getByName(netMask));
-                } catch (UnknownHostException | SocketException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            if (createdMask != null) {
-                Network generatedNet = new Network(createdAddress, createdMask);
-                this.addNetworkAndCloseDialog(generatedNet);
-            }
+        if (generatedNetwork != null) {
+            DefaultListModel df = (DefaultListModel) this.parentFrame.getListNetworks().getModel();
+            df.addElement(generatedNetwork);
+            this.dispose();
         }
-    }
-
-    private void addNetworkAndCloseDialog(Network generatedNet) {
-        DefaultListModel df = (DefaultListModel) this.parentFrame.getListNetworks().getModel();
-        df.addElement(generatedNet);
-        this.dispose();
     }
 }
