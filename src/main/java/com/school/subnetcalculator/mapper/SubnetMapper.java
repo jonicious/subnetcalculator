@@ -12,7 +12,7 @@ public class SubnetMapper
 {
     public static Subnet makeSubnetFromObject(JSONObject object)
     {
-        Subnet subnet = new Subnet(department);
+        Subnet subnet = new Subnet();
         try
         {
             String ipv6SubnetAddressString = object.getString("ipv6SubnetAddress");
