@@ -112,6 +112,15 @@ public class SubnetCalculatorFrame extends JFrame {
     private JButton getBtnDeleteNetwork() {
         if (btnDeleteNetwork == null) {
             btnDeleteNetwork = new JButton("Delete Network");
+            btnDeleteNetwork.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if (getListNetworks().isFocusOwner()) {
+						((DefaultListModel) getListNetworks().getModel())
+								.remove(getListNetworks().getSelectedIndex());
+					}
+				}
+			});
         }
         return btnDeleteNetwork;
     }
@@ -381,6 +390,15 @@ public class SubnetCalculatorFrame extends JFrame {
     private JButton getBtnDeleteSubnet() {
         if (btnDeleteSubnet == null) {
             btnDeleteSubnet = new JButton("Delete Subnet");
+            btnDeleteSubnet.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if (getListSubnets().isFocusOwner()) {
+						((DefaultListModel) getListSubnets().getModel())
+								.remove(getListSubnets().getSelectedIndex());
+					}
+				}
+			});
         }
         return btnDeleteSubnet;
     }
@@ -588,6 +606,15 @@ public class SubnetCalculatorFrame extends JFrame {
     private JButton getBtnDeleteHost() {
         if (btnDeleteHost == null) {
             btnDeleteHost = new JButton("Delete Host");
+            btnDeleteHost.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if(getListHosts().isFocusOwner()){
+						((DefaultListModel) getListHosts().getModel())
+						.remove(getListHosts().getSelectedIndex());
+					}
+				}
+			});
         }
         return btnDeleteHost;
     }
