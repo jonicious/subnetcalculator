@@ -1,10 +1,8 @@
 package com.school.subnetcalculator.view;
 
 import javax.swing.JDialog;
-import java.awt.GridBagLayout;
+import java.awt.*;
 import javax.swing.JLabel;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
 import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -14,6 +12,7 @@ import javax.swing.JButton;
 public class HostCreatorDialog extends JDialog{
 
 	private static final long serialVersionUID = -1476796903624615228L;
+	private SubnetCalculatorFrame parentFrame;
 	private JLabel lblHostaddress;
 	private JLabel lblDescription;
 	private JTextField tfHostaddress;

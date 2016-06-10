@@ -31,7 +31,6 @@ public class SubnetCalculator {
             System.out.println(subnet.getIpv4Network().toString());
         }
 
-
         new SubnetCalculatorFrame();
     }
 }

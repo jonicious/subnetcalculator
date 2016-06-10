@@ -20,14 +20,14 @@ public class VLSM {
 
             int neededSize = sortedSubnets.get(key);
             int networkMaskPrefix = calculateNeededPrefixLength(neededSize);
-            subnet.setIpv4Network(IPv4Network.fromAddressAndMask(IPv4Address.fromString(convertIpToQuartet(currentIp)), IPv4NetworkMask.fromPrefixLength(networkMaskPrefix)));
+            subnet.setIpv4Network(IPv4Network.fromAddressAndMask(IPv4Address.fromString(convertAddressToString(currentIp)), IPv4NetworkMask.fromPrefixLength(networkMaskPrefix)));
 
             int allocatedSize = findUsableHosts(networkMaskPrefix);
             subnet.setHostCount(allocatedSize);
 
-//            subnet.broadcast = convertIpToQuartet(currentIp + allocatedSize + 1);
-//            String firstUsableHost = convertIpToQuartet(currentIp + 1);
-//            String lastUsableHost = convertIpToQuartet(currentIp + allocatedSize);
+//            subnet.broadcast = convertAddressToString(currentIp + allocatedSize + 1);
+//            String firstUsableHost = convertAddressToString(currentIp + 1);
+//            String lastUsableHost = convertAddressToString(currentIp + allocatedSize);
 //            subnet.range = firstUsableHost + " - " + lastUsableHost;
 
             output.add(subnet);
@@ -67,7 +67,7 @@ public class VLSM {
         return output;
     }
 
-    private static String convertIpToQuartet(int ipAddress) {
+    private static String convertAddressToString(int ipAddress) {
         int octet1 = (ipAddress >> 24) & 255;
         int octet2 = (ipAddress >> 16) & 255;
         int octet3 = (ipAddress >> 8) & 255;
@@ -93,15 +93,5 @@ public class VLSM {
 
     private static int findUsableHosts(int mask) {
         return (int) Math.pow(2, Integer.SIZE - mask) - 2;
-    }
-
-    private static String toDecMask(int mask) {
-        if (mask == 0) {
-            return "0.0.0.0";
-        }
-        int allOne = -1;    // '255.255.255.255'
-        int shifted = allOne << (Integer.SIZE - mask);
-
-        return convertIpToQuartet(shifted);
     }
 }
