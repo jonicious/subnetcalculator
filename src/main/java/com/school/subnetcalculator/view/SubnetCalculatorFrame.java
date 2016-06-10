@@ -595,7 +595,7 @@ public class SubnetCalculatorFrame extends JFrame {
     private JButton getBtnAddHost() {
         if (btnAddHost == null) {
             btnAddHost = new JButton("Add Host");
-            btnAddHost.addActionListener(new ActionListener(e -> new HostCreatorDialog(SubnetCalculatorFrame.this));
+//            btnAddHost.addActionListener(new ActionListener(e -> new HostCreatorDialog(SubnetCalculatorFrame.this));
         }
         return btnAddHost;
     }

@@ -10,8 +10,18 @@ import com.school.subnetcalculator.model.ipv4.IPv4NetworkMask;
 import java.util.List;
 
 public class Subnet {
-    // TODO: missing IPv4Network thing
+    private String name;
     private IPv6Network ipv6Network;
+    private int hostCount;
+
+    public IPv4Network getIpv4Network() {
+        return ipv4Network;
+    }
+
+    public void setIpv4Network(IPv4Network ipv4Network) {
+        this.ipv4Network = ipv4Network;
+    }
+
     private IPv4Network ipv4Network;
     private Department department;
     private List<Host> hosts;
@@ -68,5 +78,21 @@ public class Subnet {
         } else {
             return this.ipv4Network.toString();
         }
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getHostCount() {
+        return hostCount;
+    }
+
+    public void setHostCount(int hostCount) {
+        this.hostCount = hostCount;
     }
 }
