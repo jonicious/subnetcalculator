@@ -22,8 +22,15 @@ public class HostCreatorDialog extends JDialog{
 	private JPanel pAddCancel;
 	private JButton btnAddHost;
 	private JButton btnCancel;
-	public HostCreatorDialog() {
-		initGUI();
+	
+	public HostCreatorDialog(SubnetCalculatorFrame parentFrame) {
+		setModal(true);
+        	setSize(700, 158);
+        	setMinimumSize(new Dimension(700, 158));
+        	this.parentFrame = parentFrame;
+        	setLocationRelativeTo(parentFrame);
+        	initGUI();
+        	setVisible(true);
 	}
 	private void initGUI() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
