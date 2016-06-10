@@ -92,6 +92,7 @@ public class SubnetGeneratorDialog extends JDialog {
             tfNetworkaddress = new JTextField();
             tfNetworkaddress.setEditable(false);
             tfNetworkaddress.setColumns(10);
+            tfNetworkaddress.setText(String.valueOf(parentFrame.getListNetworks().getSelectedValue().toString()));
         }
         return tfNetworkaddress;
     }
@@ -153,6 +154,12 @@ public class SubnetGeneratorDialog extends JDialog {
             for (Department department : departmentList) {
                 cbDepartments.addItem(department);
             }
+            cbDepartments.addItemListener(new ItemListener() {
+				@Override
+				public void itemStateChanged(ItemEvent e) {
+				    getTfNumberOfHosts.setText(getDepartmentHostCountMap().get(getCbDepartments().getSelectedValue()));
+				}
+			});
         }
         return cbDepartments;
     }
