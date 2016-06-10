@@ -95,4 +95,8 @@ public class Subnet {
     public void setHostCount(int hostCount) {
         this.hostCount = hostCount;
     }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
 }

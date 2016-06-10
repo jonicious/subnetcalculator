@@ -1,6 +1,8 @@
 package com.school.subnetcalculator.view;
 
+import com.school.subnetcalculator.helper.VLSM;
 import com.school.subnetcalculator.model.Department;
+import com.school.subnetcalculator.model.Subnet;
 
 import javax.swing.*;
 import javax.swing.event.PopupMenuEvent;
@@ -8,6 +10,8 @@ import javax.swing.event.PopupMenuListener;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class SubnetGeneratorDialog extends JDialog {
     private JLabel lblNetworkaddress;
@@ -159,7 +163,7 @@ public class SubnetGeneratorDialog extends JDialog {
             cbDepartments.addPopupMenuListener(new PopupMenuListener() {
                 @Override
                 public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
-
+                    getDepartmentHostCountMap().put((Department) getCbDepartments().getSelectedItem(), Integer.parseUnsignedInt(getTfNumberOfHosts().getText(), 10));
                 }
 
                 @Override
@@ -222,8 +226,31 @@ public class SubnetGeneratorDialog extends JDialog {
     private JButton getBtnGenerateSubnets() {
         if (btnGenerateSubnets == null) {
             btnGenerateSubnets = new JButton("Generate Subnets");
-            btnGenerateSubnets.addActionListener(e -> this.dispose());
+            btnGenerateSubnets.addActionListener(e -> {
+                getDepartmentHostCountMap().put((Department) getCbDepartments().getSelectedItem(), Integer.parseUnsignedInt(getTfNumberOfHosts().getText(), 10));
+
+                String majorNetwork = getTfNetworkaddress().getText();
+                Map<Department, Integer> subnets = new HashMap<>();
+
+                for (Object o : getDepartmentHostCountMap().entrySet()) {
+                    HashMap.Entry pair = (HashMap.Entry) o;
+
+                    if (Integer.parseUnsignedInt(pair.getValue().toString(), 10) != 0) {
+                        subnets.put((Department) pair.getKey(), Integer.parseUnsignedInt(pair.getValue().toString(), 10));
+                    }
+
+                    List<Subnet> subnetList = VLSM.calculateSubnets(majorNetwork, subnets);
+                    ((DefaultListModel) parentFrame.getListSubnets().getModel()).removeAllElements();
+
+                    for (Subnet sub : subnetList) {
+                        ((DefaultListModel) parentFrame.getListSubnets().getModel()).addElement(sub);
+                    }
+
+                    this.dispose();
+                }
+            });
         }
+
         return btnGenerateSubnets;
     }
 
@@ -239,13 +266,16 @@ public class SubnetGeneratorDialog extends JDialog {
         if (btnNext == null) {
             btnNext = new JButton("Next");
             btnNext.addActionListener(e -> {
-                if (!getTfNumberOfHosts().getText().isEmpty() || getTfNumberOfHosts() != null) {
+                if (getTfNumberOfHosts().getText().length() > 0 || getTfNumberOfHosts() != null) {
                     Integer hostCount = Integer.parseUnsignedInt(getTfNumberOfHosts().getText(), 10);
                     getDepartmentHostCountMap().put((Department) getCbDepartments().getSelectedItem(), hostCount);
-                    getTfNumberOfHosts().setText("");
 
                     if (getCbDepartments().getSelectedIndex() < getCbDepartments().getItemCount() - 1) {
                         getCbDepartments().setSelectedIndex(getCbDepartments().getSelectedIndex() + 1);
+                    }
+
+                    if (getDepartmentHostCountMap().get(getCbDepartments().getSelectedItem()) == 0) {
+                        getTfNumberOfHosts().setText("0");
                     }
                 }
             });
