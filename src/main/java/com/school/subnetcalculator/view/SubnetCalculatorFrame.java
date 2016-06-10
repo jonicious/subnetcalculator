@@ -51,6 +51,7 @@ public class SubnetCalculatorFrame extends JFrame {
     private JTextField tfSubnetAddress;
     private JTextField tfBroadcastaddress;
     private JLabel lblBroadcastaddress;
+    private JButton btnGenerateSubnets;
 
     public SubnetCalculatorFrame() throws IOException {
         new UIController();
@@ -283,51 +284,58 @@ public class SubnetCalculatorFrame extends JFrame {
 
     private JPanel getPNetworkButtons() {
         if (pNetworkButtons == null) {
-            pNetworkButtons = new JPanel();
-            GridBagLayout gbl_pNetworkButtons = new GridBagLayout();
-            gbl_pNetworkButtons.columnWidths = new int[]{0, 0, 0, 0};
-            gbl_pNetworkButtons.rowHeights = new int[]{0, 0, 0};
-            gbl_pNetworkButtons.columnWeights = new double[]{0.0, 0.0, 0.0,
-                    Double.MIN_VALUE};
-            gbl_pNetworkButtons.rowWeights = new double[]{0.0, 0.0,
-                    Double.MIN_VALUE};
-            pNetworkButtons.setLayout(gbl_pNetworkButtons);
-            GridBagConstraints gbc_btnAddNetwork = new GridBagConstraints();
-            gbc_btnAddNetwork.fill = GridBagConstraints.HORIZONTAL;
-            gbc_btnAddNetwork.anchor = GridBagConstraints.NORTHWEST;
-            gbc_btnAddNetwork.insets = new Insets(0, 0, 5, 5);
-            gbc_btnAddNetwork.gridx = 0;
-            gbc_btnAddNetwork.gridy = 0;
-            pNetworkButtons.add(getBtnAddNetwork(), gbc_btnAddNetwork);
-            GridBagConstraints gbc_btnDeleteNetwork = new GridBagConstraints();
-            gbc_btnDeleteNetwork.fill = GridBagConstraints.HORIZONTAL;
-            gbc_btnDeleteNetwork.anchor = GridBagConstraints.NORTHWEST;
-            gbc_btnDeleteNetwork.insets = new Insets(0, 0, 5, 5);
-            gbc_btnDeleteNetwork.gridx = 1;
-            gbc_btnDeleteNetwork.gridy = 0;
-            pNetworkButtons.add(getBtnDeleteNetwork(), gbc_btnDeleteNetwork);
-            GridBagConstraints gbc_btnOptions = new GridBagConstraints();
-            gbc_btnOptions.fill = GridBagConstraints.HORIZONTAL;
-            gbc_btnOptions.anchor = GridBagConstraints.NORTHWEST;
-            gbc_btnOptions.insets = new Insets(0, 0, 0, 5);
-            gbc_btnOptions.gridx = 0;
-            gbc_btnOptions.gridy = 1;
-            pNetworkButtons.add(getBtnOptions(), gbc_btnOptions);
-            GridBagConstraints gbc_btnLoad = new GridBagConstraints();
-            gbc_btnLoad.fill = GridBagConstraints.HORIZONTAL;
-            gbc_btnLoad.anchor = GridBagConstraints.NORTHWEST;
-            gbc_btnLoad.insets = new Insets(0, 0, 0, 5);
-            gbc_btnLoad.gridx = 1;
-            gbc_btnLoad.gridy = 1;
-            pNetworkButtons.add(getBtnLoad(), gbc_btnLoad);
-            GridBagConstraints gbc_btnSave = new GridBagConstraints();
-            gbc_btnSave.fill = GridBagConstraints.HORIZONTAL;
-            gbc_btnSave.anchor = GridBagConstraints.NORTHWEST;
-            gbc_btnSave.gridx = 2;
-            gbc_btnSave.gridy = 1;
-            pNetworkButtons.add(getBtnSave(), gbc_btnSave);
-        }
-        return pNetworkButtons;
+			pNetworkButtons = new JPanel();
+			GridBagLayout gbl_pNetworkButtons = new GridBagLayout();
+			gbl_pNetworkButtons.columnWidths = new int[] { 0, 0, 0, 0 };
+			gbl_pNetworkButtons.rowHeights = new int[] { 0, 0, 0 };
+			gbl_pNetworkButtons.columnWeights = new double[] { 0.0, 0.0, 0.0,
+					Double.MIN_VALUE };
+			gbl_pNetworkButtons.rowWeights = new double[] { 0.0, 0.0,
+					Double.MIN_VALUE };
+			pNetworkButtons.setLayout(gbl_pNetworkButtons);
+			GridBagConstraints gbc_btnAddNetwork = new GridBagConstraints();
+			gbc_btnAddNetwork.fill = GridBagConstraints.HORIZONTAL;
+			gbc_btnAddNetwork.anchor = GridBagConstraints.NORTHWEST;
+			gbc_btnAddNetwork.insets = new Insets(0, 0, 5, 5);
+			gbc_btnAddNetwork.gridx = 0;
+			gbc_btnAddNetwork.gridy = 0;
+			pNetworkButtons.add(getBtnAddNetwork(), gbc_btnAddNetwork);
+			GridBagConstraints gbc_btnDeleteNetwork = new GridBagConstraints();
+			gbc_btnDeleteNetwork.fill = GridBagConstraints.HORIZONTAL;
+			gbc_btnDeleteNetwork.anchor = GridBagConstraints.NORTHWEST;
+			gbc_btnDeleteNetwork.insets = new Insets(0, 0, 5, 5);
+			gbc_btnDeleteNetwork.gridx = 1;
+			gbc_btnDeleteNetwork.gridy = 0;
+			pNetworkButtons.add(getBtnDeleteNetwork(), gbc_btnDeleteNetwork);
+			GridBagConstraints gbc_btnGenerateSubnets = new GridBagConstraints();
+			gbc_btnGenerateSubnets.fill = GridBagConstraints.HORIZONTAL;
+			gbc_btnGenerateSubnets.anchor = GridBagConstraints.NORTHWEST;
+			gbc_btnGenerateSubnets.insets = new Insets(0, 0, 5, 0);
+			gbc_btnGenerateSubnets.gridx = 2;
+			gbc_btnGenerateSubnets.gridy = 0;
+			pNetworkButtons.add(getBtnGenerateSubnets(), gbc_btnGenerateSubnets);
+			GridBagConstraints gbc_btnOptions = new GridBagConstraints();
+			gbc_btnOptions.fill = GridBagConstraints.HORIZONTAL;
+			gbc_btnOptions.anchor = GridBagConstraints.NORTHWEST;
+			gbc_btnOptions.insets = new Insets(0, 0, 0, 5);
+			gbc_btnOptions.gridx = 0;
+			gbc_btnOptions.gridy = 1;
+			pNetworkButtons.add(getBtnOptions(), gbc_btnOptions);
+			GridBagConstraints gbc_btnLoad = new GridBagConstraints();
+			gbc_btnLoad.fill = GridBagConstraints.HORIZONTAL;
+			gbc_btnLoad.anchor = GridBagConstraints.NORTHWEST;
+			gbc_btnLoad.insets = new Insets(0, 0, 0, 5);
+			gbc_btnLoad.gridx = 1;
+			gbc_btnLoad.gridy = 1;
+			pNetworkButtons.add(getBtnLoad(), gbc_btnLoad);
+			GridBagConstraints gbc_btnSave = new GridBagConstraints();
+			gbc_btnSave.fill = GridBagConstraints.HORIZONTAL;
+			gbc_btnSave.anchor = GridBagConstraints.NORTHWEST;
+			gbc_btnSave.gridx = 2;
+			gbc_btnSave.gridy = 1;
+			pNetworkButtons.add(getBtnSave(), gbc_btnSave);
+		}
+		return pNetworkButtons;
     }
 
     public JList<Subnet> getListSubnets() {
@@ -642,4 +650,13 @@ public class SubnetCalculatorFrame extends JFrame {
         }
         return lblBroadcastaddress;
     }
+    
+    private JButton getBtnGenerateSubnets() {
+	    if (btnGenerateSubnets == null) {
+		    btnGenerateSubnets = new JButton("Generate Subnets");
+			btnGenerateSubnets.addActionListener(e -> new SubnetGeneratorDialog(SubnetCalculatorFrame.this));
+	    }
+	    return btnGenerateSubnets;
+	}
+    
 }
