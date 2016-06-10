@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.util.Collections;
 import java.util.List;
 import org.json.JSONObject;
 
@@ -29,7 +30,7 @@ public class DocumentParser
             e.printStackTrace();
         }
 
-        return null;
+        return Collections.emptyList();
     }
 
 
