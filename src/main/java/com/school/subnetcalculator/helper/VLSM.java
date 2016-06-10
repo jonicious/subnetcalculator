@@ -12,7 +12,7 @@ public class VLSM {
         Map<String, Integer> sortedSubnets = sortMap(subnets);
         List<Subnet> output = new ArrayList<>();
 
-        int currentIp = findFirstIp(networkAddress);
+        int currentIp = getFirstIPv4(networkAddress);
 
         for (String key : sortedSubnets.keySet()) {
             Subnet subnet = new Subnet();
@@ -76,9 +76,9 @@ public class VLSM {
         return octet1 + "." + octet2 + "." + octet3 + "." + octet4;
     }
 
-    private static int findFirstIp(String majorNetwork) {
+    private static int getFirstIPv4(String majorNetwork) {
         String[] ip = majorNetwork.split("/");
-        int mask = Integer.parseInt(ip[1]); // parse CIDR mask
+        int mask = Integer.parseInt(ip[1]);
         int offset = Integer.SIZE - mask;
         int majorAddress = convertQuartetToBinaryString(majorNetwork);
 

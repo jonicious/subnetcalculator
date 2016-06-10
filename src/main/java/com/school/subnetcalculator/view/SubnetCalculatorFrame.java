@@ -9,8 +9,6 @@ import com.school.subnetcalculator.model.Subnet;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -654,8 +652,12 @@ public class SubnetCalculatorFrame extends JFrame {
     private JButton getBtnGenerateSubnets() {
 	    if (btnGenerateSubnets == null) {
 		    btnGenerateSubnets = new JButton("Generate Subnets");
-			btnGenerateSubnets.addActionListener(e -> new SubnetGeneratorDialog(SubnetCalculatorFrame.this));
-	    }
+            btnGenerateSubnets.addActionListener(e -> {
+                if (getListNetworks().getSelectedValue() != null) {
+                    new SubnetGeneratorDialog(SubnetCalculatorFrame.this);
+                }
+            });
+        }
 	    return btnGenerateSubnets;
 	}
     

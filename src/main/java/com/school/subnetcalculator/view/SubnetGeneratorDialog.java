@@ -3,6 +3,8 @@ package com.school.subnetcalculator.view;
 import com.school.subnetcalculator.model.Department;
 
 import javax.swing.*;
+import javax.swing.event.PopupMenuEvent;
+import javax.swing.event.PopupMenuListener;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -154,12 +156,22 @@ public class SubnetGeneratorDialog extends JDialog {
             for (Department department : departmentList) {
                 cbDepartments.addItem(department);
             }
-            cbDepartments.addItemListener(new ItemListener() {
-				@Override
-				public void itemStateChanged(ItemEvent e) {
-				    getTfNumberOfHosts.setText(getDepartmentHostCountMap().get(getCbDepartments().getSelectedValue()));
-				}
-			});
+            cbDepartments.addPopupMenuListener(new PopupMenuListener() {
+                @Override
+                public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
+
+                }
+
+                @Override
+                public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+                    getTfNumberOfHosts().setText(getDepartmentHostCountMap().get(getCbDepartments().getSelectedItem()).toString());
+                }
+
+                @Override
+                public void popupMenuCanceled(PopupMenuEvent e) {
+
+                }
+            });
         }
         return cbDepartments;
     }
@@ -175,6 +187,7 @@ public class SubnetGeneratorDialog extends JDialog {
         if (tfNumberOfHosts == null) {
             tfNumberOfHosts = new JTextField();
             tfNumberOfHosts.setColumns(10);
+            tfNumberOfHosts.setText("0");
         }
         return tfNumberOfHosts;
     }
@@ -241,6 +254,13 @@ public class SubnetGeneratorDialog extends JDialog {
     }
 
     public HashMap<Department, Integer> getDepartmentHostCountMap() {
+        if (departmentHostCountMap == null) {
+            departmentHostCountMap = new HashMap<>();
+
+            for(Department dep : departmentList) {
+                departmentHostCountMap.put(dep, 0);
+            }
+        }
         return departmentHostCountMap;
     }
 }
