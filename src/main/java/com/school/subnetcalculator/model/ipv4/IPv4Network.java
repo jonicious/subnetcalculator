@@ -44,7 +44,7 @@ public class IPv4Network {
         return this.getCIDRNotation();
     }
 
-    private String getCIDRNotation() {
+    public String getCIDRNotation() {
         return this.networkAddress.toString() + "/" + this.networkMask.toString();
     }
 }
