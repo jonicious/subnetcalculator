@@ -8,8 +8,6 @@ import com.school.subnetcalculator.model.Subnet;
 import com.school.subnetcalculator.model.ipv4.IPv4Address;
 import com.school.subnetcalculator.model.ipv4.IPv4NetworkMask;
 
-import java.net.InetAddress;
-import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;

@@ -107,8 +107,8 @@ public class SubnetCalculatorFrame extends JFrame {
             btnDeleteNetwork = new JButton("Delete Network");
             btnDeleteNetwork.addActionListener(e -> {
                 if (getListNetworks().getSelectedValue() != null) {
-                    getListNetworks().remove(getListNetworks().getSelectedIndex());
-                    ((DefaultListModel) getListNetworks().getModel()).remove(getListNetworks().getSelectedIndex());
+
+                    ((DefaultListModel) getListNetworks().getModel()).removeElement(getListNetworks().getSelectedValue());
                 }
             });
         }
@@ -196,13 +196,16 @@ public class SubnetCalculatorFrame extends JFrame {
             listNetworks.setModel(new DefaultListModel<>());
             listNetworks.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             listNetworks.addListSelectionListener(e -> {
-                getTpNetworkSubnetsHosts().setEnabledAt(1, true);
-                getTfNetwork().setText(String.valueOf(getListNetworks().getSelectedValue().toString()));
-                DefaultListModel df = (DefaultListModel) getListSubnets().getModel();
-
-                df.clear();
-                getListNetworks().getSelectedValue().getSubnetList().forEach(df::addElement);
-
+                if (getListNetworks().getSelectedValue() != null) {
+                    getTpNetworkSubnetsHosts().setEnabledAt(1, true);
+                    getTfNetwork().setText(String.valueOf(getListNetworks().getSelectedValue().toString()));
+                    DefaultListModel df = (DefaultListModel) getListSubnets().getModel();
+                    df.clear();
+                    getListNetworks().getSelectedValue().getSubnetList().forEach(df::addElement);
+                } else {
+                    getTpNetworkSubnetsHosts().setEnabledAt(1, false);
+                    getTpNetworkSubnetsHosts().setEnabledAt(2, false);
+                }
             });
         }
         return listNetworks;
@@ -520,18 +523,20 @@ public class SubnetCalculatorFrame extends JFrame {
             listHosts = new JList<Host>();
             listHosts.setModel(new DefaultListModel<>());
             listHosts.addListSelectionListener(e -> {
-                String addrString = getListHosts().getSelectedValue().toString().replace(":", " ").replace(".", " ");
-                String binaryString = "";
+                if (getListHosts().getSelectedValue() != null) {
+                    String addrString = getListHosts().getSelectedValue().toString().replace(":", " ").replace(".", " ");
+                    String binaryString = "";
 
-                String[] stringParts = addrString.split(" ");
-                for (String s : stringParts) {
-                    binaryString += Converter.convertHexadecimalToBinary(s) + " ";
+                    String[] stringParts = addrString.split(" ");
+                    for (String s : stringParts) {
+                        binaryString += Converter.convertHexadecimalToBinary(s) + " ";
+                    }
+
+                    if (getListHosts().getSelectedValue().getDescription() != null)
+                        getTaDescription().setText(getListHosts().getSelectedValue().getDescription());
+
+                    getTfBinary().setText(binaryString);
                 }
-
-                if(getListHosts().getSelectedValue().getDescription() != null)
-                    getTaDescription().setText(getListHosts().getSelectedValue().getDescription());
-
-                getTfBinary().setText(binaryString);
             });
         }
         return listHosts;

@@ -22,6 +22,10 @@ public class IPv4Address {
         return address;
     }
 
+    public boolean isInNetwork(IPv4Network network) {
+        return network.getSnUtils().getInfo().isInRange(address.toString().replace("/", ""));
+    }
+
     @Override
     public String toString() {
         return this.address.getHostAddress();
