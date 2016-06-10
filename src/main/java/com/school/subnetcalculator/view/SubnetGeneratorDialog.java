@@ -31,8 +31,13 @@ public class SubnetGeneratorDialog extends JDialog {
 	private SubnetCalculatorFrame parentFrame;
 
 	public SubnetGeneratorDialog(SubnetCalculatorFrame parentFrame) {
-		this.parentFrame = parentFrame;
-		initGUI();
+		setModal(true);
+		setSize(700, 158);
+        	setMinimumSize(new Dimension(700, 158));
+        	this.parentFrame = parentFrame;
+        	setLocationRelativeTo(parentFrame);
+        	initGUI();
+        	setVisible(true);
 	}
 
 	private void initGUI() {
