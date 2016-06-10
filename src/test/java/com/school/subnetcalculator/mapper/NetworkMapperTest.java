@@ -37,7 +37,7 @@ public class NetworkMapperTest
         hosts.add(host1);
         hosts.add(host2);
 
-        Subnet subnet = new Subnet(department);
+        Subnet subnet = new Subnet();
         subnet.setHosts(hosts);
         subnet.setIpv6Network(ipv6ExampleNetwork);
 
