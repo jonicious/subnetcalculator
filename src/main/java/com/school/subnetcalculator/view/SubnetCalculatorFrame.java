@@ -545,13 +545,24 @@ public class SubnetCalculatorFrame extends JFrame {
         return lblHosts;
     }
 
-    private JList<Host> getListHosts() {
+    public JList<Host> getListHosts() {
         if (listHosts == null) {
             listHosts = new JList<Host>();
             listHosts.setModel(new DefaultListModel<>());
             listHosts.addListSelectionListener(e -> {
-                getTfBinary().setText(Converter.convertHexadecimalToBinary(getListHosts().getSelectedValue().getIpv6Address()
-                        .toString().replace(":", " ")));
+                String addrString = getListHosts().getSelectedValue().toString().replace(":", " ").replace(".", " ");
+                String binaryString = "";
+                String hexadecimalString = "";
+
+                String[] stringParts = addrString.split(" ");
+                for (String s : stringParts) {
+                    binaryString += Converter.convertHexadecimalToBinary(s) + " ";
+                }
+
+                if(getListHosts().getSelectedValue().getDescription() != null)
+                    getTaDescription().setText(getListHosts().getSelectedValue().getDescription());
+
+                getTfBinary().setText(binaryString);
             });
         }
         return listHosts;
@@ -660,5 +671,4 @@ public class SubnetCalculatorFrame extends JFrame {
         }
 	    return btnGenerateSubnets;
 	}
-    
 }
