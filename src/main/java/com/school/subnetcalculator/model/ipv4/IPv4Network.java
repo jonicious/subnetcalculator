@@ -11,7 +11,6 @@ public class IPv4Network {
         this.networkAddress = address;
         this.networkMask = networkMask;
         this.snUtils = new SubnetUtils(this.networkAddress.toString() + "/" + this.networkMask.toString());
-    }
 
     public static IPv4Network fromAddressAndMask(IPv4Address address, IPv4NetworkMask networkMask) {
         return new IPv4Network(address, networkMask);
@@ -38,6 +37,12 @@ public class IPv4Network {
     public IPv4Address getFirstAddress() {
         return IPv4Address.fromString(snUtils.getInfo().getAddress());
     }
+
+    public boolean IPv4AdressIsInNetwork(IPv4Address address) {
+        boolean isInRange = snUtils.getInfo().isInRange(address.toString());
+        return isInRange;
+    }
+
 
     @Override
     public String toString() {
