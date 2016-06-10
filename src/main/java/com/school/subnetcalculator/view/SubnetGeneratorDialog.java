@@ -28,6 +28,7 @@ public class SubnetGeneratorDialog extends JDialog {
 	private JPanel pGenerateCancel;
 	private JButton btnGenerateSubnets;
 	private JButton btnCancel;
+	private JButton btnNext;
 	private SubnetCalculatorFrame parentFrame;
 
 	public SubnetGeneratorDialog(SubnetCalculatorFrame parentFrame) {
@@ -98,10 +99,10 @@ public class SubnetGeneratorDialog extends JDialog {
 		if (pDepartmentsAndHosts == null) {
 			pDepartmentsAndHosts = new JPanel();
 			GridBagLayout gbl_pDepartmentsAndHosts = new GridBagLayout();
-			gbl_pDepartmentsAndHosts.columnWidths = new int[] { 0, 0, 0, 0, 0 };
+			gbl_pDepartmentsAndHosts.columnWidths = new int[] { 0, 0, 0, 0, 0, 0 };
 			gbl_pDepartmentsAndHosts.rowHeights = new int[] { 0, 0 };
 			gbl_pDepartmentsAndHosts.columnWeights = new double[] { 0.0, 1.0,
-					0.0, 0.0, Double.MIN_VALUE };
+					0.0, 0.0, 0.0, Double.MIN_VALUE };
 			gbl_pDepartmentsAndHosts.rowWeights = new double[] { 0.0,
 					Double.MIN_VALUE };
 			pDepartmentsAndHosts.setLayout(gbl_pDepartmentsAndHosts);
@@ -125,10 +126,15 @@ public class SubnetGeneratorDialog extends JDialog {
 			pDepartmentsAndHosts.add(getLblNumberOfHosts(),
 					gbc_lblNumberOfHosts);
 			GridBagConstraints gbc_tfNumberOfHosts = new GridBagConstraints();
+			gbc_tfNumberOfHosts.insets = new Insets(0, 0, 0, 5);
 			gbc_tfNumberOfHosts.fill = GridBagConstraints.HORIZONTAL;
 			gbc_tfNumberOfHosts.gridx = 3;
 			gbc_tfNumberOfHosts.gridy = 0;
 			pDepartmentsAndHosts.add(getTfNumberOfHosts(), gbc_tfNumberOfHosts);
+			GridBagConstraints gbc_btnNext = new GridBagConstraints();
+			gbc_btnNext.gridx = 4;
+			gbc_btnNext.gridy = 0;
+			pDepartmentsAndHosts.add(getBtnNext(), gbc_btnNext);
 		}
 		return pDepartmentsAndHosts;
 	}
@@ -203,5 +209,12 @@ public class SubnetGeneratorDialog extends JDialog {
 			btnCancel.addActionListener(e -> this.dispose());
 		}
 		return btnCancel;
+	}
+	
+	private JButton getBtnNext() {
+		if (btnNext == null) {
+			btnNext = new JButton("Next");
+		}
+		return btnNext;
 	}
 }
