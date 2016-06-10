@@ -1,13 +1,11 @@
 package com.school.subnetcalculator.view;
 
-import javax.swing.JDialog;
+import com.school.subnetcalculator.model.Host;
+import com.school.subnetcalculator.model.Subnet;
+import com.school.subnetcalculator.model.ipv4.IPv4Address;
+
+import javax.swing.*;
 import java.awt.*;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JPanel;
-import javax.swing.JButton;
 
 public class HostCreatorDialog extends JDialog{
 
@@ -143,6 +141,24 @@ public class HostCreatorDialog extends JDialog{
 	}
 	
 	private void addHostToHostList(){
+		IPv4Address addr = IPv4Address.fromString(getTfHostaddress().getText());
+		String desc = getTaDescription().getText();
+		Host host = new Host(addr, desc);
+
+		Subnet sn = this.parentFrame.getListSubnets().getSelectedValue();
+
+		if (!host.getIpv4Address().isInNetwork(sn.getIpv4Network())) {
+			return;
+			// TODO: inform user
+		}
+
+		if (host.getIpv4Address().toString() == sn.getIpv4Network().getFirstAddress().toString() || host.getIpv4Address().toString() == sn.getIpv4Network()
+				.getLastAddress().toString()) {
+			return;
+		}
+
+		this.parentFrame.getListSubnets().getSelectedValue().addHostToHostList(host);
+		((DefaultListModel) this.parentFrame.getListHosts().getModel()).addElement(host);
 		this.dispose();
 	}
 }

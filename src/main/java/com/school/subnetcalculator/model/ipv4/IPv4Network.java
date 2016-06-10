@@ -11,13 +11,14 @@ public class IPv4Network {
         this.networkAddress = address;
         this.networkMask = networkMask;
         this.snUtils = new SubnetUtils(this.networkAddress.toString() + "/" + this.networkMask.toString());
+    }
 
     public static IPv4Network fromAddressAndMask(IPv4Address address, IPv4NetworkMask networkMask) {
         return new IPv4Network(address, networkMask);
     }
 
     private static IPv4Network fromString(String networkString) throws IllegalArgumentException {
-        if(networkString.indexOf('/') >= 0) {
+        if (networkString.indexOf('/') >= 0) {
             IPv4Address netAddress = IPv4Address.fromString(networkString.substring(0, networkString.indexOf('/')));
             IPv4NetworkMask netMask = IPv4NetworkMask.fromPrefixLength(Integer.parseUnsignedInt(networkString.substring(1, networkString.indexOf('/')), 10));
             return new IPv4Network(netAddress, netMask);
@@ -38,11 +39,6 @@ public class IPv4Network {
         return IPv4Address.fromString(snUtils.getInfo().getAddress());
     }
 
-    public boolean IPv4AdressIsInNetwork(IPv4Address address) {
-        boolean isInRange = snUtils.getInfo().isInRange(address.toString());
-        return isInRange;
-    }
-
 
     @Override
     public String toString() {
@@ -51,5 +47,9 @@ public class IPv4Network {
 
     public String getCIDRNotation() {
         return this.networkAddress.toString() + "/" + this.networkMask.toString();
+    }
+
+    public SubnetUtils getSnUtils() {
+        return snUtils;
     }
 }

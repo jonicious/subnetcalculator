@@ -1,13 +1,17 @@
 package com.school.subnetcalculator.model;
 
 import com.googlecode.ipv6.IPv6Address;
-
-import java.net.InetAddress;
+import com.school.subnetcalculator.model.ipv4.IPv4Address;
 
 public class Host {
     private String description;
-    private InetAddress ipv4Address;
+    private IPv4Address ipv4Address;
     private IPv6Address iPv6Address;
+
+    public Host(IPv4Address addr, String description) {
+        this.ipv4Address = addr;
+        this.description = description;
+    }
 
 
     public String getDescription() {
@@ -19,13 +23,15 @@ public class Host {
         this.description = description;
     }
 
+    public Host() {
+    }
 
-    public InetAddress getIpv4Address() {
+    public IPv4Address getIpv4Address() {
         return ipv4Address;
     }
 
 
-    public void setIpv4Address(InetAddress ipv4Address) {
+    public void setIpv4Address(IPv4Address ipv4Address) {
         this.ipv4Address = ipv4Address;
     }
 
@@ -42,6 +48,10 @@ public class Host {
 
     @Override
     public String toString() {
-        return this.iPv6Address.toString();
+        if(iPv6Address != null) {
+            return this.iPv6Address.toString();
+        } else {
+            return this.ipv4Address.toString();
+        }
     }
 }

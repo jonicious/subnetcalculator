@@ -35,9 +35,7 @@ public class SubnetCalculatorFrame extends JFrame {
     private JPanel pHosts;
     private JLabel lblDescription;
     private JLabel lblBinary;
-    private JLabel lblHexadecimal;
     private JTextField tfBinary;
-    private JTextField tfHexadecimal;
     private JLabel lblHosts;
     private JList<Host> listHosts;
     private JScrollPane sPDescription;
@@ -50,6 +48,8 @@ public class SubnetCalculatorFrame extends JFrame {
     private JTextField tfBroadcastaddress;
     private JLabel lblBroadcastaddress;
     private JButton btnGenerateSubnets;
+    private JLabel lblDepartment;
+    private JTextField tfDepartment;
 
     public SubnetCalculatorFrame() throws IOException {
         new UIController();
@@ -109,8 +109,8 @@ public class SubnetCalculatorFrame extends JFrame {
             btnDeleteNetwork = new JButton("Delete Network");
             btnDeleteNetwork.addActionListener(e -> {
                 if (getListNetworks().getSelectedValue() != null) {
-                    getListNetworks().remove(getListNetworks().getSelectedIndex());
-                    ((DefaultListModel) getListNetworks().getModel()).remove(getListNetworks().getSelectedIndex());
+
+                    ((DefaultListModel) getListNetworks().getModel()).removeElement(getListNetworks().getSelectedValue());
                 }
             });
         }
@@ -198,13 +198,16 @@ public class SubnetCalculatorFrame extends JFrame {
             listNetworks.setModel(new DefaultListModel<>());
             listNetworks.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             listNetworks.addListSelectionListener(e -> {
-                getTpNetworkSubnetsHosts().setEnabledAt(1, true);
-                getTfNetwork().setText(String.valueOf(getListNetworks().getSelectedValue().toString()));
-                DefaultListModel df = (DefaultListModel) getListSubnets().getModel();
-
-                df.clear();
-                getListNetworks().getSelectedValue().getSubnetList().forEach(df::addElement);
-
+                if (getListNetworks().getSelectedValue() != null) {
+                    getTpNetworkSubnetsHosts().setEnabledAt(1, true);
+                    getTfNetwork().setText(String.valueOf(getListNetworks().getSelectedValue().toString()));
+                    DefaultListModel df = (DefaultListModel) getListSubnets().getModel();
+                    df.clear();
+                    getListNetworks().getSelectedValue().getSubnetList().forEach(df::addElement);
+                } else {
+                    getTpNetworkSubnetsHosts().setEnabledAt(1, false);
+                    getTpNetworkSubnetsHosts().setEnabledAt(2, false);
+                }
             });
         }
         return listNetworks;
@@ -234,6 +237,18 @@ public class SubnetCalculatorFrame extends JFrame {
             gbc_tfNetwork.gridx = 1;
             gbc_tfNetwork.gridy = 0;
             pSubnets.add(getTfNetwork(), gbc_tfNetwork);
+            GridBagConstraints gbc_lblDepartment = new GridBagConstraints();
+            gbc_lblDepartment.anchor = GridBagConstraints.NORTHWEST;
+            gbc_lblDepartment.insets = new Insets(5, 5, 5, 5);
+            gbc_lblDepartment.gridx = 0;
+            gbc_lblDepartment.gridy = 1;
+            pSubnets.add(getLblDepartment(), gbc_lblDepartment);
+            GridBagConstraints gbc_tfDepartment = new GridBagConstraints();
+            gbc_tfDepartment.insets = new Insets(0, 0, 5, 0);
+            gbc_tfDepartment.fill = GridBagConstraints.HORIZONTAL;
+            gbc_tfDepartment.gridx = 1;
+            gbc_tfDepartment.gridy = 1;
+            pSubnets.add(getTfDepartment(), gbc_tfDepartment);
             GridBagConstraints gbc_lblSubnets = new GridBagConstraints();
             gbc_lblSubnets.anchor = GridBagConstraints.NORTHWEST;
             gbc_lblSubnets.insets = new Insets(5, 5, 5, 5);
@@ -255,6 +270,22 @@ public class SubnetCalculatorFrame extends JFrame {
             pSubnets.add(getPSubnetButtons(), gbc_pSubnetButtons);
         }
         return pSubnets;
+    }
+
+    private JTextField getTfDepartment() {
+        if (tfDepartment == null) {
+            tfDepartment = new JTextField();
+            tfDepartment.setColumns(10);
+            tfDepartment.setEditable(false);
+        }
+        return tfDepartment;
+    }
+
+    private JLabel getLblDepartment() {
+        if (lblDepartment == null) {
+            lblDepartment = new JLabel("Department");
+        }
+        return lblDepartment;
     }
 
     private JLabel getLblNetwork() {
@@ -282,58 +313,58 @@ public class SubnetCalculatorFrame extends JFrame {
 
     private JPanel getPNetworkButtons() {
         if (pNetworkButtons == null) {
-			pNetworkButtons = new JPanel();
-			GridBagLayout gbl_pNetworkButtons = new GridBagLayout();
-			gbl_pNetworkButtons.columnWidths = new int[] { 0, 0, 0, 0 };
-			gbl_pNetworkButtons.rowHeights = new int[] { 0, 0, 0 };
-			gbl_pNetworkButtons.columnWeights = new double[] { 0.0, 0.0, 0.0,
-					Double.MIN_VALUE };
-			gbl_pNetworkButtons.rowWeights = new double[] { 0.0, 0.0,
-					Double.MIN_VALUE };
-			pNetworkButtons.setLayout(gbl_pNetworkButtons);
-			GridBagConstraints gbc_btnAddNetwork = new GridBagConstraints();
-			gbc_btnAddNetwork.fill = GridBagConstraints.HORIZONTAL;
-			gbc_btnAddNetwork.anchor = GridBagConstraints.NORTHWEST;
-			gbc_btnAddNetwork.insets = new Insets(0, 0, 5, 5);
-			gbc_btnAddNetwork.gridx = 0;
-			gbc_btnAddNetwork.gridy = 0;
-			pNetworkButtons.add(getBtnAddNetwork(), gbc_btnAddNetwork);
-			GridBagConstraints gbc_btnDeleteNetwork = new GridBagConstraints();
-			gbc_btnDeleteNetwork.fill = GridBagConstraints.HORIZONTAL;
-			gbc_btnDeleteNetwork.anchor = GridBagConstraints.NORTHWEST;
-			gbc_btnDeleteNetwork.insets = new Insets(0, 0, 5, 5);
-			gbc_btnDeleteNetwork.gridx = 1;
-			gbc_btnDeleteNetwork.gridy = 0;
-			pNetworkButtons.add(getBtnDeleteNetwork(), gbc_btnDeleteNetwork);
-			GridBagConstraints gbc_btnGenerateSubnets = new GridBagConstraints();
-			gbc_btnGenerateSubnets.fill = GridBagConstraints.HORIZONTAL;
-			gbc_btnGenerateSubnets.anchor = GridBagConstraints.NORTHWEST;
-			gbc_btnGenerateSubnets.insets = new Insets(0, 0, 5, 0);
-			gbc_btnGenerateSubnets.gridx = 2;
-			gbc_btnGenerateSubnets.gridy = 0;
-			pNetworkButtons.add(getBtnGenerateSubnets(), gbc_btnGenerateSubnets);
-			GridBagConstraints gbc_btnOptions = new GridBagConstraints();
-			gbc_btnOptions.fill = GridBagConstraints.HORIZONTAL;
-			gbc_btnOptions.anchor = GridBagConstraints.NORTHWEST;
-			gbc_btnOptions.insets = new Insets(0, 0, 0, 5);
-			gbc_btnOptions.gridx = 0;
-			gbc_btnOptions.gridy = 1;
-			pNetworkButtons.add(getBtnOptions(), gbc_btnOptions);
-			GridBagConstraints gbc_btnLoad = new GridBagConstraints();
-			gbc_btnLoad.fill = GridBagConstraints.HORIZONTAL;
-			gbc_btnLoad.anchor = GridBagConstraints.NORTHWEST;
-			gbc_btnLoad.insets = new Insets(0, 0, 0, 5);
-			gbc_btnLoad.gridx = 1;
-			gbc_btnLoad.gridy = 1;
-			pNetworkButtons.add(getBtnLoad(), gbc_btnLoad);
-			GridBagConstraints gbc_btnSave = new GridBagConstraints();
-			gbc_btnSave.fill = GridBagConstraints.HORIZONTAL;
-			gbc_btnSave.anchor = GridBagConstraints.NORTHWEST;
-			gbc_btnSave.gridx = 2;
-			gbc_btnSave.gridy = 1;
-			pNetworkButtons.add(getBtnSave(), gbc_btnSave);
-		}
-		return pNetworkButtons;
+            pNetworkButtons = new JPanel();
+            GridBagLayout gbl_pNetworkButtons = new GridBagLayout();
+            gbl_pNetworkButtons.columnWidths = new int[]{0, 0, 0, 0};
+            gbl_pNetworkButtons.rowHeights = new int[]{0, 0, 0};
+            gbl_pNetworkButtons.columnWeights = new double[]{0.0, 0.0, 0.0,
+                    Double.MIN_VALUE};
+            gbl_pNetworkButtons.rowWeights = new double[]{0.0, 0.0,
+                    Double.MIN_VALUE};
+            pNetworkButtons.setLayout(gbl_pNetworkButtons);
+            GridBagConstraints gbc_btnAddNetwork = new GridBagConstraints();
+            gbc_btnAddNetwork.fill = GridBagConstraints.HORIZONTAL;
+            gbc_btnAddNetwork.anchor = GridBagConstraints.NORTHWEST;
+            gbc_btnAddNetwork.insets = new Insets(0, 0, 5, 5);
+            gbc_btnAddNetwork.gridx = 0;
+            gbc_btnAddNetwork.gridy = 0;
+            pNetworkButtons.add(getBtnAddNetwork(), gbc_btnAddNetwork);
+            GridBagConstraints gbc_btnDeleteNetwork = new GridBagConstraints();
+            gbc_btnDeleteNetwork.fill = GridBagConstraints.HORIZONTAL;
+            gbc_btnDeleteNetwork.anchor = GridBagConstraints.NORTHWEST;
+            gbc_btnDeleteNetwork.insets = new Insets(0, 0, 5, 5);
+            gbc_btnDeleteNetwork.gridx = 1;
+            gbc_btnDeleteNetwork.gridy = 0;
+            pNetworkButtons.add(getBtnDeleteNetwork(), gbc_btnDeleteNetwork);
+            GridBagConstraints gbc_btnGenerateSubnets = new GridBagConstraints();
+            gbc_btnGenerateSubnets.fill = GridBagConstraints.HORIZONTAL;
+            gbc_btnGenerateSubnets.anchor = GridBagConstraints.NORTHWEST;
+            gbc_btnGenerateSubnets.insets = new Insets(0, 0, 5, 0);
+            gbc_btnGenerateSubnets.gridx = 2;
+            gbc_btnGenerateSubnets.gridy = 0;
+            pNetworkButtons.add(getBtnGenerateSubnets(), gbc_btnGenerateSubnets);
+            GridBagConstraints gbc_btnOptions = new GridBagConstraints();
+            gbc_btnOptions.fill = GridBagConstraints.HORIZONTAL;
+            gbc_btnOptions.anchor = GridBagConstraints.NORTHWEST;
+            gbc_btnOptions.insets = new Insets(0, 0, 0, 5);
+            gbc_btnOptions.gridx = 0;
+            gbc_btnOptions.gridy = 1;
+            pNetworkButtons.add(getBtnOptions(), gbc_btnOptions);
+            GridBagConstraints gbc_btnLoad = new GridBagConstraints();
+            gbc_btnLoad.fill = GridBagConstraints.HORIZONTAL;
+            gbc_btnLoad.anchor = GridBagConstraints.NORTHWEST;
+            gbc_btnLoad.insets = new Insets(0, 0, 0, 5);
+            gbc_btnLoad.gridx = 1;
+            gbc_btnLoad.gridy = 1;
+            pNetworkButtons.add(getBtnLoad(), gbc_btnLoad);
+            GridBagConstraints gbc_btnSave = new GridBagConstraints();
+            gbc_btnSave.fill = GridBagConstraints.HORIZONTAL;
+            gbc_btnSave.anchor = GridBagConstraints.NORTHWEST;
+            gbc_btnSave.gridx = 2;
+            gbc_btnSave.gridy = 1;
+            pNetworkButtons.add(getBtnSave(), gbc_btnSave);
+        }
+        return pNetworkButtons;
     }
 
     public JList<Subnet> getListSubnets() {
@@ -345,12 +376,23 @@ public class SubnetCalculatorFrame extends JFrame {
                     getTpNetworkSubnetsHosts().setEnabledAt(2, true);
                     getTfSubnetAddress().setText(String.valueOf(getListSubnets().getSelectedValue().toString()));
 
+                    if (getListSubnets().getSelectedValue().getDepartment() != null) {
+                        getTfDepartment().setText(getListSubnets().getSelectedValue().getDepartment().getName());
+                    }
+
+                    if (getListSubnets().getSelectedValue().getIpv4Network().getFirstAddress() != null) {
+                        getTfBroadcastaddress().setText(getListSubnets().getSelectedValue().getIpv4Network().getLastAddress().toString());
+                    }
+
                     DefaultListModel df = (DefaultListModel) getListHosts().getModel();
                     df.clear();
 
                     if (getListSubnets().getSelectedValue().getHosts() != null) {
                         getListSubnets().getSelectedValue().getHosts().forEach(df::addElement);
                     }
+                } else {
+                    getTfDepartment().setText("");
+                    getTpNetworkSubnetsHosts().setEnabledAt(2, false);
                 }
             });
         }
@@ -410,11 +452,11 @@ public class SubnetCalculatorFrame extends JFrame {
             pHosts = new JPanel();
             GridBagLayout gbl_pHosts = new GridBagLayout();
             gbl_pHosts.columnWidths = new int[]{0, 0, 0};
-            gbl_pHosts.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
+            gbl_pHosts.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};
             gbl_pHosts.columnWeights = new double[]{0.0, 1.0,
                     Double.MIN_VALUE};
-            gbl_pHosts.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0,
-                    Double.MIN_VALUE};
+            gbl_pHosts.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0,
+                    1.0, 0.0, Double.MIN_VALUE};
             pHosts.setLayout(gbl_pHosts);
             GridBagConstraints gbc_lblSubnetaddress = new GridBagConstraints();
             gbc_lblSubnetaddress.anchor = GridBagConstraints.NORTHWEST;
@@ -465,35 +507,23 @@ public class SubnetCalculatorFrame extends JFrame {
             gbc_tfBinary.gridx = 1;
             gbc_tfBinary.gridy = 3;
             pHosts.add(getTfBinary(), gbc_tfBinary);
-            GridBagConstraints gbc_lblHexadecimal = new GridBagConstraints();
-            gbc_lblHexadecimal.anchor = GridBagConstraints.NORTHWEST;
-            gbc_lblHexadecimal.insets = new Insets(5, 5, 5, 5);
-            gbc_lblHexadecimal.gridx = 0;
-            gbc_lblHexadecimal.gridy = 4;
-            pHosts.add(getLblHexadecimal(), gbc_lblHexadecimal);
-            GridBagConstraints gbc_tfHexadecimal = new GridBagConstraints();
-            gbc_tfHexadecimal.insets = new Insets(0, 0, 5, 0);
-            gbc_tfHexadecimal.fill = GridBagConstraints.HORIZONTAL;
-            gbc_tfHexadecimal.gridx = 1;
-            gbc_tfHexadecimal.gridy = 4;
-            pHosts.add(getTfHexadecimal(), gbc_tfHexadecimal);
             GridBagConstraints gbc_lblDescription = new GridBagConstraints();
             gbc_lblDescription.anchor = GridBagConstraints.NORTHWEST;
             gbc_lblDescription.insets = new Insets(5, 5, 5, 5);
             gbc_lblDescription.gridx = 0;
-            gbc_lblDescription.gridy = 5;
+            gbc_lblDescription.gridy = 4;
             pHosts.add(getLblDescription(), gbc_lblDescription);
             GridBagConstraints gbc_sPDescription = new GridBagConstraints();
             gbc_sPDescription.insets = new Insets(0, 0, 5, 0);
             gbc_sPDescription.fill = GridBagConstraints.BOTH;
             gbc_sPDescription.gridx = 1;
-            gbc_sPDescription.gridy = 5;
+            gbc_sPDescription.gridy = 4;
             pHosts.add(getSPDescription(), gbc_sPDescription);
             GridBagConstraints gbc_pHostButtons = new GridBagConstraints();
             gbc_pHostButtons.gridwidth = 2;
             gbc_pHostButtons.fill = GridBagConstraints.BOTH;
             gbc_pHostButtons.gridx = 0;
-            gbc_pHostButtons.gridy = 6;
+            gbc_pHostButtons.gridy = 5;
             pHosts.add(getPHostButtons(), gbc_pHostButtons);
         }
         return pHosts;
@@ -513,13 +543,6 @@ public class SubnetCalculatorFrame extends JFrame {
         return lblBinary;
     }
 
-    private JLabel getLblHexadecimal() {
-        if (lblHexadecimal == null) {
-            lblHexadecimal = new JLabel("Hexadecimal");
-        }
-        return lblHexadecimal;
-    }
-
     private JTextField getTfBinary() {
         if (tfBinary == null) {
             tfBinary = new JTextField();
@@ -529,15 +552,6 @@ public class SubnetCalculatorFrame extends JFrame {
         return tfBinary;
     }
 
-    private JTextField getTfHexadecimal() {
-        if (tfHexadecimal == null) {
-            tfHexadecimal = new JTextField();
-            tfHexadecimal.setEditable(false);
-            tfHexadecimal.setColumns(10);
-        }
-        return tfHexadecimal;
-    }
-
     private JLabel getLblHosts() {
         if (lblHosts == null) {
             lblHosts = new JLabel("Hosts");
@@ -545,13 +559,29 @@ public class SubnetCalculatorFrame extends JFrame {
         return lblHosts;
     }
 
-    private JList<Host> getListHosts() {
+    public JList<Host> getListHosts() {
         if (listHosts == null) {
             listHosts = new JList<Host>();
             listHosts.setModel(new DefaultListModel<>());
             listHosts.addListSelectionListener(e -> {
-                getTfBinary().setText(Converter.convertHexadecimalToBinary(getListHosts().getSelectedValue().getIpv6Address()
-                        .toString().replace(":", " ")));
+                if (getListHosts().getSelectedValue() != null) {
+                    String addrString = getListHosts().getSelectedValue().toString().replace(":", " ").replace(".", " ");
+                    String binaryString = "";
+
+                    String[] stringParts = addrString.split(" ");
+                    for (String s : stringParts) {
+                        binaryString += Converter.convertHexadecimalToBinary(s) + " ";
+                    }
+
+                    if (getListHosts().getSelectedValue().getDescription() != null) {
+                        getTaDescription().setText(getListHosts().getSelectedValue().getDescription());
+                    }
+
+                    getTfBinary().setText(binaryString);
+                } else {
+                    getTfBinary().setText("");
+                    getTaDescription().setText("");
+                }
             });
         }
         return listHosts;
@@ -638,6 +668,7 @@ public class SubnetCalculatorFrame extends JFrame {
         if (tfBroadcastaddress == null) {
             tfBroadcastaddress = new JTextField();
             tfBroadcastaddress.setColumns(10);
+            tfBroadcastaddress.setEditable(false);
         }
         return tfBroadcastaddress;
     }
@@ -648,17 +679,16 @@ public class SubnetCalculatorFrame extends JFrame {
         }
         return lblBroadcastaddress;
     }
-    
+
     private JButton getBtnGenerateSubnets() {
-	    if (btnGenerateSubnets == null) {
-		    btnGenerateSubnets = new JButton("Generate Subnets");
+        if (btnGenerateSubnets == null) {
+            btnGenerateSubnets = new JButton("Generate Subnets");
             btnGenerateSubnets.addActionListener(e -> {
                 if (getListNetworks().getSelectedValue() != null) {
                     new SubnetGeneratorDialog(SubnetCalculatorFrame.this);
                 }
             });
         }
-	    return btnGenerateSubnets;
-	}
-    
+        return btnGenerateSubnets;
+    }
 }

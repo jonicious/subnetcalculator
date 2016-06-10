@@ -22,9 +22,8 @@ public class IPv4Address {
         return address;
     }
 
-    public boolean equals(IPv4Address address1, IPv4Address address2) {
-        boolean equals = address1.toString() == address2.toString();
-        return equals;
+    public boolean isInNetwork(IPv4Network network) {
+        return network.getSnUtils().getInfo().isInRange(address.toString().replace("/", ""));
     }
 
     @Override

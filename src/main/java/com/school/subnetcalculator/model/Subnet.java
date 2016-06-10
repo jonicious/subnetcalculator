@@ -7,6 +7,7 @@ import com.school.subnetcalculator.model.ipv4.IPv4Address;
 import com.school.subnetcalculator.model.ipv4.IPv4Network;
 import com.school.subnetcalculator.model.ipv4.IPv4NetworkMask;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Subnet {
@@ -50,6 +51,9 @@ public class Subnet {
     }
 
     public List<Host> getHosts() {
+        if(hosts == null) {
+            hosts = new ArrayList<>();
+        }
         return hosts;
     }
 
@@ -68,7 +72,7 @@ public class Subnet {
     }
 
     public void removeHostFromList(Host host) {
-        this.hosts.remove(host);
+        getHosts().remove(host);
     }
 
     @Override
@@ -98,5 +102,9 @@ public class Subnet {
 
     public void setDepartment(Department department) {
         this.department = department;
+    }
+
+    public void addHostToHostList(Host host) {
+        getHosts().add(host);
     }
 }
