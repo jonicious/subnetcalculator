@@ -1,8 +1,10 @@
 package com.school.subnetcalculator.model.ipv4;
 
+import java.math.BigInteger;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.net.UnknownHostException;
 
 public class IPv4NetworkMask {
     private final int prefixLength;
@@ -15,11 +17,27 @@ public class IPv4NetworkMask {
         this.prefixLength = prefixLength;
     }
 
-    public static IPv4NetworkMask fromAddress(final InetAddress iPv4Address) throws SocketException {
-        NetworkInterface networkInterface = NetworkInterface.getByInetAddress(iPv4Address);
-        int prefixLength = networkInterface.getInterfaceAddresses().get(0).getNetworkPrefixLength();
+    public static IPv4NetworkMask fromAddress(String networkMaskAdress) throws UnknownHostException {
+        InetAddress inetNetworkMaskAdress = InetAddress.getByName(networkMaskAdress);
+        byte[] netmaskBytes = inetNetworkMaskAdress.getAddress();
+        int cidr = 0;
+        boolean zero = false;
+        for(byte b : netmaskBytes){
+            int mask = 0x80;
 
-        return new IPv4NetworkMask(prefixLength);
+            for(int i = 0; i < 8; i++){
+                int result = b & mask;
+                if(result == 0){
+                    zero = true;
+                }else if(zero){
+                    throw new IllegalArgumentException("Invalid netmask.");
+                } else {
+                    cidr++;
+                }
+                mask >>>= 1;
+            }
+        }
+        return new  IPv4NetworkMask(cidr);
     }
 
     public static IPv4NetworkMask fromPrefixLength(int prefixLength) {

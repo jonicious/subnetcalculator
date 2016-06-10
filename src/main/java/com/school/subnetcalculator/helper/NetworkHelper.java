@@ -83,8 +83,8 @@ public class NetworkHelper {
             createdMask = IPv4NetworkMask.fromPrefixLength(Integer.parseUnsignedInt(prefixLength, 10));
         } else if (subnetMask != null && !subnetMask.isEmpty()) {
             try {
-                createdMask = IPv4NetworkMask.fromAddress(InetAddress.getByName(subnetMask));
-            } catch (UnknownHostException | SocketException e) {
+                createdMask = IPv4NetworkMask.fromAddress(subnetMask);
+            } catch (UnknownHostException e) {
                 e.printStackTrace();
             }
         }
