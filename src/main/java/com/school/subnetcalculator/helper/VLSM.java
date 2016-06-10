@@ -1,5 +1,6 @@
 package com.school.subnetcalculator.helper;
 
+import com.school.subnetcalculator.model.Department;
 import com.school.subnetcalculator.model.Subnet;
 import com.school.subnetcalculator.model.ipv4.IPv4Address;
 import com.school.subnetcalculator.model.ipv4.IPv4Network;
@@ -8,15 +9,15 @@ import com.school.subnetcalculator.model.ipv4.IPv4NetworkMask;
 import java.util.*;
 
 public class VLSM {
-    public static List<Subnet> calculateSubnets(String networkAddress, Map<String, Integer> subnets) {
-        Map<String, Integer> sortedSubnets = sortMap(subnets);
+    public static List<Subnet> calculateSubnets(String networkAddress, Map<Department, Integer> subnets) {
+        Map<Department, Integer> sortedSubnets = sortMap(subnets);
         List<Subnet> output = new ArrayList<>();
 
         int currentIp = getFirstIPv4(networkAddress);
 
-        for (String key : sortedSubnets.keySet()) {
+        for (Department key : sortedSubnets.keySet()) {
             Subnet subnet = new Subnet();
-            subnet.setName(key);
+            subnet.setDepartment(key);
 
             int neededSize = sortedSubnets.get(key);
             int networkMaskPrefix = calculateNeededPrefixLength(neededSize);
@@ -39,12 +40,12 @@ public class VLSM {
         return output;
     }
 
-    private static Map<String, Integer> sortMap(Map<String, Integer> map) {
-        List<Map.Entry<String, Integer>> entries = new ArrayList<>(map.entrySet());
+    private static Map<Department, Integer> sortMap(Map<Department, Integer> map) {
+        List<Map.Entry<Department, Integer>> entries = new ArrayList<>(map.entrySet());
         Collections.sort(entries, (o1, o2) -> o2.getValue().compareTo(o1.getValue()));
-        Map<String, Integer> sortedMap = new LinkedHashMap<>();
+        Map<Department, Integer> sortedMap = new LinkedHashMap<>();
 
-        for (Map.Entry<String, Integer> entry : entries) {
+        for (Map.Entry<Department, Integer> entry : entries) {
             sortedMap.put(entry.getKey(), entry.getValue());
         }
 
