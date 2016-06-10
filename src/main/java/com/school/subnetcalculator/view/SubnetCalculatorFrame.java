@@ -125,6 +125,10 @@ public class SubnetCalculatorFrame extends JFrame {
                 JFileChooser fileChooser = new JFileChooser();
                 int returnVal = fileChooser.showOpenDialog(SubnetCalculatorFrame.this);
                 if (returnVal == JFileChooser.APPROVE_OPTION) {
+                    DefaultListModel model = (DefaultListModel) getListNetworks().getModel();
+                    model.removeAllElements();
+                    getTpNetworkSubnetsHosts().setEnabledAt(1, false);
+                    getTpNetworkSubnetsHosts().setEnabledAt(2, false);
                     for (Network net : DocumentParser.importFromFile(fileChooser.getSelectedFile().getName())) {
                         ((DefaultListModel) getListNetworks().getModel()).addElement(net);
                     }
