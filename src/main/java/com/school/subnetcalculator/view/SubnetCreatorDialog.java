@@ -248,10 +248,15 @@ public class SubnetCreatorDialog extends JDialog {
 
         Subnet generatedSubnet = NetworkHelper.generateSubnet(netAddress, netPraefix, netMask, department);
         if (generatedSubnet != null) {
-            DefaultListModel df = (DefaultListModel) this.parentFrame.getListSubnets().getModel();
-            df.addElement(generatedSubnet);
-            this.parentFrame.getListNetworks().getSelectedValue().addSubnet(generatedSubnet);
-            this.dispose();
+            try {
+                DefaultListModel df = (DefaultListModel) this.parentFrame.getListSubnets().getModel();
+                this.parentFrame.getListNetworks().getSelectedValue().addSubnet(generatedSubnet);
+                df.addElement(generatedSubnet);
+                this.dispose();
+            } catch (Exception e) {
+                new ExceptionDialog("The subnet is to big for the network", e, null);
+            }
+
         }
     }
 

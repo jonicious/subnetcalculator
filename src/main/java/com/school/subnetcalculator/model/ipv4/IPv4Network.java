@@ -39,6 +39,10 @@ public class IPv4Network {
         return IPv4Address.fromString(snUtils.getInfo().getAddress());
     }
 
+    public int adressCount() {
+        return  snUtils.getInfo().getAddressCount();
+    }
+
 
     @Override
     public String toString() {
