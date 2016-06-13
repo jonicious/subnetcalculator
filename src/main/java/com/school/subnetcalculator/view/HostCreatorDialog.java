@@ -19,15 +19,16 @@ public class HostCreatorDialog extends JDialog{
 	private JPanel pAddCancel;
 	private JButton btnAddHost;
 	private JButton btnCancel;
-	
+
 	public HostCreatorDialog(SubnetCalculatorFrame parentFrame) {
 		setModal(true);
-        	setSize(700, 158);
-        	setMinimumSize(new Dimension(700, 158));
-        	this.parentFrame = parentFrame;
-        	setLocationRelativeTo(parentFrame);
-        	initGUI();
-        	setVisible(true);
+		setSize(700, 158);
+		setMinimumSize(new Dimension(700, 158));
+		this.parentFrame = parentFrame;
+		setLocationRelativeTo(parentFrame);
+		initGUI();
+		setVisible(true);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
 	private void initGUI() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -148,12 +149,15 @@ public class HostCreatorDialog extends JDialog{
 		Subnet sn = this.parentFrame.getListSubnets().getSelectedValue();
 
 		if (!host.getIpv4Address().isInNetwork(sn.getIpv4Network())) {
+			setModal(false);
+			new ExceptionDialog("address not allowed", new Exception("address not available in network"), this.parentFrame);
 			return;
-			// TODO: inform user
 		}
 
 		if (host.getIpv4Address().toString() == sn.getIpv4Network().getFirstAddress().toString() || host.getIpv4Address().toString() == sn.getIpv4Network()
 				.getLastAddress().toString()) {
+			new ExceptionDialog("broadcast or network address must not be used", new Exception("the broadcast or the network address cannot be used as a host address " +
+					"in the network"), this.parentFrame);
 			return;
 		}
 

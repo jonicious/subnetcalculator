@@ -1,25 +1,9 @@
 package com.school.subnetcalculator.view;
 
-import javax.swing.JDialog;
-
-import java.awt.Dimension;
-import java.awt.GridBagLayout;
-
-import javax.swing.JLabel;
-
-import java.awt.GridBagConstraints;
-
-import javax.swing.JTextField;
-
-import java.awt.Insets;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.JSplitPane;
-import javax.swing.JPanel;
-import javax.swing.JButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 
 public class ExceptionDialog extends JDialog{
 	
@@ -41,6 +25,8 @@ public class ExceptionDialog extends JDialog{
 		setMinimumSize(new Dimension(500,300));
 		this.parentFrame = parentFrame;
         setLocationRelativeTo(parentFrame);
+		this.setModal(true);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
 	
 	private void initGUI() {
