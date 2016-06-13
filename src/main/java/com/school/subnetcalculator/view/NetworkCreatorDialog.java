@@ -1,20 +1,12 @@
 package com.school.subnetcalculator.view;
 
-import com.googlecode.ipv6.IPv6Address;
-import com.googlecode.ipv6.IPv6NetworkMask;
 import com.school.subnetcalculator.helper.NetworkHelper;
 import com.school.subnetcalculator.model.Network;
-import com.school.subnetcalculator.model.ipv4.IPv4Address;
-import com.school.subnetcalculator.model.ipv4.IPv4Network;
-import com.school.subnetcalculator.model.ipv4.IPv4NetworkMask;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.net.InetAddress;
-import java.net.SocketException;
-import java.net.UnknownHostException;
 
 class NetworkCreatorDialog extends JDialog {
     private static final long serialVersionUID = -509854914694000006L;
@@ -38,6 +30,7 @@ class NetworkCreatorDialog extends JDialog {
         setLocationRelativeTo(parentFrame);
         initGUI();
         setVisible(true);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
     private void initGUI() {
