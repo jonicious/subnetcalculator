@@ -5,7 +5,7 @@ import com.googlecode.ipv6.IPv6Network;
 import com.school.subnetcalculator.model.Host;
 import com.school.subnetcalculator.model.Network;
 import com.school.subnetcalculator.model.Subnet;
-import java.net.InetAddress;
+import com.school.subnetcalculator.model.ipv4.IPv4Address;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,7 @@ public class NetworkMapperTest
     {
         IPv6Network ipv6ExampleNetwork = IPv6Network.fromString("2001:0db8:85a3:0000:0000:8a2e:0370:7334/48");
         IPv6Address iPv6ExampleAddress = IPv6Address.fromString("2001:0db8:85a3:0000:0000:8a2e:0370:7334");
-        InetAddress iPv4ExampleAddress = InetAddress.getByName("192.168.178.1");
+        IPv4Address iPv4ExampleAddress = IPv4Address.fromString("192.168.178.1");
 
         Host host1 = new Host();
         host1.setDescription("This is the computer of Jonah.");
