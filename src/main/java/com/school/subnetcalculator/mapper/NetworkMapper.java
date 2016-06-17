@@ -1,10 +1,9 @@
 package com.school.subnetcalculator.mapper;
 
 import com.google.gson.Gson;
-import com.googlecode.ipv6.IPv6Address;
 import com.googlecode.ipv6.IPv6Network;
-import com.googlecode.ipv6.IPv6NetworkMask;
 import com.school.subnetcalculator.model.Network;
+import com.school.subnetcalculator.model.ipv4.IPv4Network;
 import java.util.ArrayList;
 import java.util.List;
 import org.json.JSONArray;
@@ -19,19 +18,21 @@ public class NetworkMapper
 
         try
         {
-            // TODO: Add ipv4 object.getString("ipv4NetworkAddress");
-            JSONObject ipv6NetworkObject = object.getJSONObject("ipv6Network");
 
-            JSONObject ipv6AddressObject = ipv6NetworkObject.getJSONObject("address");
-            Long ipv6AddressHighBits = ipv6AddressObject.getLong("highBits");
-            Long ipv6AddressLowBits = ipv6AddressObject.getLong("lowBits");
-            IPv6Address iPv6Address = IPv6Address.fromLongs(ipv6AddressHighBits, ipv6AddressLowBits);
+            if (object.has("ipv4Network"))
+            {
+                JSONObject ipv4NetworkObject = object.getJSONObject("ipv4Network");
+                IPv4Network iPv4Network = Ipv4NetworkMapper.makeIpv4NetworkFromJsonObject(ipv4NetworkObject);
+                network.setIpv4Network(iPv4Network);
+            }
 
-            JSONObject ipv6NetworkMaskObject = ipv6NetworkObject.getJSONObject("networkMask");
-            int ipv6NetworkMaskPrefixLength = ipv6NetworkMaskObject.getInt("prefixLength");
-            IPv6NetworkMask ipv6NetworkMask = IPv6NetworkMask.fromPrefixLength(ipv6NetworkMaskPrefixLength);
+            if (object.has("ipv6Network"))
+            {
+                JSONObject ipv6NetworkObject = object.getJSONObject("ipv6Network");
+                IPv6Network iPv6Network = Ipv6NetworkMapper.makeIpv6NetworkFromJsonObject(ipv6NetworkObject);
+                network.setIpv6Network(iPv6Network);
+            }
 
-            network.setIpv6Network(IPv6Network.fromAddressAndMask(iPv6Address, ipv6NetworkMask));
             network.setSubnetList(SubnetMapper.makeSubnetListFromJsonArray(object.getJSONArray("subnetList")));
         }
         catch (JSONException e)

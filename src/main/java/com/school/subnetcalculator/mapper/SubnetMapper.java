@@ -2,6 +2,7 @@ package com.school.subnetcalculator.mapper;
 
 import com.googlecode.ipv6.IPv6Network;
 import com.school.subnetcalculator.model.Subnet;
+import com.school.subnetcalculator.model.ipv4.IPv4Network;
 import java.util.ArrayList;
 import java.util.List;
 import org.json.JSONArray;
@@ -15,9 +16,22 @@ public class SubnetMapper
         Subnet subnet = new Subnet();
         try
         {
-            String ipv6SubnetAddressString = object.getString("ipv6SubnetAddress");
-            subnet.setIpv6Network(IPv6Network.fromString(ipv6SubnetAddressString));
-            subnet.setHosts(HostMapper.makeHostListFromObject(object.getJSONArray("hosts")));
+            if (object.has("ipv4Network"))
+            {
+                IPv4Network iPv4Network = Ipv4NetworkMapper.makeIpv4NetworkFromJsonObject(object.getJSONObject("ipv4Network"));
+                subnet.setIpv4Network(iPv4Network);
+            }
+
+            if (object.has("ipv6Network"))
+            {
+                IPv6Network iPv6Network = Ipv6NetworkMapper.makeIpv6NetworkFromJsonObject(object.getJSONObject("ipv6Network"));
+                subnet.setIpv6Network(iPv6Network);
+            }
+
+            if (object.has("hosts")) {
+                subnet.setHosts(HostMapper.makeHostListFromObject(object.getJSONArray("hosts")));
+            }
+
         }
         catch (JSONException e)
         {

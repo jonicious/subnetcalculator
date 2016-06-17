@@ -47,7 +47,7 @@ public class Network {
         this.subnetList = subnetList;
     }
 
-    public int getSubnetsAdressCount() {
+    public int getSubnetsAddressCount() {
         int hostcount = 0;
 
         for(Subnet subnet : subnetList) {
@@ -58,12 +58,17 @@ public class Network {
     }
 
     public void addSubnet(Subnet subnet) throws Exception {
-        if(subnet.getIpv4Network() != null) {
-            int subnetCount = subnet.getIpv4Network().getSnUtils().getInfo().getAddressCount() + getSubnetsAdressCount();
-            if (subnetCount < ipv4Network.adressCount()) {
+
+        if(subnet.getIpv4Network() != null)
+        {
+            int subnetCount = subnet.getIpv4Network().getSnUtils().getInfo().getAddressCount() + getSubnetsAddressCount();
+            if (subnetCount < ipv4Network.adressCount())
+            {
                 System.out.println(subnetCount);
                 this.subnetList.add(subnet);
-            } else {
+            }
+            else
+            {
                 throw new Exception("Subnets overreach the network mask limit");
             }
         } else {
@@ -78,6 +83,10 @@ public class Network {
 
     public void setIpv6Network(IPv6Network ipv6Network) {
         this.ipv6Network = ipv6Network;
+    }
+
+    public void setIpv4Network(IPv4Network ipv4Network) {
+        this.ipv4Network = ipv4Network;
     }
 
 
