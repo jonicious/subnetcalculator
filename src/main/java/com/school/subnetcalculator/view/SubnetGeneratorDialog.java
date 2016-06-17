@@ -4,6 +4,7 @@ import com.school.subnetcalculator.helper.VLSM;
 import com.school.subnetcalculator.model.Department;
 import com.school.subnetcalculator.model.Subnet;
 
+import java.util.Collections;
 import javax.swing.*;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
@@ -232,22 +233,37 @@ public class SubnetGeneratorDialog extends JDialog {
                 String majorNetwork = getTfNetworkaddress().getText();
                 Map<Department, Integer> subnets = new HashMap<>();
 
-                for (Object o : getDepartmentHostCountMap().entrySet()) {
+                List<Subnet> subnetList = Collections.emptyList();
+
+                for (Object o : getDepartmentHostCountMap().entrySet())
+                {
                     HashMap.Entry pair = (HashMap.Entry) o;
 
                     if (Integer.parseUnsignedInt(pair.getValue().toString(), 10) != 0) {
                         subnets.put((Department) pair.getKey(), Integer.parseUnsignedInt(pair.getValue().toString(), 10));
                     }
 
-                    List<Subnet> subnetList = VLSM.calculateSubnets(majorNetwork, subnets);
+                    subnetList = VLSM.calculateSubnets(majorNetwork, subnets);
                     ((DefaultListModel) parentFrame.getListSubnets().getModel()).removeAllElements();
 
-                    for (Subnet sub : subnetList) {
-                        ((DefaultListModel) parentFrame.getListSubnets().getModel()).addElement(sub);
-                    }
-
-                    this.dispose();
                 }
+
+                for (Subnet sub : subnetList)
+                {
+                    ((DefaultListModel) parentFrame.getListSubnets().getModel()).addElement(sub);
+                    try
+                    {
+                        parentFrame.getListNetworks().getSelectedValue().addSubnet(sub);
+                    }
+                    catch (Exception exception)
+                    {
+                        new ExceptionDialog(exception.getMessage(), exception, parentFrame);
+                    }
+                }
+
+                this.dispose();
+
+
             });
         }
 

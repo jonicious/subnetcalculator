@@ -228,6 +228,8 @@ public class SubnetCreatorDialog extends JDialog {
         if (btnAddSubnet == null) {
             btnAddSubnet = new JButton("Add Subnet");
             btnAddSubnet.addActionListener(e -> addSubnetToSubnetList());
+
+
         }
         return btnAddSubnet;
     }
@@ -252,6 +254,16 @@ public class SubnetCreatorDialog extends JDialog {
                 DefaultListModel df = (DefaultListModel) this.parentFrame.getListSubnets().getModel();
                 this.parentFrame.getListNetworks().getSelectedValue().addSubnet(generatedSubnet);
                 df.addElement(generatedSubnet);
+
+                try
+                {
+                    parentFrame.getListNetworks().getSelectedValue().addSubnet(generatedSubnet);
+                }
+                catch (Exception exception)
+                {
+                    new ExceptionDialog(exception.getMessage(), exception, parentFrame);
+                }
+
                 this.dispose();
             } catch (Exception e) {
                 new ExceptionDialog("The subnet is to big for the network", e, null);
