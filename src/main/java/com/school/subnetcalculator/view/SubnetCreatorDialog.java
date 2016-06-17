@@ -10,7 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.util.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SubnetCreatorDialog extends JDialog {
@@ -254,7 +254,7 @@ public class SubnetCreatorDialog extends JDialog {
                 df.addElement(generatedSubnet);
                 this.dispose();
             } catch (Exception e) {
-                new ExceptionDialog("The subnet is to big for the network", e, null);
+                new ExceptionDialog("The subnet is too big for the network", e, null);
             }
 
         }

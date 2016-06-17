@@ -371,6 +371,7 @@ public class SubnetCalculatorFrame extends JFrame {
         if (listSubnets == null) {
             listSubnets = new JList<>();
             listSubnets.setModel(new DefaultListModel<>());
+            listSubnets.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             listSubnets.addListSelectionListener(e -> {
                 if (getListSubnets().getSelectedValue() != null) {
                     getTpNetworkSubnetsHosts().setEnabledAt(2, true);
@@ -561,8 +562,9 @@ public class SubnetCalculatorFrame extends JFrame {
 
     public JList<Host> getListHosts() {
         if (listHosts == null) {
-            listHosts = new JList<Host>();
+            listHosts = new JList<>();
             listHosts.setModel(new DefaultListModel<>());
+            listHosts.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
             listHosts.addListSelectionListener(e -> {
                 if (getListHosts().getSelectedValue() != null) {
                     String addrString = getListHosts().getSelectedValue().toString().replace(":", " ").replace(".", " ");

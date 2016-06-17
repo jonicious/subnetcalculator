@@ -6,7 +6,6 @@ import com.googlecode.ipv6.IPv6NetworkMask;
 import com.school.subnetcalculator.model.ipv4.IPv4Address;
 import com.school.subnetcalculator.model.ipv4.IPv4Network;
 import com.school.subnetcalculator.model.ipv4.IPv4NetworkMask;
-import com.school.subnetcalculator.view.ExceptionDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,13 +58,16 @@ public class Network {
     }
 
     public void addSubnet(Subnet subnet) throws Exception {
-        int subnetCount = subnet.getIpv4Network().getSnUtils().getInfo().getAddressCount() + getSubnetsAdressCount();
-
-        if(subnetCount < ipv4Network.adressCount()) {
-            System.out.println(subnetCount);
-            this.subnetList.add(subnet);
+        if(subnet.getIpv4Network() != null) {
+            int subnetCount = subnet.getIpv4Network().getSnUtils().getInfo().getAddressCount() + getSubnetsAdressCount();
+            if (subnetCount < ipv4Network.adressCount()) {
+                System.out.println(subnetCount);
+                this.subnetList.add(subnet);
+            } else {
+                throw new Exception("Subnets overreach the network mask limit");
+            }
         } else {
-            throw new Exception("Subnets overreach the network mask limit");
+            this.subnetList.add(subnet);
         }
     }
 
